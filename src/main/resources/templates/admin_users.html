@@ -8,6 +8,7 @@
       table {
         border-collapse: collapse;
         width: 100%;
+        padding-top: 50px; 
       }
       th,
       td {
@@ -15,21 +16,22 @@
         padding: 8px;
       }
       th {
-        background-color: #ddd;
+        background-color: #3363cb;
       }
       .error {
         color: red;
       }
-      .body {
-        padding-top: 50px; /* Add padding equal to navbar height */
+
+      header{
+        padding-bottom: 50px;
       }
     </style>
   </head>
-  <body>
-    <header>
-      <div th:replace="fragments/newNav :: newBar"></div>
-    </header>
+  <header>
+    <div th:replace="fragments/newNav :: newBar"></div>
+  </header>
 
+  <body>
     <h1>Welcome, Admin!</h1>
     <hr />
 

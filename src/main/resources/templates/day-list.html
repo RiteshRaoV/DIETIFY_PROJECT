@@ -11,6 +11,11 @@
   <header>
     <div th:replace="fragments/newNav :: newBar"></div>
   </header>
+        <div class="heading">
+          <h1 class="heading_1"> Here is delicious recipes  </h1>
+          <h1 class="heading_2">suggestion based on your </h1>
+          <h1 class="heading_3">dietary preferences</h1>
+        </div>
         <div class="page-container">
           <div class="row">
             <div class="column-3" th:each="meal : ${dayResponse.meals}">
@@ -24,7 +29,7 @@
                 <div class="recipe-bottom3">
                   <div class="recipe-info">Servings: <span th:text="${meal.servings}"></span></div>
                   <div class="recipe-info">Total Time: <span th:text="${meal.readyInMinutes}"></span></div>
-                  <a th:href="@{/recipe/details}" class="button3">VIEW RECIPE</a>
+                  <a th:href="@{/recipe/details}" class="button3">VIEW RECIPE 🍳</a>
                 </div>
                 
               </div>
