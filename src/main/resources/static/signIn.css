@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+* {
+  margin:0;
+  padding:0;
+}
+.container {
+  height:100vh;
+  width:90%;
+  margin:0 auto;
+  font-family: 'Roboto', sans-serif;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  font-family: 'Lato', sans-serif;
+}
+
+/*Company logo section*/
+.company-logo {
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+
+.logo-container {
+  width:70%;
+}
+
+.company-logo h3 {
+  font-weight:lighter;
+  color:#e53935;
+}
+
+.company-logo img {
+  height:80%;
+  width:80%;
+}
+
+.company-logo span {
+  color:rgb(55, 63, 65);
+}
+
+
+/*signIn section */
+.signin-section {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.signin-section h2 {
+  color:rgb(0, 0, 0);
+}
+
+/*signin card*/
+.signin-card {
+  background-color:#fff;
+  width:57%;
+  display:flex;
+  flex-direction:column;
+  border:1px solid  rgb(255, 255, 255);
+  border-radius:7px;
+  margin-top:20px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.signin-card h3 {
+  text-align:center;
+  border-bottom: 0.7px solid rgb(66, 71, 72);
+  color:grey;
+  font-weight:lighter;
+  padding:28px 18%;
+}
+
+.signin-card h3 span {
+  color:rgb(64, 72, 73);
+}
+
+.signin-card form {
+  display:flex;
+  flex-direction:column;
+  padding:30px 11%; 
+  font-weight:lighter;
+}
+.signin-card form label{
+  font-size:x-small;
+  font-weight:lighter;
+  color:grey;
+}
+.signin-card form input{
+  margin:10px 0;
+  border:none;
+  outline:none;
+  border-bottom:0.7px solid grey;
+  padding: 3px;
+}
+
+.signin-card form input:focus {
+    border-bottom: 2px solid #e53935;
+}
+
+.password-container {
+  position: relative;
+}
+.password-container input {
+  width: 100%;
+}
+.forgot-pass {
+  right: 0;
+  bottom: 15px;
+  position: absolute;
+  font-size: x-small;
+  font-weight: lighter;
+  color: grey;
+  cursor: pointer;
+}
+
+.signin-card form button{
+  border:none;
+  outline:none;
+  padding:7px;
+  margin:20px 0;
+  background-color: #e53935;
+  border-radius:3px;
+  color:#fff;
+  font-weight:bold;
+  font-size: 15px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  cursor: pointer;
+}
+
+.signin-card form button:hover {
+  background-color:#e53935;
+}
+
+
+.signin-card .signin-card-footer {
+  padding:15px 14%; 
+}
+
+.signin-card .signin-card-footer h5 {
+  font-weight:lighter;
+  text-align:center;
+}
+
+.signin-card .signin-card-footer h5 span{
+  color: #e53935;
+  cursor: pointer;
+}
+
+
+/*left shape*/
+.left-shape {
+  width: 20%;
+  height: 30%;
+  background-color: #e53935;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  clip-path: polygon(0 0, 0% 100%, 78% 100%);
+}
+
+/*right shape*/
+.right-shape {
+  width: 50%;
+  height: 60%;
+  background-color:  #e53935;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  clip-path: polygon(100% 30%, 0% 100%, 100% 100%);
+}
+
+
+
+
+
+
+@media only screen and (max-width:1200px) {
+    .container {
+        grid-template-columns: 0.8fr 1.2fr;
+    }
+    .signin-card {
+        width: 65%;
+    }
+}
+@media only screen and (max-width:800px) {
+    .container {
+        width: 95%;
+    }
+    .signin-card {
+        width: 80%;
+    }
+}
+@media only screen and (max-width:550px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow-y: auto;
+    }
+    .company-logo {
+        height: 20%;
+    }
+    .signin-section {
+        justify-content: flex-start;
+        margin-top: 35px;
+    }
+    .signin-card {
+        width: 70%;
+    }
+}
+@media only screen and (max-width:400px) {
+    .signin-card {
+        width: 80%;
+    }
+}

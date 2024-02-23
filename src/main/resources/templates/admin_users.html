@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin User Management</title>
+    <style>
+      /* Basic table styling for clarity and readability */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background-color: #ddd;
+      }
+      .error {
+        color: red;
+      }
+      .body {
+        padding-top: 50px; /* Add padding equal to navbar height */
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div th:replace="fragments/newNav :: newBar"></div>
+    </header>
+
+    <h1>Welcome, Admin!</h1>
+    <hr />
+
+    <h2>Manage Users</h2>
+
+    <span class="error" th:if="${error}">{{error}}</span>
+    <table th:if="${users}">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="user : ${users}">
+          <td th:text="${user.id}"></td>
+          <td th:text="${user.name}"></td>
+          <td th:text="${user.email}"></td>
+          <td th:text="${user.role}"></td>
+          <td>
+            <th:block th:if="${user.role != 'ROLE_ADMIN'}">
+              <form th:action="@{/admin/user/delete}" method="post">
+                <input
+                  type="hidden"
+                  name="${_csrf.parameterName}"
+                  value="${_csrf.token}"
+                />
+                <button
+                  type="submit"
+                  class="delete"
+                  name="id"
+                  th:value="${user.id}"
+                >
+                  delete
+                </button>
+              </form>
+            </th:block>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <form th:action="@{/logout}" method="post">
+      <input
+        type="hidden"
+        name="${_csrf.parameterName}"
+        value="${_csrf.token}"
+      />
+      <button type="submit">Logout</button>
+    </form>
+  </body>
+</html>

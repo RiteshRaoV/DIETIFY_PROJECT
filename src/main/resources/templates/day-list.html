@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/day-list.css}">
+
+</head>
+<body>
+  <header>
+    <div th:replace="fragments/newNav :: newBar"></div>
+  </header>
+        <div class="page-container">
+          <div class="row">
+            <div class="column-3" th:each="meal : ${dayResponse.meals}">
+              <div class="recipe-card">
+                <div class="recipe-image">
+                  <img th:src="${meal.sourceUrl}" th:alt="${meal.title}">
+                </div>
+                <div class="recipe-top">
+                  <h1 th:text="${meal.title}"></h1>
+                </div>
+                <div class="recipe-bottom3">
+                  <div class="recipe-info">Servings: <span th:text="${meal.servings}"></span></div>
+                  <div class="recipe-info">Total Time: <span th:text="${meal.readyInMinutes}"></span></div>
+                  <a th:href="@{/recipe/details}" class="button3">VIEW RECIPE</a>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      
+    
+</body>
+</html>
