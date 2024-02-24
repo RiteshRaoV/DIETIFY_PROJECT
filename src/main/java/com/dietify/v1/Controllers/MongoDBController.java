@@ -2,44 +2,77 @@ package com.dietify.v1.Controllers;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JsonParseException;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dietify.v1.DTO.Day.DayResponse;
+import com.dietify.v1.Entity.User;
+import com.dietify.v1.Repository.UserRepo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 public class MongoDBController {
-
+    @Autowired
+    private UserRepo userRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    @PostMapping("mongodb/store")
-    public ResponseEntity<String> storeDataToMongoDB(@RequestBody String body, @RequestParam String userID) {
+    @PostMapping("/mongodb/store")
+    public ResponseEntity<String> storeDataToMongoDB(HttpSession session) {
         try {
-            // Convert the JSON string to a Document
-            Document document = Document.parse(body);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String userEmail = authentication.getName();
+            User user = userRepository.findByEmail(userEmail);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+            }
 
-            // Add the userID field to the Document
-            document.append("userID", userID);
+            DayResponse dayResponse = (DayResponse) session.getAttribute("dayResponse");
+            if (dayResponse == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No day response data found in session.");
+            }
 
-            // Save the Document to MongoDB
+            ObjectMapper objectMapper = new ObjectMapper();
+            String dayResponseJson = objectMapper.writeValueAsString(dayResponse);
+
+            dayResponseJson = dayResponseJson.replaceAll("\\s", "");
+
+            Document existingData = mongoTemplate.findOne(new Query(Criteria.where("data").is(dayResponseJson)), Document.class, "mealPlans");
+            if (existingData != null) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Data already exists.");
+            }
+
+            Document document = Document.parse(dayResponseJson);
+
+            document.append("userID", user.getId());
+
             mongoTemplate.save(document, "mealPlans");
 
-            return new ResponseEntity<>("Data stored successfully for user " + userID, HttpStatus.OK);
+            return ResponseEntity.ok().body("Data stored successfully for user " + user.getId());
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid JSON format.");
         } catch (Exception e) {
-            // Handle exception if there's an issue with parsing or saving
-            return new ResponseEntity<>("Error storing data for user " + userID, HttpStatus.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error storing data.");
         }
     }
 
     @GetMapping("/mongodb/fetch")
     public ResponseEntity<String> fetchDataFromMongoDB(@RequestParam String userID) {
-        String data = mongoTemplate.findAll(String.class, "mealPlans" ).toString();
+        String data = mongoTemplate.findAll(String.class, "mealPlans").toString();
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }

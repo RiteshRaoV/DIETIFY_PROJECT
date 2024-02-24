@@ -7,7 +7,15 @@
       <a class="nav-link" href="#aboutSection" id="aboutLink">About Us</a>
       <a class="nav-link" href="#servicesSection" id="servicesLink">Survey</a>
       <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-link" href="#servicesSection" id="servicesLink">addBlogs</a>
-      <a class="nav-link" href="#contactSection" id="contactLink">Profile</a>
+      <img class="nav-avatar" th:src="@{/admin.png}" alt="Avatar">
+      <div class="dropdown-content">
+        <a href="#">Profile</a>
+        <a th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+        <form id="logout-form" action="#" th:action="@{/logout}" method="post" style="display: none;">
+          <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        </form>
+      </div>
+      </div> 
     </div>
   </div>
 </div>

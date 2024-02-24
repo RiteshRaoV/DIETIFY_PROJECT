@@ -35,9 +35,10 @@
               </div>
             </div>
           </div>
+        <form th:action="@{/mongodb/store}" method="post">
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+          <button type="submit">Save Day Response</button>
+      </form>
         </div>
-        
-      
-    
 </body>
 </html>

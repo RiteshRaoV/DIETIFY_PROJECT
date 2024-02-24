@@ -19,6 +19,7 @@ import com.dietify.v1.DTO.Day.DayResponse;
 import com.dietify.v1.DTO.Week.Week;
 import com.dietify.v1.DTO.Week.WeekResponse;
 
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/mealplanner")
@@ -33,30 +34,37 @@ public class MealController {
 
 	@GetMapping("/day")
 	public String getDayMeals(Model model,
-                              @RequestParam Optional<String> targetCalories,
-                              @RequestParam Optional<String> diet,
-                              @RequestParam Optional<String> exclusions){
-		RestTemplate rt = new RestTemplate();
+			HttpSession session,
+			@RequestParam Optional<String> targetCalories,
+			@RequestParam Optional<String> diet,
+			@RequestParam Optional<String> exclusions) {
+		if (session.getAttribute("dayResponse") == null) {
+			RestTemplate rt = new RestTemplate();
 
-		URI uri = UriComponentsBuilder.fromHttpUrl(baseURL)
-				.queryParam("timeFrame", "day")
-				.queryParamIfPresent("targetCalories", targetCalories)
-				.queryParamIfPresent("diet", diet)
-				.queryParamIfPresent("exclude", exclusions)
-				.queryParam("apiKey", apiKey)
-				.build()
-				.toUri();
+			URI uri = UriComponentsBuilder.fromHttpUrl(baseURL)
+					.queryParam("timeFrame", "day")
+					.queryParamIfPresent("targetCalories", targetCalories)
+					.queryParamIfPresent("diet", diet)
+					.queryParamIfPresent("exclude", exclusions)
+					.queryParam("apiKey", apiKey)
+					.build()
+					.toUri();
 
-		ResponseEntity<DayResponse> response = rt.getForEntity(uri, DayResponse.class);
-		if (response.getStatusCode().is2xxSuccessful()) {
-			DayResponse dayResponse = response.getBody();
-			if (dayResponse != null && dayResponse.getMeals() != null) {
-				dayResponse.getMeals().forEach(meal -> {
-					int id = meal.getId();
-					String imageURL = "https://spoonacular.com/recipeImages/" + id + "-312x231.jpg";
-					meal.setSourceUrl(imageURL);
-				});
+			ResponseEntity<DayResponse> response = rt.getForEntity(uri, DayResponse.class);
+			if (response.getStatusCode().is2xxSuccessful()) {
+				DayResponse dayResponse = response.getBody();
+				if (dayResponse != null && dayResponse.getMeals() != null) {
+					dayResponse.getMeals().forEach(meal -> {
+						int id = meal.getId();
+						String imageURL = "https://spoonacular.com/recipeImages/" + id + "-312x231.jpg";
+						meal.setSourceUrl(imageURL);
+					});
+				}
+				session.setAttribute("dayResponse", dayResponse);
+				model.addAttribute("dayResponse", dayResponse);
 			}
+		} else {
+			DayResponse dayResponse = (DayResponse) session.getAttribute("dayResponse");
 			model.addAttribute("dayResponse", dayResponse);
 		}
 		return "day-list";

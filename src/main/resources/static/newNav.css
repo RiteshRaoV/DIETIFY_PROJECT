@@ -49,7 +49,7 @@ body {
 .nav-links-container {
     position: absolute;
     top: 50%;
-    right: 1%;
+    right: 3%;
     transform: translateY(-50%);
 }
 
@@ -59,11 +59,58 @@ body {
     text-transform: uppercase;
     cursor: pointer;
     font-weight: 500;
-    padding: 0 12px;
+    padding: 0 10px;
     transition: 0.4s ease;
 }
 
 .nav-link.active,
 .nav-link:hover {
-    color: rgb(0, 0, 0);
+    font-size: 15px;
 }
+
+/* Style for avatar */
+.nav-avatar {
+    width: 25px; /* Adjust the width and height as needed */
+    height: 25px;
+    top: -25%;
+    border-radius: 50%; 
+    cursor: pointer; 
+    position: absolute; 
+    margin-left: 1px; 
+}
+.nav-avatar:hover{
+    transform: scale(1.3);
+    transition: 0.2s ease-in;
+}
+  
+  /* Style for dropdown container */
+  .dropdown-content {
+    display: none; /* Initially hide the dropdown content */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Style for dropdown links */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 10px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Show dropdown content on hover */
+  .nav-avatar:hover + .dropdown-content,
+  .dropdown-content:hover {
+    display: block;
+  }
+  
+  /* Position dropdown content */
+  .dropdown-content {
+    top: 20px; /* Adjust this value as needed */
+    right: -20px; /* Adjust this value as needed */
+  }
+  
+  

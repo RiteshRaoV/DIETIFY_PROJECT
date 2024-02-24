@@ -13,7 +13,9 @@
         <div class="container text-container">
             <h1 class="mb-4 gradient-text">Your personalized nutrition companion.</h1>
             <p class="mb-5 gradient-subtext">Personalized recipes for your plate, based on what you have and love to taste!</p>
-            <button type="button" class="btn btn-primary" onclick="location.href='signIn'">Get Started →</button>
+            <form th:action="@{/signIn}">
+                <button type="submit" class="btn btn-primary">Get Started →</button>
+            </form>
         </div>
     </div>
 </body>
