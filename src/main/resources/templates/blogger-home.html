@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blogs</title>
+</head>
+<body>
+    <h1>My Blogs</h1>
+    <ul>
+        <th:block th:each="blog : ${myBlogs}">
+            <li th:text="${blog.blogTitle}"></li>
+            <li th:text="${blog.status}"></li>
+        </th:block>
+    </ul>
+    <a th:href="@{/blogs/addBlogs}">Sign in</a></h5>
+</body>
+</html>

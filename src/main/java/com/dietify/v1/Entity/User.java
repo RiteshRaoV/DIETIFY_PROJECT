@@ -1,9 +1,14 @@
 package com.dietify.v1.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -21,6 +26,9 @@ public class User {
 	private String resetToken;
 	
 	private String role;
+
+	@OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL)
+	private List<Blog> blogs = new ArrayList<>();
 
 	public int getId() {
 		return id;
@@ -68,6 +76,14 @@ public class User {
 
 	public void setResetToken(String resetToken) {
 		this.resetToken = resetToken;
+	}
+
+	public List<Blog> getBlogs() {
+		return blogs;
+	}
+
+	public void setBlogs(List<Blog> blogs) {
+		this.blogs = blogs;
 	}
 
 }

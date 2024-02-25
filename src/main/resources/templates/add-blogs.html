@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Blog</title>
+</head>
+<body>
+    <h1>Add Blog</h1>
+    <form th:action="@{/blogs/save}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <label for="blogTitle">Blog Title:</label><br>
+        <input type="text" id="blogTitle" name="blogTitle" ><br>
+        <label for="blogContent">Blog Content:</label><br>
+        <textarea id="blogContent" name="blogContent" rows="4" cols="50" ></textarea><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
