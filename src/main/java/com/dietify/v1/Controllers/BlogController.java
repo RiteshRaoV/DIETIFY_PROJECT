@@ -1,6 +1,7 @@
 package com.dietify.v1.Controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/blogs")
@@ -30,8 +32,28 @@ public class BlogController {
     @Autowired
     private UserRepo userRepository;
 
-    @GetMapping("/approvedBlogs")
+    @GetMapping("/allBlogs")
     public String allBlogs(Model model) {
+        List<Blog> blogs = repo.findAll();
+        model.addAttribute("blogs", blogs);
+        return "allBlogs";
+    }
+
+    @PostMapping("/changeStatus")
+    public String changeBlogStatus(@RequestParam("blogId") int blogId, @RequestParam("status") String status) {
+        Optional<Blog> optionalBlog = repo.findById(blogId);
+        if (optionalBlog.isPresent()) {
+            Blog blog = optionalBlog.get();
+            blog.setStatus(status);
+            repo.save(blog);
+            return "redirect:/blogs/allBlogs";
+        } else {
+            return "redirect:/error";
+        }
+    }
+
+    @GetMapping("/approvedBlogs")
+    public String allApprovedBlogs(Model model) {
         List<Blog> approvedBlogs = repo.findByStatus("Approved");
         model.addAttribute("approvedBlogs", approvedBlogs);
         return "blogs";

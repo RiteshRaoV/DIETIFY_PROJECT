@@ -3,10 +3,11 @@
   <div class="nav-bar">
     <div class="nav-logo">DIETIFY</div>
     <div class="nav-links-container">
-      <a class="nav-link" href="#topSection" id="topLink">Home</a>
+      <a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="nav-link" th:href="@{/mealplanner/day}" id="topLink">Home</a>
+      <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-link" th:href="@{/admin/users}" id="topLink">Home</a>
       <a class="nav-link" href="#aboutSection" id="aboutLink">About Us</a>
       <a class="nav-link" href="#servicesSection" id="servicesLink">Survey</a>
-      <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-link" href="#servicesSection" id="servicesLink">addBlogs</a>
+      <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-link" th:href="@{/blogs/allBlogs}" id="servicesLink">allBlogs</a>
       <img class="nav-avatar" th:src="@{/admin.png}" alt="Avatar">
       <div class="dropdown-content">
         <a href="#">Profile</a>

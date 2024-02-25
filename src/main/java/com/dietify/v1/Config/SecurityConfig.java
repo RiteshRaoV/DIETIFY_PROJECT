@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .requestMatchers("/saveUser").permitAll() // Allow unauthenticated access to /saveUser
                 .requestMatchers("/mealplanner/**").hasRole("USER")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/blogs/**").hasAnyRole("BLOGGER")
+                .requestMatchers("/blogs/**").hasAnyRole("ADMIN","BLOGGER")
                 .requestMatchers("/**").permitAll()
                 .and()
             .formLogin()

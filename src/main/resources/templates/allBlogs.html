@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Blogs</title>
+</head>
+<body>
+    <header>
+        <div th:replace="fragments/newNav :: newBar"></div>
+    </header>
+    <h1>All Blogs</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="blog : ${blogs}">
+                <!-- <td th:text="${blog.user.id}"></td>
+                <td th:text="${blog.user.email}"></td>
+                <td th:text="${blog.user.name}"></td> -->
+                <td th:text="${blog.blogId}"></td>
+                <td th:text="${blog.blogTitle}"></td>
+                <td th:text="${blog.blogContent}"></td>
+                <td th:text="${blog.status}"></td>
+                <td>
+                    <form th:action="@{/blogs/changeStatus}" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <input type="hidden" name="blogId" th:value="${blog.blogId}" />
+                        <input type="hidden" name="status" value="Approved" />
+                        <button type="submit">Approve</button>
+                    </form>
+                    <form th:action="@{/blogs/changeStatus}" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <input type="hidden" name="blogId" th:value="${blog.blogId}" />
+                        <input type="hidden" name="status" value="Rejected" />
+                        <button type="submit">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
