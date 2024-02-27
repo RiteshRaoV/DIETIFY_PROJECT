@@ -65,7 +65,7 @@ body {
 
 .nav-link.active,
 .nav-link:hover {
-    font-size: 15px;
+    transform: scale(1.5);
 }
 
 /* Style for avatar */

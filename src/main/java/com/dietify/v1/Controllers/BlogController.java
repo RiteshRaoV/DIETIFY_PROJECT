@@ -1,5 +1,6 @@
 package com.dietify.v1.Controllers;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +35,8 @@ public class BlogController {
 
     @GetMapping("/allBlogs")
     public String allBlogs(Model model) {
-        List<Blog> blogs = repo.findAll();
-        model.addAttribute("blogs", blogs);
+        List<User> users = userRepository.findAll();
+        model.addAttribute("users", users);
         return "allBlogs";
     }
 
@@ -60,7 +61,7 @@ public class BlogController {
     }
 
     @GetMapping("/myBlogs")
-    public String myBlogs(Model model, HttpSession session) {
+    public String myBlogs(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
         User user = userRepository.findByEmail(userEmail);
@@ -79,7 +80,7 @@ public class BlogController {
     }
 
     @PostMapping("/save")
-    public String saveBlog(@ModelAttribute Blog blog, HttpSession session) {
+    public String saveBlog(@ModelAttribute Blog blog) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
 

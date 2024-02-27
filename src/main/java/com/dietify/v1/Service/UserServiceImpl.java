@@ -1,5 +1,7 @@
 package com.dietify.v1.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -60,6 +62,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void resetPassword(String email, String token, String newPassword) {
 		customUserDetailsService.resetPassword(email, token, newPassword);
+	}
+
+	@Override
+	public List<User> findAll() {
+		return userRepo.findAll();
 	}
 
 	
