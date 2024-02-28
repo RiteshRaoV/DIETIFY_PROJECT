@@ -66,9 +66,8 @@ public class SecurityConfig {
                 .and()
             .sessionManagement() // Configure session management
             .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)  // Create a new session for each request
-            .maximumSessions(1)                                  // Allow only one session per user (optional)
+            .maximumSessions(1) // Allow only one session per user (optional)
             .expiredUrl("/login?expired"); // Enable CSRF protection with HTTP-only cookie
         return http.build();
     }
-
 }

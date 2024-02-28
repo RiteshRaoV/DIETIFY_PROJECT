@@ -1,6 +1,5 @@
 package com.dietify.v1.Controllers;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +13,6 @@ import com.dietify.v1.Entity.Blog;
 import com.dietify.v1.Entity.User;
 import com.dietify.v1.Repository.BlogRepo;
 import com.dietify.v1.Repository.UserRepo;
-
-import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
