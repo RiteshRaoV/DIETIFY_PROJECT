@@ -1,241 +1,271 @@
-@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
 * {
     margin: 0;
     padding: 0;
-    outline: none;
-    font-family: "Poppins", sans-serif;
-}
-:root {
-    --primary: #eb4a35;
-    --secondary: #333;
-    --errorColor: red;
-    --stepNumber: 6;
-    --containerWidth: 600px;
-    --bgColor: #ffffff;
-    --inputBorderColor: rgb(136, 120, 120);
 }
 
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    overflow-x: hidden;
-    background: url("https://github.com/applescan/what-to-eat/blob/main/public/background-3.png?raw=true");
-}
-::selection {
-    color: #fff;
-    background: var(--primary);
-}
-.container {
-    width: var(--containerWidth);
-    background: #ffffff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 50px 35px 10px 35px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8); 
-}
-
-.container header {
-    font-size: 35px;
-    font-weight: 600;
-    margin: 0 0 30px 0;
-}
-.container .form-outer {
-    width: 100%;
+html {
+    height: 100%;
     overflow: hidden;
 }
-.container .form-outer form {
-    display: flex;
-    width: calc(100% * var(--stepNumber));
-}
-.form-outer form .page {
-    width: calc(100% / var(--stepNumber));
-    transition: margin-left 0.3s ease-in-out;
-}
-.form-outer form .page .title {
-    text-align: left;
-    font-size: 25px;
-    font-weight: 500;
-}
-.form-outer form .page .field {
-    width: var(--containerWidth);
-    height: 45px;
-    margin: 45px 0;
-    display: flex;
-    position: relative;
-}
-form .page .field .label {
-    position: absolute;
-    top: -30px;
-    font-weight: 500;
-}
-form .page .field input {
-    box-sizing: border-box;
-    height: 100%;
-    width: 100%;
-    border: 1px solid var(--inputBorderColor);
-    border-radius: 5px;
-    padding-left: 15px;
-    margin: 0 1px;
-    font-size: 18px;
-    transition: border-color 150ms ease;
-}
-form .page .field input.invalid-input {
-    border-color: var(--errorColor);
-}
-form .page .field select {
-    width: 100%;
-    padding-left: 10px;
-    font-size: 17px;
-    font-weight: 500;
-}
-form .page .field button {
-    width: 100%;
-    height: calc(100% + 5px);
-    border: none;
-    background: var(--secondary);
-    margin-top: -20px;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: 0.5s ease;
-}
-form .page .field button:hover {
-    background: #000;
-}
-form .page .btns button {
-    margin-top: -20px !important;
-}
-form .page .btns button.prev {
-    margin-right: 3px;
-    font-size: 17px;
-}
-form .page .btns button.next {
-    margin-left: 3px;
-}
-.container .progress-bar {
-    display: flex;
-    margin: 40px 0;
-    user-select: none;
-}
-.container .progress-bar .step {
-    text-align: center;
-    width: 100%;
-    position: relative;
-}
-.container .progress-bar .step p {
-    font-weight: 500;
-    font-size: 18px;
-    color: #000;
-    margin-bottom: 8px;
-}
-.progress-bar .step .bullet {
-    height: 25px;
-    width: 25px;
-    border: 2px solid #000;
-    display: inline-block;
-    border-radius: 50%;
-    position: relative;
-    transition: 0.2s;
-    font-weight: 500;
-    font-size: 17px;
-    line-height: 25px;
-}
-.progress-bar .step .bullet.active {
-    border-color: var(--primary);
-    background: var(--primary);
-}
-.progress-bar .step .bullet span {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-.progress-bar .step .bullet.active span {
-    display: none;
-}
-.progress-bar .step .bullet:before,
-.progress-bar .step .bullet:after {
-    position: absolute;
-    content: "";
-    bottom: 11px;
-    right: -125px;
-    height: 3px;
-    width: 125px;
-    background: #262626;
-}
-.progress-bar .step .bullet.active:after {
-    background: var(--primary);
-    transform: scaleX(0);
-    transform-origin: left;
-    animation: animate 0.3s linear forwards;
-}
-@keyframes animate {
-    100% {
-        transform: scaleX(1);
-    }
-}
-.progress-bar .step:last-child .bullet:before,
-.progress-bar .step:last-child .bullet:after {
-    display: none;
-}
-.progress-bar .step p.active {
-    color: var(--primary);
-    transition: 0.2s linear;
-}
-.progress-bar .step .check {
-    position: absolute;
-    left: 50%;
-    top: 70%;
-    font-size: 15px;
-    transform: translate(-50%, -50%);
-    display: none;
-}
-.progress-bar .step .check.active {
-    display: block;
-    color: #fff;
+
+/*Background color*/
+#grad1 {
+    background: url("/background-2.gif");
+    margin-top: 30px;
+    height: 100vh;
+    padding-top: 125px;
+    padding-left: 75px;
+    
 }
 
-@media screen and (max-width: 660px) {
-    :root {
-        --containerWidth: 400px;
-    }
-    .progress-bar .step p {
-        display: none;
-    }
-    .progress-bar .step .bullet::after,
-    .progress-bar .step .bullet::before {
-        display: none;
-    }
-    .progress-bar .step .bullet {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .progress-bar .step .check {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        font-size: 15px;
-        transform: translate(-50%, -50%);
-        display: none;
-    }
-    .step {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+/*form styles*/
+#msform {
+    text-align: center;
+    position: relative;
+    margin-top: 10px;
+    
 }
-@media screen and (max-width: 490px) {
-    :root {
-        --containerWidth: 100%;
-    }
-    .container {
-        box-sizing: border-box;
-        border-radius: 0;
-    }
+
+#msform fieldset .form-card {
+    background: white;
+    border: 0 none;
+    border-radius: 0px;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.1);
+    padding: 20px 40px 30px 40px;
+    box-sizing: border-box;
+    width: 94%;
+    margin: 0 3% 20px 3%;
+
+    /*stacking fieldsets above each other*/
+    position: relative;
+}
+
+#msform fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    
+    width: 100%;
+    margin: 0;
+    padding-bottom: 20px;
+
+    /*stacking fieldsets above each other*/
+    position: relative;
+}
+
+
+/*Hide all except first fieldset*/
+#msform fieldset:not(:first-of-type) {
+    display: none;
+}
+
+#msform fieldset .form-card {
+    text-align: left;
+    color: #9E9E9E;
+}
+
+#msform input, #msform textarea {
+    padding: 0px 8px 4px 8px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    margin-bottom: 25px;
+    margin-top: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+#msform input:focus, #msform textarea:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: none;
+    font-weight: bold;
+    border-bottom: 2px solid skyblue;
+    outline-width: 0;
+}
+
+/*Blue Buttons*/
+#msform .action-button {
+    width: 100px;
+    background: skyblue;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 7px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+.submitbtn{
+    width: 100px;
+    background: rgb(226, 10, 10);
+    /* font-weight: bold; */
+    color: white;
+    border: 0 none;
+    border-radius: 7px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+
+#msform .action-button:hover, #msform .action-button:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue;
+}
+
+/*Previous Buttons*/
+#msform .action-button-previous {
+    width: 100px;
+    background: #616161;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 7px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+
+#msform .action-button-previous:hover, #msform .action-button-previous:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #616161;
+}
+
+/*Dropdown List Exp Date*/
+select.list-dt {
+    border: none;
+    outline: 0;
+    border-bottom: 1px solid #ccc;
+    padding: 2px 5px 3px 5px;
+    margin: 2px;
+}
+
+select.list-dt:focus {
+    border-bottom: 2px solid skyblue;
+}
+
+/*The background card*/
+.card {
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.1);
+    z-index: 0;
+    border: none;
+    border-radius: 0.5rem;
+    position: relative;
+    border: 5px solid black;
+}
+
+/*FieldSet headings*/
+.fs-title {
+    font-size: 25px;
+    color: #2C3E50;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: left;
+}
+
+/*progressbar*/
+#progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    color: lightgrey;
+}
+
+#progressbar .active {
+    color: #000000;
+}
+
+#progressbar li {
+    list-style-type: none;
+    font-size: 12px;
+    width: 25%;
+    float: left;
+    position: relative;
+}
+
+/*Icons in the ProgressBar*/
+#progressbar #account:before {
+    font-family: FontAwesome;
+    content: "\f023";
+}
+
+#progressbar #personal:before {
+    font-family: FontAwesome;
+    content: "\f007";
+}
+
+#progressbar #payment:before {
+    font-family: FontAwesome;
+    content: "\f09d";
+}
+
+#progressbar #confirm:before {
+    font-family: FontAwesome;
+    content: "\f00c";
+}
+
+/*ProgressBar before any progress*/
+#progressbar li:before {
+    width: 50px;
+    height: 50px;
+    line-height: 45px;
+    display: block;
+    font-size: 18px;
+    color: #ffffff;
+    background: lightgray;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    padding: 2px;
+}
+
+/*ProgressBar connectors*/
+#progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: lightgray;
+    position: absolute;
+    left: 0;
+    top: 25px;
+    z-index: -1;
+}
+
+/*Color number of the step and the connector before it*/
+#progressbar li.active:before, #progressbar li.active:after {
+    background: skyblue;
+}
+
+/*Imaged Radio Buttons*/
+.radio-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.radio {
+    display:inline-block;
+    width: 204;
+    height: 104;
+    border-radius: 0;
+    background: lightblue;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    cursor:pointer;
+    margin: 8px 2px; 
+}
+
+.radio:hover {
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.radio.selected {
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+/*Fit image in bootstrap div*/
+.fit-image{
+    width: 100%;
+    object-fit: cover;
 }

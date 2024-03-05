@@ -8,11 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.dietify.v1.DTO.Formdata;
 import com.dietify.v1.DTO.Day.Day;
 import com.dietify.v1.DTO.Day.DayResponse;
 import com.dietify.v1.DTO.Week.Week;
@@ -31,20 +34,17 @@ public class MealController {
 	@Value("${apikey}")
 	private String apiKey;
 
-	@GetMapping("/day")
-	public String getDayMeals(Model model,
-			HttpSession session,
-			@RequestParam Optional<String> targetCalories,
-			@RequestParam Optional<String> diet,
-			@RequestParam Optional<String> exclusions) {
+	@PostMapping("/day")
+	public String getDayMeals(@ModelAttribute Formdata formdata, Model model,
+			HttpSession session) {
 		if (session.getAttribute("dayResponse") == null) {
 			RestTemplate rt = new RestTemplate();
 
 			URI uri = UriComponentsBuilder.fromHttpUrl(baseURL)
 					.queryParam("timeFrame", "day")
-					.queryParamIfPresent("targetCalories", targetCalories)
-					.queryParamIfPresent("diet", diet)
-					.queryParamIfPresent("exclude", exclusions)
+					.queryParamIfPresent("targetCalories", Optional.ofNullable(formdata.getTargetCalories()))
+					.queryParamIfPresent("diet", Optional.ofNullable(formdata.getDiet()))
+					.queryParamIfPresent("exclude", Optional.ofNullable(formdata.getExclude()))
 					.queryParam("apiKey", apiKey)
 					.build()
 					.toUri();
@@ -59,12 +59,9 @@ public class MealController {
 						meal.setSourceUrl(imageURL);
 					});
 				}
-				session.setAttribute("dayResponse", dayResponse);
 				model.addAttribute("dayResponse", dayResponse);
 			}
-		} else {
-			DayResponse dayResponse = (DayResponse) session.getAttribute("dayResponse");
-			model.addAttribute("dayResponse", dayResponse);
+			return "day-list";
 		}
 		return "day-list";
 	}

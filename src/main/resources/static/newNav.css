@@ -49,26 +49,26 @@ body {
 .nav-links-container {
     position: absolute;
     top: 50%;
-    right: 3%;
+    right: 2.5%;
     transform: translateY(-50%);
 }
 
-.nav-link {
+.nav-linkbar {
     color: #ffffff;
     font-size: 13px;
     text-transform: uppercase;
     cursor: pointer;
     font-weight: 500;
-    padding: 0 10px;
+    padding: 0 12px;
     transition: 0.4s ease;
 }
 
-.nav-link.active,
-.nav-link:hover {
-    transform: scale(1.5);
+.nav-linkbar.active,
+.nav-linkbar:hover {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
 }
 
-/* Style for avatar */
 .nav-avatar {
     width: 25px; /* Adjust the width and height as needed */
     height: 25px;
@@ -112,5 +112,4 @@ body {
     top: 20px; /* Adjust this value as needed */
     right: -20px; /* Adjust this value as needed */
   }
-  
   

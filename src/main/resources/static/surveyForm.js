@@ -1,83 +1,96 @@
-initMultiStepForm();
 
-function initMultiStepForm() {
-    const progressNumber = document.querySelectorAll(".step").length;
-    const slidePage = document.querySelector(".slide-page");
-    const submitBtn = document.querySelector(".submit");
-    const progressText = document.querySelectorAll(".step p");
-    const progressCheck = document.querySelectorAll(".step .check");
-    const bullet = document.querySelectorAll(".step .bullet");
-    const pages = document.querySelectorAll(".page");
-    const nextButtons = document.querySelectorAll(".next");
-    const prevButtons = document.querySelectorAll(".prev");
-    const stepsNumber = pages.length;
+document.getElementById('timeFrame').addEventListener('change', function() {
+    var selectedValue = this.value;
+    document.getElementById('msform').action = '/mealplanner/' + selectedValue;
+});
 
-    if (progressNumber !== stepsNumber) {
-        console.warn(
-            "Error, number of steps in progress bar do not match number of pages"
-        );
-    }
 
-    document.documentElement.style.setProperty("--stepNumber", stepsNumber);
 
-    let current = 1;
+document.addEventListener("DOMContentLoaded", function(){
+var current_fs, next_fs, previous_fs; // fieldsets
+var opacity;
+var userData = {};
 
-    for (let i = 0; i < nextButtons.length; i++) {
-        nextButtons[i].addEventListener("click", function (event) {
-            event.preventDefault();
+document.querySelectorAll(".next").forEach(function(nextBtn){
+    nextBtn.addEventListener("click", function(){
+        current_fs = this.parentElement;
+        next_fs = this.parentElement.nextElementSibling;
 
-            inputsValid = validateInputs(this);
-            // inputsValid = true;
-
-            if (inputsValid) {
-                slidePage.style.marginLeft = `-${
-                    (100 / stepsNumber) * current
-                }%`;
-                bullet[current - 1].classList.add("active");
-                progressCheck[current - 1].classList.add("active");
-                progressText[current - 1].classList.add("active");
-                current += 1;
+        // Add Class Active
+        document.querySelectorAll("#progressbar li")[Array.prototype.indexOf.call(document.querySelectorAll("fieldset"), next_fs)].classList.add("active");
+        document.querySelectorAll("fieldset").forEach(function(fs){
+            if (fs !== next_fs) {
+                fs.style.display = "none";
             }
         });
-    }
 
-    for (let i = 0; i < prevButtons.length; i++) {
-        prevButtons[i].addEventListener("click", function (event) {
-            event.preventDefault();
-            slidePage.style.marginLeft = `-${
-                (100 / stepsNumber) * (current - 2)
-            }%`;
-            bullet[current - 2].classList.remove("active");
-            progressCheck[current - 2].classList.remove("active");
-            progressText[current - 2].classList.remove("active");
-            current -= 1;
+        ///
+        var inputs = next_fs.querySelectorAll("input, select");
+        inputs.forEach(function(input){
+            userData[input.id] = input.value;
         });
-    }
-    submitBtn.addEventListener("click", function () {
-        bullet[current - 1].classList.add("active");
-        progressCheck[current - 1].classList.add("active");
-        progressText[current - 1].classList.add("active");
-        current += 1;
-        setTimeout(function () {
-            alert("Your Form Successfully Signed up");
-            location.reload();
-        }, 800);
+        console.log(userData);
+
+        // Show the next fieldset
+        next_fs.style.display = "block";
+
+        // to store user nputs
+        
+
+        // Hide the current fieldset with style
+        var animationInterval = setInterval(function(){
+            if (opacity >= 1){
+                clearInterval(animationInterval);
+            }
+            opacity += 0.1;
+            current_fs.style.opacity = 1 - opacity;
+            next_fs.style.opacity = opacity;
+        }, 60);
     });
+});
 
-    function validateInputs(ths) {
-        let inputsValid = true;
+document.querySelectorAll(".previous").forEach(function(prevBtn){
+    prevBtn.addEventListener("click", function(){
+        current_fs = this.parentElement;
+        previous_fs = this.parentElement.previousElementSibling;
 
-        const inputs =
-            ths.parentElement.parentElement.querySelectorAll("input");
-        for (let i = 0; i < inputs.length; i++) {
-            const valid = inputs[i].checkValidity();
-            if (!valid) {
-                inputsValid = false;
-                inputs[i].classList.add("invalid-input");
-            } else {
-                inputs[i].classList.remove("invalid-input");
+        // Remove class active
+        document.querySelectorAll("#progressbar li")[Array.prototype.indexOf.call(document.querySelectorAll("fieldset"), current_fs)].classList.remove("active");
+
+        document.querySelectorAll("fieldset").forEach(function(fs){
+            if (fs !== previous_fs) {
+                fs.style.display = "none";
             }
-        }
-        return inputsValid;
-    }
-}
+        });
+
+        // Show the previous fieldset
+        previous_fs.style.display = "block";
+
+        // Hide the current fieldset with style
+        var animationInterval = setInterval(function(){
+            if (opacity >= 1){
+                clearInterval(animationInterval);
+            }
+            opacity += 0.1;
+            current_fs.style.opacity = 1 - opacity;
+            previous_fs.style.opacity = opacity;
+        }, 60);
+    });
+});
+
+document.querySelectorAll(".radio-group .radio").forEach(function(radio){
+    radio.addEventListener("click", function(){
+        this.parentElement.querySelectorAll(".radio").forEach(function(radio){
+            radio.classList.remove("selected");
+        });
+        this.classList.add("selected");
+    });
+});
+
+document.querySelectorAll(".submit").forEach(function(submitBtn){
+    submitBtn.addEventListener("click", function(){
+        return false;
+    });
+});
+
+});
