@@ -35,11 +35,11 @@ public class MealController {
 	private String apiKey;
 
 	@PostMapping("/day")
-	public String getDayMeals(@ModelAttribute Formdata formdata, Model model,
-			HttpSession session) {
-		if (session.getAttribute("dayResponse") == null) {
+	public String getDayMeals(@ModelAttribute Formdata formdata, Model model, HttpSession session) {
+		DayResponse dayResponse = (DayResponse) session.getAttribute("dayResponse");
+		if (dayResponse == null) {
 			RestTemplate rt = new RestTemplate();
-
+	
 			URI uri = UriComponentsBuilder.fromHttpUrl(baseURL)
 					.queryParam("timeFrame", "day")
 					.queryParamIfPresent("targetCalories", Optional.ofNullable(formdata.getTargetCalories()))
@@ -48,11 +48,10 @@ public class MealController {
 					.queryParam("apiKey", apiKey)
 					.build()
 					.toUri();
-			System.out.println(uri.toString());
-
+	
 			ResponseEntity<DayResponse> response = rt.getForEntity(uri, DayResponse.class);
 			if (response.getStatusCode().is2xxSuccessful()) {
-				DayResponse dayResponse = response.getBody();
+				dayResponse = response.getBody();
 				if (dayResponse != null && dayResponse.getMeals() != null) {
 					dayResponse.getMeals().forEach(meal -> {
 						int id = meal.getId();
@@ -60,12 +59,13 @@ public class MealController {
 						meal.setSourceUrl(imageURL);
 					});
 				}
-				model.addAttribute("dayResponse", dayResponse);
+				session.setAttribute("dayResponse", dayResponse);
 			}
-			return "day-list";
 		}
+		model.addAttribute("dayResponse", dayResponse);
 		return "day-list";
 	}
+	
 
 	@GetMapping("/week")
 	public String getWeekMeals(Model model,
