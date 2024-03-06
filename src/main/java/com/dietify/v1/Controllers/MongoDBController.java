@@ -47,12 +47,12 @@ public class MongoDBController {
             ObjectMapper objectMapper = new ObjectMapper();
             String dayResponseJson = objectMapper.writeValueAsString(dayResponse);
 
-            dayResponseJson = dayResponseJson.replaceAll("\\s", "");
+            //dayResponseJson = dayResponseJson.replaceAll("\\s", "");
 
-            Document existingData = mongoTemplate.findOne(new Query(Criteria.where("data").is(dayResponseJson)), Document.class, "mealPlans");
-            if (existingData != null) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Data already exists.");
-            }
+            // Document existingData = mongoTemplate.findOne(new Query(Criteria.where("data").is(dayResponseJson)), Document.class, "mealPlans");
+            // if (existingData != null) {
+            //     return ResonseEntity.status(HttpStatus.CONFLICT).body("Data already exists.");
+            // }
 
             Document document = Document.parse(dayResponseJson);
 
