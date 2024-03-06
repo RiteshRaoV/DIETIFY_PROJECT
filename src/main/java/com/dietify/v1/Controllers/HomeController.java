@@ -3,7 +3,6 @@ package com.dietify.v1.Controllers;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,10 +52,6 @@ public class HomeController {
 
 	@PostMapping("/saveUser")
 	public String saveUser(@ModelAttribute User user, HttpSession session, Model m) {
-		if (userService.existsByEmail(user.getEmail())) {
-			session.setAttribute("msg", "Email address already exists");
-			return "redirect:/signUp";
-		}
 		User savedUser = userService.saveUser(user);
 
 		if (savedUser != null) {
@@ -65,7 +60,6 @@ public class HomeController {
 		} else {
 			session.setAttribute("msg", "Something went wrong on the server");
 		}
-
 		return "redirect:/signUp";
 	}
 
@@ -77,21 +71,22 @@ public class HomeController {
 	@PostMapping("/verify")
 	public String register(@RequestParam String email,HttpSession session){
 		if (userService.existsByEmail(email)) {
-			session.setAttribute("msg", "Email address already exists");
+			session.setAttribute("message", "Email address already exists");
 			return "redirect:/verify";
 		}
 		else{
 			userService.initiateMailValidation(email);
-			session.setAttribute("msg", "Verification link sent to your email id");
+			session.setAttribute("message", "Verification link sent to your email id");
 			return "redirect:/verify";
 		}
 	}
 
-	@GetMapping("/register")
+	@GetMapping("/verifyEmail")
 	public String register(@RequestParam("token")String token,Model model,HttpSession session){
 		User user = userService.findUserByResetToken(token);
 		if( user!= null){
 			model.addAttribute("email",user.getEmail());
+			model.addAttribute("token", token); 
 			return "signUp";
 		}else{
 			session.setAttribute("msg", "error while validating your email");
@@ -108,7 +103,6 @@ public class HomeController {
 		} else {
 			session.setAttribute("message", "email does'nt exist");
 			return "redirect:/forgot-password";
-
 		}
 	}
 
@@ -132,7 +126,7 @@ public class HomeController {
 	public String resetPassword(@RequestParam("email") String email, @RequestParam("token") String token,
 			@RequestParam("password") String password) {
 		userService.resetPassword(email, token, password);
-		return "redirect:/signIn"; // Redirect to login page after password reset
+		return "redirect:/signIn"; 
 	}
 
 }

@@ -35,27 +35,33 @@
             </div>
           </section>
           <section class='signin-section'>
-            <h2>Sign In</h2>
+            <h2>Verify email</h2>
             <div class='signin-card'>
-              <div class="errorClass">
-                <p th:if="${param.error}" class="text-center text-danger fs-5" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></p>
-              </div>
-              <form th:action="userLogin" method="post">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <label>Email</label>
-                <input type="email"  name="username" required/>
-                <label>Password</label>
-                <div class="password-container">
-                  <span class="forgot-pass"><a th:href="@{/forgot-password}">forgot password?</a></span>
-                  <input type="password"  name="password" required/>
+                <div class="errorClass">
+                    <!-- Display session message if present -->
+                    <span th:text="${session.message}"></span>
                 </div>
-                <button type="submit">Sign In</button>
-              </form>
-              <div class='signin-card-footer'>
-                <h5>Don't have an account? <a th:href="@{/verify}">Get started</a></h5>
+                <form th:action="verify" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <label>Email</label>
+                    <input type="email" name="email" required/>
+                    <button type="submit">Send verification Link</button>
+                </form>
+                <div class='signin-card-footer'>
+                    <h5>Already an user? <a th:href="@{/signIn}">Sign in</a></h5>
+                </div>
             </div>
-            </div>
-          </section>
+            <script th:inline="javascript">
+                setTimeout(function() {
+                    var errorClass = document.querySelector('.errorClass');
+                    if (errorClass) {
+                        errorClass.innerHTML = ''; 
+                    }
+                }, 5000); 
+            </script>
+        </section>
+        
+        
         </div>
         <div class='left-shape'></div>
         <div class='right-shape'></div>

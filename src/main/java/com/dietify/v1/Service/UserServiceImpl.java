@@ -45,15 +45,20 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(User user) {
-
-		String password = passwordEncoder.encode(user.getPassword());
-		user.setPassword(password);
-		user.setRole("ROLE_USER");
-		user.setResetToken(null);
-		User newuser = userRepo.save(user);
-
-		return newuser;
+		String email = user.getEmail();
+		String token = user.getResetToken();
+		User existingUser = userRepo.findByEmailAndResetToken(email, token);
+		if (existingUser != null) {
+			String encodedPassword = passwordEncoder.encode(user.getPassword());
+			existingUser.setName(user.getName());
+			existingUser.setPassword(encodedPassword);
+			existingUser.setResetToken(null);
+			userRepo.save(existingUser);
+			return existingUser; 
+		}
+		return null; 
 	}
+	
 
 	@Override
 	public void initiatePasswordReset(String email) {
@@ -83,6 +88,8 @@ public class UserServiceImpl implements UserService {
 		user.setRole("ROLE_USER");
         userRepo.save(user);
     }
+
+	
 
 	
 

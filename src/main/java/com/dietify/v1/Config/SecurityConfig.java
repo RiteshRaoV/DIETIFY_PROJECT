@@ -42,7 +42,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .requestMatchers("/saveUser").permitAll() // Allow unauthenticated access to /saveUser
+                .requestMatchers("/saveUser","/register","/verify").permitAll() // Allow unauthenticated access to /saveUser
                 .requestMatchers("/mealplanner/**","/formpage").hasRole("USER")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/blogs/**").hasAnyRole("ADMIN","BLOGGER")
