@@ -47,6 +47,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 		}
 	}
 
+	public void initiateMailValidation(String email){
+		String verificationToken = generateResetToken();
+		User user = new User();
+        user.setEmail(email);
+        user.setResetToken(verificationToken);
+		user.setRole("ROLE_USER");
+        userRepo.save(user);
+		sendVerificationMail(email, verificationToken);
+	}
+
 	public void resetPassword(String email, String token, String newPassword) {
 		User user = userRepo.findByEmailAndResetToken(email, token);
 		if (user != null) {
@@ -65,6 +75,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 		String resetLink = "http://localhost:1111/reset?token=" + token;
 		String subject = "Reset Your Password";
 		String body = "To reset your password, click the following link: " + resetLink;
+		emailService.sendEmail(email, subject, body);
+	}
+
+	private void sendVerificationMail(String email, String token) {
+		String resetLink = "http://localhost:1111/verifyEmail?token=" + token;
+		String subject = "Verify your email";
+		String body = "To verify your email, click the following link: " + resetLink;
 		emailService.sendEmail(email, subject, body);
 	}
 

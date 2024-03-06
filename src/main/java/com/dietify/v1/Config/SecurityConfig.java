@@ -64,10 +64,10 @@ public class SecurityConfig {
             .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
-            .sessionManagement() // Configure session management
-            .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)  // Create a new session for each request
-            .maximumSessions(1) // Allow only one session per user (optional)
-            .expiredUrl("/login?expired"); // Enable CSRF protection with HTTP-only cookie
+            .sessionManagement() 
+            .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) 
+            .maximumSessions(1) 
+            .expiredUrl("/login?expired");
         return http.build();
     }
 }

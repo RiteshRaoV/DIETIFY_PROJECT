@@ -47,7 +47,7 @@ public class HomeController {
 	}
 
 	@GetMapping("/signUp")
-	public String resgister() {
+	public String signUp() {
 		return "signUp";
 	}
 
@@ -69,13 +69,42 @@ public class HomeController {
 		return "redirect:/signUp";
 	}
 
+	@GetMapping("/verify")
+	public String verify(){
+		return "verify";
+	}
+
+	@PostMapping("/verify")
+	public String register(@RequestParam String email,HttpSession session){
+		if (userService.existsByEmail(email)) {
+			session.setAttribute("msg", "Email address already exists");
+			return "redirect:/verify";
+		}
+		else{
+			userService.initiateMailValidation(email);
+			session.setAttribute("msg", "Verification link sent to your email id");
+			return "redirect:/verify";
+		}
+	}
+
+	@GetMapping("/register")
+	public String register(@RequestParam("token")String token,Model model,HttpSession session){
+		User user = userService.findUserByResetToken(token);
+		if( user!= null){
+			model.addAttribute("email",user.getEmail());
+			return "signUp";
+		}else{
+			session.setAttribute("msg", "error while validating your email");
+			return "signUp";
+		}
+	}
+
 	@PostMapping("/forgot-password")
 	public String forgotPassword(@RequestParam String email, HttpSession session) {
 		if (userService.existsByEmail(email)) {
 			userService.initiatePasswordReset(email);
 			session.setAttribute("message", "Link sent to your email");
 			return "redirect:/forgot-password";
-
 		} else {
 			session.setAttribute("message", "email does'nt exist");
 			return "redirect:/forgot-password";
@@ -90,13 +119,11 @@ public class HomeController {
 
 	@GetMapping("/reset")
 	public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
-		// Find user by reset token
 		User user = userService.findUserByResetToken(token);
 		if (user != null) {
 			model.addAttribute("email", user.getEmail());
 			return "reset_password";
 		} else {
-			// Handle invalid token (optional)
 			return "reset_password";
 		}
 	}

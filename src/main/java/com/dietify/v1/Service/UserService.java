@@ -17,6 +17,10 @@ public interface UserService {
 
 	public void initiatePasswordReset(String email);
 
+	public void initiateMailValidation(String email);
+
+	public void saveUserWithEmailAndToken(String email, String verificationToken);
+
 	public User findUserByResetToken(String token);
 
 	public List<User> findAll();

@@ -48,6 +48,7 @@ public class MealController {
 					.queryParam("apiKey", apiKey)
 					.build()
 					.toUri();
+			System.out.println(uri.toString());
 
 			ResponseEntity<DayResponse> response = rt.getForEntity(uri, DayResponse.class);
 			if (response.getStatusCode().is2xxSuccessful()) {

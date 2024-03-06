@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
 		String password = passwordEncoder.encode(user.getPassword());
 		user.setPassword(password);
 		user.setRole("ROLE_USER");
+		user.setResetToken(null);
 		User newuser = userRepo.save(user);
 
 		return newuser;
@@ -68,6 +69,20 @@ public class UserServiceImpl implements UserService {
 	public List<User> findAll() {
 		return userRepo.findAll();
 	}
+
+	@Override
+	public void initiateMailValidation(String email) {
+		customUserDetailsService.initiateMailValidation(email);
+	}
+
+	@Override
+	public void saveUserWithEmailAndToken(String email, String verificationToken) {
+        User user = new User();
+        user.setEmail(email);
+        user.setResetToken(verificationToken);
+		user.setRole("ROLE_USER");
+        userRepo.save(user);
+    }
 
 	
 
