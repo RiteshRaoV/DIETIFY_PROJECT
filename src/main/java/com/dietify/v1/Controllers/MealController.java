@@ -1,5 +1,6 @@
 package com.dietify.v1.Controllers;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ import com.dietify.v1.DTO.Day.Day;
 import com.dietify.v1.DTO.Day.DayResponse;
 import com.dietify.v1.DTO.Week.Week;
 import com.dietify.v1.DTO.Week.WeekResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -36,65 +38,65 @@ public class MealController {
 
 	@PostMapping("/day")
 	public String getDayMeals(@ModelAttribute Formdata formdata, Model model, HttpSession session) {
-		DayResponse dayResponse = (DayResponse) session.getAttribute("dayResponse");
-		if (dayResponse == null) {
-			RestTemplate rt = new RestTemplate();
-	
-			URI uri = UriComponentsBuilder.fromHttpUrl(baseURL)
-					.queryParam("timeFrame", "day")
-					.queryParamIfPresent("targetCalories", Optional.ofNullable(formdata.getTargetCalories()))
-					.queryParamIfPresent("diet", Optional.ofNullable(formdata.getDiet()))
-					.queryParamIfPresent("exclude", Optional.ofNullable(formdata.getExclude()))
-					.queryParam("apiKey", apiKey)
-					.build()
-					.toUri();
-	
-			ResponseEntity<DayResponse> response = rt.getForEntity(uri, DayResponse.class);
-			if (response.getStatusCode().is2xxSuccessful()) {
-				dayResponse = response.getBody();
-				if (dayResponse != null && dayResponse.getMeals() != null) {
-					dayResponse.getMeals().forEach(meal -> {
-						int id = meal.getId();
-						String imageURL = "https://spoonacular.com/recipeImages/" + id + "-312x231.jpg";
-						meal.setSourceUrl(imageURL);
-					});
-				}
-				session.setAttribute("dayResponse", dayResponse);
+		session.removeAttribute("dayResponse");
+
+		RestTemplate rt = new RestTemplate();
+
+		URI uri = UriComponentsBuilder.fromHttpUrl(baseURL)
+				.queryParam("timeFrame", "day")
+				.queryParamIfPresent("targetCalories", Optional.ofNullable(formdata.getTargetCalories()))
+				.queryParamIfPresent("diet", Optional.ofNullable(formdata.getDiet()))
+				.queryParamIfPresent("exclude", Optional.ofNullable(formdata.getExclude()))
+				.queryParam("apiKey", apiKey)
+				.build()
+				.toUri();
+
+		ResponseEntity<DayResponse> response = rt.getForEntity(uri, DayResponse.class);
+		if (response.getStatusCode().is2xxSuccessful()) {
+			DayResponse dayResponse = response.getBody();
+			if (dayResponse != null && dayResponse.getMeals() != null) {
+				dayResponse.getMeals().forEach(meal -> {
+					int id = meal.getId();
+					String imageURL = "https://spoonacular.com/recipeImages/" + id + "-312x231.jpg";
+					meal.setSourceUrl(imageURL);
+				});
 			}
+			session.setAttribute("dayResponse", dayResponse);
 		}
-		model.addAttribute("dayResponse", dayResponse);
+
+		model.addAttribute("dayResponse", response.getBody());
 		return "day-list";
 	}
-	
 
-	@GetMapping("/week")
-	public String getWeekMeals(Model model,
-			@RequestParam(required = false) String targetCalories,
-			@RequestParam(required = false) String diet,
-			@RequestParam(required = false) String exclusions) {
+	@PostMapping("/week")
+	public String getWeekMeals(@ModelAttribute Formdata formdata,Model model) {
 
 		RestTemplate restTemplate = new RestTemplate();
 
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseURL)
 				.queryParam("timeFrame", "week")
-				.queryParamIfPresent("targetCalories", Optional.ofNullable(targetCalories))
-				.queryParamIfPresent("diet", Optional.ofNullable(diet))
-				.queryParamIfPresent("exclude", Optional.ofNullable(exclusions))
+				.queryParamIfPresent("targetCalories", Optional.ofNullable(formdata.getTargetCalories()))
+				.queryParamIfPresent("diet", Optional.ofNullable(formdata.getDiet()))
+				.queryParamIfPresent("exclude",Optional.ofNullable(formdata.getExclude()))
 				.queryParam("apiKey", apiKey)
 				.build()
 				.toUri();
 
-		ResponseEntity<WeekResponse> responseEntity = restTemplate.getForEntity(uri, WeekResponse.class);
-		if (responseEntity.getStatusCode().is2xxSuccessful()) {
-			WeekResponse weekResponse = responseEntity.getBody();
-			if (weekResponse != null && weekResponse.getWeek() != null) {
-				updateMealSourceUrls(weekResponse.getWeek());
-			}
-			model.addAttribute("weekResponse", weekResponse);
+				
+				String jsonResponse = restTemplate.getForObject(uri, String.class);
+		// ResponseEntity<WeekResponse> responseEntity = restTemplate.getForEntity(uri, WeekResponse.class);
 
-		}
-		return "week-list";
-
+		 String jsonString = jsonResponse; // JSON string containing the response data
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            WeekResponse weekresponse = objectMapper.readValue(jsonString, WeekResponse.class);
+		updateMealSourceUrls(weekresponse.getWeek());
+            model.addAttribute("weekresponse", weekresponse);
+			return "weeklist";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		return "errorpage";
 	}
 
 	private void updateMealSourceUrls(Week week) {
@@ -102,7 +104,9 @@ public class MealController {
 				week.getThursday(), week.getFriday(), week.getSaturday(), week.getSunday() };
 		for (Day day : days) {
 			if (day != null) {
+				
 				day.getMeals().forEach(meal -> {
+					System.out.println("---------------"+meal);
 					int id = meal.getId();
 					String imageURL = "https://spoonacular.com/recipeImages/" + id + "-312x231.jpg";
 					meal.setSourceUrl(imageURL);
