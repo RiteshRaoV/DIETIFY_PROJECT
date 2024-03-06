@@ -16,6 +16,7 @@ body {
 }
 
 
+
 .nav-bar {
     position: fixed;
     z-index: 100;
@@ -86,6 +87,7 @@ body {
   /* Style for dropdown container */
   .dropdown-content {
     display: none; /* Initially hide the dropdown content */
+
     position: absolute;
     background-color: #f9f9f9;
     min-width: 120px;
@@ -110,6 +112,6 @@ body {
   /* Position dropdown content */
   .dropdown-content {
     top: 20px; /* Adjust this value as needed */
-    right: -20px; /* Adjust this value as needed */
+    right: -30px; /* Adjust this value as needed */
   }
   

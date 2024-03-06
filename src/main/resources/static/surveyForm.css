@@ -26,6 +26,13 @@ html {
     
 }
 
+.myform{
+    min-height: 390px;
+} 
+.form-card{
+    min-height: 170px;
+}
+
 #msform fieldset .form-card {
     background: white;
     border: 0 none;
@@ -63,7 +70,9 @@ html {
 #msform fieldset .form-card {
     text-align: left;
     color: #9E9E9E;
+    /* min-height: 150px; */
 }
+
 
 #msform input, #msform textarea {
     padding: 0px 8px 4px 8px;
@@ -156,7 +165,9 @@ select.list-dt:focus {
     border-radius: 0.5rem;
     position: relative;
     border: 5px solid black;
+    
 }
+
 
 /*FieldSet headings*/
 .fs-title {
@@ -235,7 +246,7 @@ select.list-dt:focus {
 
 /*Color number of the step and the connector before it*/
 #progressbar li.active:before, #progressbar li.active:after {
-    background: skyblue;
+    background: #e53935;
 }
 
 /*Imaged Radio Buttons*/
