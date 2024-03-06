@@ -1,14 +1,12 @@
 package com.dietify.v1.Service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.dietify.v1.Config.CustomUserDetailsService;
 import com.dietify.v1.Entity.User;
 import com.dietify.v1.Repository.UserRepo;
 
@@ -20,7 +18,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepo userRepo;
 	@Autowired
-	private CustomUserDetailsService customUserDetailsService;
+	private EmailService emailService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -31,8 +29,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findUserByResetToken(String token) {
-        return userRepo.findByResetToken(token);
-    }
+		return userRepo.findByResetToken(token);
+	}
 
 	@Override
 	public void removeSessionMessage() {
@@ -54,43 +52,56 @@ public class UserServiceImpl implements UserService {
 			existingUser.setPassword(encodedPassword);
 			existingUser.setResetToken(null);
 			userRepo.save(existingUser);
-			return existingUser; 
+			return existingUser;
 		}
-		return null; 
+		return null;
 	}
-	
+
+	@Override
+	public void saveUserWithEmailAndToken(String email, String verificationToken) {
+		User user = new User();
+		user.setEmail(email);
+		user.setResetToken(verificationToken);
+		user.setRole("ROLE_USER");
+		userRepo.save(user);
+	}
 
 	@Override
 	public void initiatePasswordReset(String email) {
-		customUserDetailsService.initiatePasswordReset(email);
+		User user = userRepo.findByEmail(email);
+		if (user != null) {
+			String resetToken = emailService.generateResetToken();
+			user.setResetToken(resetToken);
+			userRepo.save(user);
+			emailService.sendResetPasswordEmail(user.getEmail(), resetToken);
+		}
+	}
+
+	@Override
+	public void initiateMailValidation(String email) {
+		String verificationToken = emailService.generateResetToken();
+		User user = new User();
+		user.setEmail(email);
+		user.setResetToken(verificationToken);
+		user.setRole("ROLE_USER");
+		userRepo.save(user);
+		emailService.sendVerificationMail(email, verificationToken);
 	}
 
 	@Override
 	public void resetPassword(String email, String token, String newPassword) {
-		customUserDetailsService.resetPassword(email, token, newPassword);
+		User user = userRepo.findByEmailAndResetToken(email, token);
+		if (user != null) {
+			String password = passwordEncoder.encode(newPassword);
+			user.setPassword(password);
+			user.setResetToken(null);
+			userRepo.save(user);
+		}
 	}
 
 	@Override
 	public List<User> findAll() {
 		return userRepo.findAll();
 	}
-
-	@Override
-	public void initiateMailValidation(String email) {
-		customUserDetailsService.initiateMailValidation(email);
-	}
-
-	@Override
-	public void saveUserWithEmailAndToken(String email, String verificationToken) {
-        User user = new User();
-        user.setEmail(email);
-        user.setResetToken(verificationToken);
-		user.setRole("ROLE_USER");
-        userRepo.save(user);
-    }
-
-	
-
-	
 
 }
