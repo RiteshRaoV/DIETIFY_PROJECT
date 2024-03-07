@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>User Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/profile.css}">
+    <link href="https://fonts.googleapis.com/css?family=Muli%7CRoboto:400,300,500,700,900" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div th:replace="~{fragments/newNav :: newBar}"></div>
+    </header>
+
+    <div><p>Welcome <span th:text="${user.name}"></span></p></div>
+    <main class="flex">
+        <div class="card">
+            <h2>Day Plan</h2>
+            <p>I’m an aspiring web developer who loves everything about the web. I've lived in lots of different places
+                and have worked in lots of different jobs. I’m excited to bring my life experience to the process of
+                building fantastic looking websites.</p>
+            <p>I'm a life-long learner who's always interested in expanding my skills.</p>
+        </div>
+
+        <div class="card">
+            <h2>Week Plan</h2>
+            <p>I want to master the process of building web sites and increase my knowledge, skills and abilities in:
+            </p>
+            <ul class="skills">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>ExpressJS</li>
+                <li>ReactJS</li>
+            </ul>
+            <p>I’d like to work for a web development firm helping clients create an impressive online presence.</p>
+        </div>
+
+    </main>
+
+</body>
+
+</html>
