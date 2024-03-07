@@ -40,9 +40,9 @@ public class HomeController {
 		return "home";
 	}
 
-	@GetMapping(value = {"/signin", "/signIn"})
+	@GetMapping(value = { "/signin", "/signIn" })
 	public String signIn() {
-    	return "signIn";
+		return "signIn";
 	}
 
 	@GetMapping("/signUp")
@@ -64,17 +64,16 @@ public class HomeController {
 	}
 
 	@GetMapping("/verify")
-	public String verify(){
+	public String verify() {
 		return "verify";
 	}
 
 	@PostMapping("/verify")
-	public String register(@RequestParam String email,HttpSession session){
+	public String register(@RequestParam String email, HttpSession session) {
 		if (userService.existsByEmail(email)) {
 			session.setAttribute("message", "Email address already exists");
 			return "redirect:/verify";
-		}
-		else{
+		} else {
 			userService.initiateMailValidation(email);
 			session.setAttribute("message", "Verification link sent to your email id");
 			return "redirect:/verify";
@@ -82,13 +81,13 @@ public class HomeController {
 	}
 
 	@GetMapping("/verifyEmail")
-	public String register(@RequestParam("token")String token,Model model,HttpSession session){
+	public String register(@RequestParam("token") String token, Model model, HttpSession session) {
 		User user = userService.findUserByResetToken(token);
-		if( user!= null){
-			model.addAttribute("email",user.getEmail());
-			model.addAttribute("token", token); 
+		if (user != null) {
+			model.addAttribute("email", user.getEmail());
+			model.addAttribute("token", token);
 			return "signUp";
-		}else{
+		} else {
 			session.setAttribute("msg", "error while validating your email");
 			return "signUp";
 		}
@@ -126,7 +125,18 @@ public class HomeController {
 	public String resetPassword(@RequestParam("email") String email, @RequestParam("token") String token,
 			@RequestParam("password") String password) {
 		userService.resetPassword(email, token, password);
-		return "redirect:/signIn"; 
+		return "redirect:/signIn";
+	}
+
+	@GetMapping("/profile")
+	public String viewProfile(Model model, HttpSession session) {
+		// Retrieve the user object from the session
+		User user = (User) session.getAttribute("user");
+
+		// Add the user object as a model attribute
+		model.addAttribute("user", user);
+
+		return "profile";
 	}
 
 }
