@@ -27,7 +27,7 @@ public class CustomAuthSucessHandler implements AuthenticationSuccessHandler {
 			response.sendRedirect("/blogs/myBlogs");
 		} 
 		else {
-			response.sendRedirect("/formpage");
+			response.sendRedirect("/landing");
 		}
 
 	}
