@@ -50,7 +50,7 @@ body {
 .nav-links-container {
     position: absolute;
     top: 50%;
-    right: 2.5%;
+    right: 4%;
     transform: translateY(-50%);
 }
 
@@ -74,6 +74,7 @@ body {
     width: 25px; /* Adjust the width and height as needed */
     height: 25px;
     top: -25%;
+    right: -12%;
     border-radius: 50%; 
     cursor: pointer; 
     position: absolute; 
@@ -103,10 +104,8 @@ body {
     display: block;
   }
   
-  /* Show dropdown content on hover */
-  .nav-avatar:hover + .dropdown-content,
-  .dropdown-content:hover {
-    display: block;
+  .dropdown-content {
+    display: none;
   }
   
   /* Position dropdown content */

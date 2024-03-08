@@ -46,7 +46,6 @@ public class MealController {
 				.queryParam("timeFrame", "day")
 				.queryParamIfPresent("targetCalories", Optional.ofNullable(formdata.getTargetCalories()))
 				.queryParamIfPresent("diet", Optional.ofNullable(formdata.getDiet()))
-				.queryParamIfPresent("exclude", Optional.ofNullable(formdata.getExclude()))
 				.queryParam("apiKey", apiKey)
 				.build()
 				.toUri();
@@ -77,7 +76,6 @@ public class MealController {
 				.queryParam("timeFrame", "week")
 				.queryParamIfPresent("targetCalories", Optional.ofNullable(formdata.getTargetCalories()))
 				.queryParamIfPresent("diet", Optional.ofNullable(formdata.getDiet()))
-				.queryParamIfPresent("exclude",Optional.ofNullable(formdata.getExclude()))
 				.queryParam("apiKey", apiKey)
 				.build()
 				.toUri();

@@ -6,7 +6,7 @@ public class Formdata {
         private String timeFrame;
         private int targetCalories;
         private String diet;
-        private String exclude;
+        
     
         // Getter and setter for timeFrame
         public String getTimeFrame() {
@@ -36,13 +36,6 @@ public class Formdata {
         }
     
         // Getter and setter for exclude
-        public String getExclude() {
-            return exclude;
-        }
-    
-        public void setExclude(String exclude) {
-            this.exclude = exclude;
-        }
-    
+       
     
 }
