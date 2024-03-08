@@ -5,11 +5,11 @@
     <div class="nav-links-container">
       <a class="nav-linkbar" href="#topSection" id="topLink">Home</a>
       <a class="nav-linkbar" href="#aboutSection" id="aboutLink">About Us</a>
-      <a class="nav-linkbar" href="#servicesSection" id="servicesLink">Survey</a>
+      <a class="nav-linkbar" th:href="@{/formpage}" id="survey">Survey</a>
       <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-linkbar" href="#servicesSection" id="servicesLink">addBlogs</a>
       <img class="nav-avatar" th:src="@{/admin.png}" alt="Avatar">
       <div class="dropdown-content">
-        <a th:href="@{/profile}">Profile</a>
+        <a th:href="@{/userprofile}">Profile</a>
         <a th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
         <form id="logout-form" action="#" th:action="@{/logout}" method="post" style="display: none;">
           <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />

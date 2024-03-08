@@ -13,11 +13,10 @@ import com.dietify.v1.DTO.RecipeDetails.AnalyzedInstruction;
 import com.dietify.v1.DTO.RecipeDetails.ExtendedIngredient;
 import com.dietify.v1.DTO.RecipeDetails.Recipe;
 
-
 @RestController
 public class RecipeController {
 
-    @Value("${apikey}") 
+    @Value("${apikey}")
     private String apiKey;
 
     private final RestTemplate restTemplate;
