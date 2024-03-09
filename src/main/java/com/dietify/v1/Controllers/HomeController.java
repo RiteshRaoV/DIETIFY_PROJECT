@@ -129,16 +129,17 @@ public class HomeController {
 		return "redirect:/signIn";
 	}
 
-	@GetMapping("/profile")
-	public String viewProfile(Model model, HttpSession session) {
+	@GetMapping("/userprofile")
+	public String viewProfile(Principal p, Model m) {
 		// Retrieve the user object from the session
-		User user = (User) session.getAttribute("user");
-
-		// Add the user object as a model attribute
-		model.addAttribute("user", user);
-
+		if (p != null) {
+			String email = p.getName();
+			User user = userRepo.findByEmail(email);
+			m.addAttribute("user", user.getName());
+		}
 		return "profile";
 	}
+
 
 
 

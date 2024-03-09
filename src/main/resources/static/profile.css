@@ -1,4 +1,5 @@
 /* Global Layout Set-up */
+<<<<<<< HEAD
 * { 
     box-sizing: border-box;
   }
@@ -184,3 +185,104 @@
   
   }
   
+=======
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  color: #222;
+  background: #f7f5f0;
+}
+
+/* Link Styles */
+a {
+  text-decoration: none;
+  color: #999;
+}
+
+a:hover {
+  color: #6633ff;
+}
+
+/* Section Styles */
+header {
+  text-align: center;
+  background: url('https://placeimg.com/1000/989/arch') no-repeat top center;
+  background-size: cover;
+  overflow: hidden;
+  padding-top: 60px;
+  line-height: 1.5;
+}
+
+header .profile-image {
+  margin-top: 50px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid white;
+  transition: all .5s;
+}
+
+header .profile-image:hover {
+  transform: scale(1.2) rotate(5deg);
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  /* Enable wrapping for smaller screens */
+  justify-content: space-around;
+  padding: 20px 50px;
+}
+
+.card {
+  flex: 1;
+  /* Each card takes equal width */
+  margin: 10px;
+  /* Adjust margin for spacing */
+  padding: 20px 40px 40px;
+  text-align: left;
+  background: #fff;
+  border-bottom: 4px solid #ccc;
+  border-radius: 6px;
+  transition: all .5s;
+}
+
+.card:hover {
+  border-color: #ff99ff;
+}
+
+.card h2 {
+  text-align: center;
+}
+
+/* @media queries for responsiveness */
+@media screen and (max-width: 768px) {
+  header .profile-image {
+    width: 100px;
+    /* Adjust profile image size for smaller screens */
+    height: 100px;
+  }
+
+  main {
+    flex-direction: column;
+    /* Stack cards vertically on smaller screens */
+    align-items: center;
+    /* Center cards on smaller screens */
+  }
+
+  .card {
+    flex: 0 1 100%;
+    /* Fix card width and limit to 80% of the screen width */
+    min-width: 300px;
+    /* Limit card width for smaller screens */
+    margin: 10px auto;
+    /* Center cards on smaller screens */
+  }
+}
+>>>>>>> d00462cefe5a5d38c8a524e5068260efdc782fbc

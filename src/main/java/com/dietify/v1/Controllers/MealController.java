@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -68,7 +66,7 @@ public class MealController {
 	}
 
 	@PostMapping("/week")
-	public String getWeekMeals(@ModelAttribute Formdata formdata,Model model) {
+	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model) {
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -80,20 +78,20 @@ public class MealController {
 				.build()
 				.toUri();
 
-				
-				String jsonResponse = restTemplate.getForObject(uri, String.class);
-		// ResponseEntity<WeekResponse> responseEntity = restTemplate.getForEntity(uri, WeekResponse.class);
+		String jsonResponse = restTemplate.getForObject(uri, String.class);
+		// ResponseEntity<WeekResponse> responseEntity = restTemplate.getForEntity(uri,
+		// WeekResponse.class);
 
-		 String jsonString = jsonResponse; // JSON string containing the response data
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            WeekResponse weekresponse = objectMapper.readValue(jsonString, WeekResponse.class);
-		updateMealSourceUrls(weekresponse.getWeek());
-            model.addAttribute("weekresponse", weekresponse);
+		String jsonString = jsonResponse; // JSON string containing the response data
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			WeekResponse weekresponse = objectMapper.readValue(jsonString, WeekResponse.class);
+			updateMealSourceUrls(weekresponse.getWeek());
+			model.addAttribute("weekresponse", weekresponse);
 			return "weeklist";
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return "errorpage";
 	}
 
@@ -102,9 +100,9 @@ public class MealController {
 				week.getThursday(), week.getFriday(), week.getSaturday(), week.getSunday() };
 		for (Day day : days) {
 			if (day != null) {
-				
+
 				day.getMeals().forEach(meal -> {
-					System.out.println("---------------"+meal);
+					System.out.println("---------------" + meal);
 					int id = meal.getId();
 					String imageURL = "https://spoonacular.com/recipeImages/" + id + "-312x231.jpg";
 					meal.setSourceUrl(imageURL);
