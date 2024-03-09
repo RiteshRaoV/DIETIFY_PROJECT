@@ -1,44 +1,64 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeLeaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meal Plan</title>
-    <link rel="stylesheet" th:href="@{/day-list.css}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meal Plan</title>
+  <link rel="stylesheet" th:href="@{/day-list.css}">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
+
 <body>
   <header>
     <div th:replace="fragments/newNav :: newBar"></div>
   </header>
-        <div class="heading">
-          <h1 class="heading_1"> Here is delicious recipes  </h1>
-          <h1 class="heading_2">suggestion based on your </h1>
-          <h1 class="heading_3">dietary preferences</h1>
-        </div>
-        <div class="page-container">
-          <div class="row">
-            <div class="column-3" th:each="meal : ${dayResponse.meals}">
-              <div class="recipe-card">
-                <div class="recipe-image">
-                  <img th:src="${meal.sourceUrl}" th:alt="${meal.title}">
-                </div>
-                <div class="recipe-top">
-                  <h1 th:text="${meal.title}"></h1>
-                </div>
-                <div class="recipe-bottom3">
-                  <div class="recipe-info">Servings: <span th:text="${meal.servings}"></span></div>
-                  <div class="recipe-info">Total Time: <span th:text="${meal.readyInMinutes}"></span></div>
-                  <a th:href="@{/recipe/details}" class="button3">VIEW RECIPE 🍳</a>
-                </div>
-                
-              </div>
-            </div>
+  <div class="heading">
+    <h1 class="heading_1">Here are delicious recipes</h1>
+    <h1 class="heading_2">suggestions based on your</h1>
+    <h1 class="heading_3">dietary preferences</h1>
+  </div>
+  <div class="page-container">
+    <div class="row">
+      <div class="column-3" th:each="meal : ${dayResponse.meals}">
+        <div class="recipe-card">
+          <div class="recipe-image">
+            <img th:src="${meal.sourceUrl}" th:alt="${meal.title}">
           </div>
-        <form th:action="@{/mongodb/store}" method="post">
-          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-          <button type="submit">Save Day Response</button>
-      </form>
+          <div class="recipe-top">
+            <h1 th:text="${meal.title}"></h1>
+          </div>
+          <div class="recipe-bottom3">
+            <div class="recipe-info">Servings: <span th:text="${meal.servings}"></span></div>
+            <div class="recipe-info">Total Time: <span th:text="${meal.readyInMinutes}"></span></div>
+            <a th:href="@{/recipe/details}" class="button3">VIEW RECIPE 🍳</a>
+          </div>
         </div>
+      </div>
+    </div>
+    <form th:action="@{/mongodb/store}" method="post" id="saveForm">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+      <button type="button" onclick="showPopup()">Save Day Response</button>
+      <div id="popup" style="display: none;">
+        <input type="text" id="userText" name="userText">
+        <button type="submit">Save</button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Popup -->
+  <!-- <div id="popup" style="display: none;">
+        <label for="userText">Enter Text:</label>
+        <input type="text" id="userText" name="userText" th:value="${dayResponse.userText}" >
+        <button type="submit">Save</button>
+    </div> -->
+
+  <script>
+    function showPopup() {
+      $('#popup').show();
+    }
+  </script>
 </body>
+
 </html>

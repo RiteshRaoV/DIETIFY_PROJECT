@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dietify.v1.DTO.Day.DayResponse;
+import com.dietify.v1.DTO.Week.WeekResponse;
 import com.dietify.v1.Entity.User;
 import com.dietify.v1.Repository.UserRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +29,7 @@ public class MongoDBController {
     private MongoTemplate mongoTemplate;
 
     @PostMapping("/mongodb/store")
-    public ResponseEntity<String> storeDataToMongoDB(HttpSession session) {
+    public ResponseEntity<String> storeDataToMongoDB(@RequestParam String userText, HttpSession session) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userEmail = authentication.getName();
@@ -58,6 +59,44 @@ public class MongoDBController {
             Document document = Document.parse(dayResponseJson);
 
             document.append("userID", user.getId());
+            document.append("title", userText);
+            document.append("type", "day");
+
+            mongoTemplate.save(document, "mealPlans");
+
+            return ResponseEntity.ok().body("Data stored successfully for user " + user.getId());
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid JSON format.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error storing data.");
+        }
+    }
+
+    @PostMapping("/mongodb/store-week")
+    public ResponseEntity<String> storeWeekDataToMongoDB(@RequestParam String userText, HttpSession session) {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String userEmail = authentication.getName();
+            User user = userRepository.findByEmail(userEmail);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+            }
+
+            WeekResponse weekResponse = (WeekResponse) session.getAttribute("weekResponse");
+            if (weekResponse == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No week response data found in session.");
+            }
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String weekResponseJson = objectMapper.writeValueAsString(weekResponse);
+
+            Document document = Document.parse(weekResponseJson);
+
+            document.append("userID", user.getId());
+            document.append("title", userText);
+            document.append("type", "week");
 
             mongoTemplate.save(document, "mealPlans");
 

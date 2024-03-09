@@ -66,7 +66,7 @@ public class MealController {
 	}
 
 	@PostMapping("/week")
-	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model) {
+	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model,HttpSession session) {
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -87,6 +87,7 @@ public class MealController {
 		try {
 			WeekResponse weekresponse = objectMapper.readValue(jsonString, WeekResponse.class);
 			updateMealSourceUrls(weekresponse.getWeek());
+			session.setAttribute("weekResponse",weekresponse);
 			model.addAttribute("weekresponse", weekresponse);
 			return "weeklist";
 		} catch (IOException e) {
