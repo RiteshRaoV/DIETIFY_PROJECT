@@ -62,7 +62,10 @@ public class MealController {
 			}
 			session.setAttribute("dayResponse", dayResponse);
 		}
-
+		int calories=formdata.getTargetCalories();
+		String diet=formdata.getDiet();
+		model.addAttribute("calories",calories);
+		model.addAttribute("Diet",diet);
 		model.addAttribute("dayResponse", response.getBody());
 		return "day-list";
 	}
@@ -90,7 +93,11 @@ public class MealController {
             WeekResponse weekresponse = objectMapper.readValue(jsonString, WeekResponse.class);
 		updateMealSourceUrls(weekresponse.getWeek());
             model.addAttribute("weekresponse", weekresponse);
-			return "weeklist";
+			int calories=formdata.getTargetCalories();
+		String diet=formdata.getDiet();
+		model.addAttribute("calories",calories);
+		model.addAttribute("Diet",diet);
+			return "weekList";
         } catch (IOException e) {
             e.printStackTrace();
         }

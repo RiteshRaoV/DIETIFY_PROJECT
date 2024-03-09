@@ -117,3 +117,22 @@ header{
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* styling for weeklist */
+.calendar{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.week{
+  background-color: #e53935;
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+h2{
+  text-align: center;
+}
