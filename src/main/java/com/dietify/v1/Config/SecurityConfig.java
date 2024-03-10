@@ -41,7 +41,7 @@ public class SecurityConfig {
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
+            .authorizeHttpRequests()
                 .requestMatchers("/saveUser","/register","/verify").permitAll() // Allow unauthenticated access to /saveUser
                 .requestMatchers("/mealplanner/**","/formpage").hasRole("USER")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
