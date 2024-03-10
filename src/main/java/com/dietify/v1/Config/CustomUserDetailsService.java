@@ -3,14 +3,10 @@ package com.dietify.v1.Config;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.dietify.v1.Entity.User;
 import com.dietify.v1.Repository.UserRepo;
-import com.dietify.v1.Service.EmailService;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Component

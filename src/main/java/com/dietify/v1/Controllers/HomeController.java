@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dietify.v1.Entity.User;
@@ -130,16 +129,13 @@ public class HomeController {
 	}
 
 	@GetMapping("/profile")
-	public String viewProfile(Model model, HttpSession session) {
-		// Retrieve the user object from the session
-		User user = (User) session.getAttribute("user");
+	public String viewProfile(Model model, Principal p) {
 
-		// Add the user object as a model attribute
+		String email = p.getName();
+		User user = userRepo.findByEmail(email);
 		model.addAttribute("user", user);
 
 		return "profile";
 	}
-
-
 
 }

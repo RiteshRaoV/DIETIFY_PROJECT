@@ -4,8 +4,6 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParseException;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -46,13 +44,6 @@ public class MongoDBController {
 
             ObjectMapper objectMapper = new ObjectMapper();
             String dayResponseJson = objectMapper.writeValueAsString(dayResponse);
-
-            //dayResponseJson = dayResponseJson.replaceAll("\\s", "");
-
-            // Document existingData = mongoTemplate.findOne(new Query(Criteria.where("data").is(dayResponseJson)), Document.class, "mealPlans");
-            // if (existingData != null) {
-            //     return ResonseEntity.status(HttpStatus.CONFLICT).body("Data already exists.");
-            // }
 
             Document document = Document.parse(dayResponseJson);
 
