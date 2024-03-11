@@ -7,6 +7,9 @@
     <link rel="stylesheet" th:href="@{/day-list.css}">
 </head>
 <body>
+  <header>
+    <div th:replace="fragments/newNav :: newBar"></div>
+  </header>
     <h2>Meals of the week</h2>
     <div class="calendar">
         <button class="week" onclick="showDays('week1')">Monday</button>
