@@ -1,9 +1,12 @@
 package com.dietify.v1.Controllers;
 
+import java.util.List;
+
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParseException;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -13,12 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dietify.v1.DTO.DatabaseResponse;
 import com.dietify.v1.DTO.Day.DayResponse;
 import com.dietify.v1.DTO.Week.WeekResponse;
 import com.dietify.v1.Entity.User;
 import com.dietify.v1.Repository.UserRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.data.mongodb.core.query.Query;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -45,16 +50,6 @@ public class MongoDBController {
 
             ObjectMapper objectMapper = new ObjectMapper();
             String dayResponseJson = objectMapper.writeValueAsString(dayResponse);
-
-            // dayResponseJson = dayResponseJson.replaceAll("\\s", "");
-
-            // Document existingData = mongoTemplate.findOne(new
-            // Query(Criteria.where("data").is(dayResponseJson)), Document.class,
-            // "mealPlans");
-            // if (existingData != null) {
-            // return ResonseEntity.status(HttpStatus.CONFLICT).body("Data already
-            // exists.");
-            // }
 
             Document document = Document.parse(dayResponseJson);
 
@@ -111,8 +106,11 @@ public class MongoDBController {
     }
 
     @GetMapping("/mongodb/fetch")
-    public ResponseEntity<String> fetchDataFromMongoDB(@RequestParam String userID) {
-        String data = mongoTemplate.findAll(String.class, "mealPlans").toString();
+    public ResponseEntity<DatabaseResponse> fetchDataFromMongoDB(@RequestParam int userId) {
+        Query query = new Query(Criteria.where("userId").is(userId));
+        query.fields().include("data").include("title");
+        DatabaseResponse data = new DatabaseResponse();
+        data.setData(mongoTemplate.find(query, Object.class, "mealPlans"));
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }
