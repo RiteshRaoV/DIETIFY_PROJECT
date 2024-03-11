@@ -30,7 +30,11 @@
                 <div class="recipe-bottom3">
                   <div class="recipe-info">Servings: <span th:text="${meal.servings}"></span></div>
                   <div class="recipe-info">Total Time: <span th:text="${meal.readyInMinutes}"></span></div>
-                  <a th:href="@{/recipe/details}" class="button3">VIEW RECIPE 🍳</a>
+                  <!-- <a th:href="@{/recipe}" class="button3">VIEW RECIPE 🍳</a> -->
+                  <form action="#" th:action="@{/recipe}" th:object="${meal.id}" method="post">
+                    <input type="hidden" th:name="recipeid" th:value="${meal.id}" />
+                    <button type="submit" class="button3">VIEW RECIPE 🍳</button>
+                  </form>
                 </div>
                 
               </div>
