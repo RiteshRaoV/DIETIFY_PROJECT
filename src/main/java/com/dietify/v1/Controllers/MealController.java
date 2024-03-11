@@ -35,35 +35,80 @@ public class MealController {
 
 	@PostMapping("/day")
 	public String getDayMeals(@ModelAttribute Formdata formdata, Model model, HttpSession session) {
-		session.removeAttribute("dayResponse");
+		// session.removeAttribute("dayResponse");
 
-		RestTemplate rt = new RestTemplate();
+		// RestTemplate rt = new RestTemplate();
 
-		URI uri = UriComponentsBuilder.fromHttpUrl(baseURL)
-				.queryParam("timeFrame", "day")
-				.queryParamIfPresent("targetCalories", Optional.ofNullable(formdata.getTargetCalories()))
-				.queryParamIfPresent("diet", Optional.ofNullable(formdata.getDiet()))
-				.queryParam("apiKey", apiKey)
-				.build()
-				.toUri();
+		// URI uri = UriComponentsBuilder.fromHttpUrl(baseURL)
+		// .queryParam("timeFrame", "day")
+		// .queryParamIfPresent("targetCalories",
+		// Optional.ofNullable(formdata.getTargetCalories()))
+		// .queryParamIfPresent("diet", Optional.ofNullable(formdata.getDiet()))
+		// .queryParam("apiKey", apiKey)
+		// .build()
+		// .toUri();
 
-		ResponseEntity<DayResponse> response = rt.getForEntity(uri, DayResponse.class);
-		if (response.getStatusCode().is2xxSuccessful()) {
-			DayResponse dayResponse = response.getBody();
-			if (dayResponse != null && dayResponse.getMeals() != null) {
-				dayResponse.getMeals().forEach(meal -> {
-					int id = meal.getId();
-					String imageURL = "https://spoonacular.com/recipeImages/" + id + "-312x231.jpg";
-					meal.setSourceUrl(imageURL);
-				});
-			}
-			session.setAttribute("dayResponse", dayResponse);
+		// ResponseEntity<DayResponse> response = rt.getForEntity(uri,
+		// DayResponse.class);
+		// if (response.getStatusCode().is2xxSuccessful()) {
+		// DayResponse dayResponse = response.getBody();
+		// if (dayResponse != null && dayResponse.getMeals() != null) {
+		// dayResponse.getMeals().forEach(meal -> {
+		// int id = meal.getId();
+		// String imageURL = "https://spoonacular.com/recipeImages/" + id +
+		// "-312x231.jpg";
+		// meal.setSourceUrl(imageURL);
+		// });
+		// }
+		// session.setAttribute("dayResponse", dayResponse);
+		// }
+		// int calories = formdata.getTargetCalories();
+		// String diet = formdata.getDiet();
+		// model.addAttribute("calories", calories);
+		// model.addAttribute("Diet", diet);
+		// model.addAttribute("dayResponse", response.getBody());
+		String jsonString = "{\n" + //
+				"    \"meals\": [\n" + //
+				"        {\n" + //
+				"            \"id\": 649824,\n" + //
+				"            \"imageType\": \"jpg\",\n" + //
+				"            \"title\": \"Lemon Zucchini Muffins\",\n" + //
+				"            \"readyInMinutes\": 45,\n" + //
+				"            \"servings\": 10,\n" + //
+				"            \"sourceUrl\": \"https://spoonacular.com/recipeImages/649824-312x231.jpg\"\n" + //
+				"        },\n" + //
+				"        {\n" + //
+				"            \"id\": 642777,\n" + //
+				"            \"imageType\": \"jpg\",\n" + //
+				"            \"title\": \"Fig and Goat Cheese Pizza With Pesto\",\n" + //
+				"            \"readyInMinutes\": 15,\n" + //
+				"            \"servings\": 6,\n" + //
+				"            \"sourceUrl\": \"https://spoonacular.com/recipeImages/642777-312x231.jpg\"\n" + //
+				"        },\n" + //
+				"        {\n" + //
+				"            \"id\": 648460,\n" + //
+				"            \"imageType\": \"jpg\",\n" + //
+				"            \"title\": \"Japanese Chicken Donburi\",\n" + //
+				"            \"readyInMinutes\": 45,\n" + //
+				"            \"servings\": 4,\n" + //
+				"            \"sourceUrl\": \"https://spoonacular.com/recipeImages/648460-312x231.jpg\"\n" + //
+				"        }\n" + //
+				"    ],\n" + //
+				"    \"nutrients\": {\n" + //
+				"        \"calories\": 1966.51,\n" + //
+				"        \"protein\": 55.7,\n" + //
+				"        \"fat\": 59.33,\n" + //
+				"        \"carbohydrates\": 296.93\n" + //
+				"    }\n" + //
+				"}";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			DayResponse dayResponse = mapper.readValue(jsonString, DayResponse.class);
+			model.addAttribute("dayResponse", dayResponse);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		int calories = formdata.getTargetCalories();
-		String diet = formdata.getDiet();
-		model.addAttribute("calories", calories);
-		model.addAttribute("Diet", diet);
-		model.addAttribute("dayResponse", response.getBody());
 		return "day-list";
 	}
 
