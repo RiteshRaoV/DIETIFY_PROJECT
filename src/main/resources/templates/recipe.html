@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipes</title>
+    <link rel="stylesheet" th:href="@{/recipestyle.css}">
+</head>
+<body>
+    <header>
+        <div th:replace="fragments/newNav :: newBar"></div>
+      </header>
+   
+    <div class="parentdiv">
+
+  
+    
+        <div>
+            
+             <h3 class="firsth3" th:text="${'servings: '+recipe.getServings()}"></h3>
+            <h3 th:text="${'Readyinminutes: '+recipe.getReadyInMinutes()}"></h3>
+            <img th:src="${recipe.getImage()}" class="recipeimg" >
+            <!-- <img th:src="${recipe.getImage()}"  style="max-width: 200px; height: auto;"> -->
+            <!-- <p>Servings: <span th:text="${recipe.servings}"></span></p>
+            <p>Ready in minutes: <span th:text="${recipe.readyInMinutes}"></span></p> -->
+
+        </div>
+        <div class="tablediv">
+            <h4>Ingredients</h4>
+            
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Unit</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ingredient : ${recipe.extendedIngredients}">
+                    <td th:text="${ingredient.name}"></td>
+                    <td th:text="${ingredient.amount}"></td>
+                    <td th:text="${ingredient.unit}"></td>
+                    <!-- <td><img th:src="${ingredient.image}" th:alt="${ingredient.name}" style="max-width: 50px; height: auto;"></td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+        
+        <div th:each="instruction : ${recipe.analyzedInstructions}"class="instructions">
+            
+            <h3 th:text="${instruction.name}"></h3>
+            <ol>
+                <li th:each="step : ${instruction.steps}">
+                    <div>
+                        <!-- <p th:text="${step.number + '. ' + step.step}"></p> -->
+                        <p th:text="${ step.step}"></p>
+                        <ul>
+                            <li th:each="ingredient : ${step.ingredients}">
+                                <!-- <img th:src="${ingredient.image}" th:alt="${ingredient.name}" style="max-width: 50px; height: auto;"> -->
+                                <span th:text="${ingredient.name}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+
+    
+</body>
+</html>
