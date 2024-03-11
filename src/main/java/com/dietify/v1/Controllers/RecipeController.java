@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class RecipeController {
 
-    @Value("${apikey}") 
+    @Value("${apikey}")
     private String apiKey;
 
     private final RestTemplate restTemplate;

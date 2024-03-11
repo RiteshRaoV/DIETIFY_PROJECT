@@ -4,7 +4,7 @@ document.getElementById('timeFrame').addEventListener('change', function() {
     document.getElementById('msform').action = '/mealplanner/' + selectedValue;
 });
 
-
+document.getElementById('targetCalories').defaultValue="2000"
 
 document.addEventListener("DOMContentLoaded", function(){
 var current_fs, next_fs, previous_fs; // fieldsets

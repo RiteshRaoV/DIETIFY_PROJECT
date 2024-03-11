@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeLeaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" th:href="@{/day-list.css}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meal Plan</title>
+  <link rel="stylesheet" th:href="@{/day-list.css}">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
+
 <body>
   <header>
     <div th:replace="fragments/newNav :: newBar"></div>
@@ -34,10 +36,32 @@
               </div>
             </div>
           </div>
-        <form th:action="@{/mongodb/store}" method="post">
-          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-          <button type="submit">Save Day Response</button>
-      </form>
         </div>
+      </div>
+    </div>
+    <form th:action="@{/mongodb/store}" method="post" id="saveForm">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+      <button type="button" onclick="showPopup()">Save Day Response</button>
+      <div id="popup" style="display: none;">
+        <input type="text" id="userText" name="userText">
+        <button type="submit">Save</button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Popup -->
+  <!-- <div id="popup" style="display: none;">
+        <label for="userText">Enter Text:</label>
+        <input type="text" id="userText" name="userText" th:value="${dayResponse.userText}" >
+        <button type="submit">Save</button>
+    </div> -->
+
+  <script>
+    function showPopup() {
+      $('#popup').show();
+    }
+  </script>
 </body>
+
 </html>
