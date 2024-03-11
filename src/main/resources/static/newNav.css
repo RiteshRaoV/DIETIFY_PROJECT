@@ -8,14 +8,17 @@ a {
 
 body {
     overflow-x: hidden;
-    font-family: "Roboto";
     font-size: 14px;
     line-height: 18px;
     letter-spacing: 2px;
     font-weight: 400;
 }
 
-
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
 
 .nav-bar {
     position: fixed;
@@ -24,9 +27,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    padding: 0 6%;
-    background-color: #e53935;
-    /* opacity: 0.5; */
+    background-color: white;
 }
 
 .nav-bar.scrolled {
@@ -35,16 +36,12 @@ body {
 }
 
 .nav-logo {
-    position: absolute;
-    top: 50%;
-    left: 1%;
-    transform: translateY(-50%);
-    font-family: "Montserrat";
-    font-size: 24px;
-    letter-spacing: 0px;
-    color: rgb(255, 255, 255);
-    transition: 0.4s ease;
-    cursor: pointer;
+    /* 
+    leftposition: relative; */
+    height: 50px;
+    margin-left:10px;
+    
+    
 }
 
 .nav-links-container {
@@ -55,7 +52,7 @@ body {
 }
 
 .nav-linkbar {
-    color: #ffffff;
+    color: #0c0c0c;
     font-size: 13px;
     text-transform: uppercase;
     cursor: pointer;
@@ -68,8 +65,8 @@ body {
 .nav-linkbar.active,
 .nav-linkbar:hover {
     text-decoration: none;
-    color: rgb(255, 255, 255);
-    border-bottom: 1px solid white;
+    color: rgb(238, 87, 0);
+    border-bottom: 1px solid rgb(255, 119, 0);
     transition: 0.3s;
 }
 

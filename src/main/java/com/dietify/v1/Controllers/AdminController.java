@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.dietify.v1.Entity.User;
 import com.dietify.v1.Repository.UserRepo;
 
-
-
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {

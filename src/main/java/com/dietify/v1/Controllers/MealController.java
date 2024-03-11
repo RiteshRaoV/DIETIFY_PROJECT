@@ -113,7 +113,7 @@ public class MealController {
 	}
 
 	@PostMapping("/week")
-	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model) {
+	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model,HttpSession session) {
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -126,18 +126,17 @@ public class MealController {
 				.toUri();
 
 		String jsonResponse = restTemplate.getForObject(uri, String.class);
+		// ResponseEntity<WeekResponse> responseEntity = restTemplate.getForEntity(uri,
+		// WeekResponse.class);
 
-		String jsonString = jsonResponse;
+		String jsonString = jsonResponse; // JSON string containing the response data
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			WeekResponse weekresponse = objectMapper.readValue(jsonString, WeekResponse.class);
 			updateMealSourceUrls(weekresponse.getWeek());
+			session.setAttribute("weekResponse",weekresponse);
 			model.addAttribute("weekresponse", weekresponse);
-			int calories = formdata.getTargetCalories();
-			String diet = formdata.getDiet();
-			model.addAttribute("calories", calories);
-			model.addAttribute("Diet", diet);
-			return "weekList";
+			return "weeklist";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
