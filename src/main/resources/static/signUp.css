@@ -29,7 +29,7 @@
 
 .company-logo h3 {
   font-weight:lighter;
-  color: #e53935;
+  color: #fe5722;
 }
 
 .company-logo img {
@@ -103,7 +103,7 @@
 }
 
 .signin-card form input:focus {
-    border-bottom: 2px solid #e53935;
+    border-bottom: 2px solid #fe5722;
 }
 
 .password-container {
@@ -127,7 +127,7 @@
   outline:none;
   padding:7px;
   margin:20px 0;
-  background-color: #e53935;
+  background-color: #fe5722;
   border-radius:3px;
   color:#fff;
   font-weight:bold;
@@ -137,7 +137,7 @@
 }
 
 .signin-card form button:hover {
-  background-color:#e53935;
+  background-color:#fe5722;
 }
 
 
@@ -151,7 +151,7 @@
 }
 
 .signin-card .signin-card-footer h5 span{
-  color: #e53935;
+  color: #fe5722;
   cursor: pointer;
 }
 
@@ -160,7 +160,7 @@
 .left-shape {
   width: 20%;
   height: 30%;
-  background-color: #e53935;
+  background-color: #fe5722;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -172,7 +172,7 @@
 .right-shape {
   width: 50%;
   height: 60%;
-  background-color:  #e53935;
+  background-color:  #fe5722;
   position: absolute;
   right: 0;
   bottom: 0;

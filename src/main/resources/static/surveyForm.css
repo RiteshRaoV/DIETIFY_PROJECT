@@ -247,7 +247,7 @@ select.list-dt:focus {
 
 /*Color number of the step and the connector before it*/
 #progressbar li.active:before, #progressbar li.active:after {
-    background: #e53935;
+    background: #fe5722;
 }
 
 /*Imaged Radio Buttons*/

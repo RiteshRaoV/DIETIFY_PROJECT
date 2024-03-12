@@ -1,82 +1,71 @@
 body {
-    font-family: Arial, sans-serif;
-    background-image: url('/background-2.gif');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-size: 100% 100%;
-    margin: 0;
-    padding: 0;
-  }
-  .container{
-    margin-top: 50px;
-  }
-  h3{
-    display: inline;
-    
-  }
-  h4{
-    margin-left: 100px;
-  }
-  .firsth3{
-    margin-right: 200px;
-  }
-  .recipeimg{
-    border-radius: 20px;
-    /* margin-top: 20px; */
-    /* display: block; */
-    height: 100%;
-    max-width: 100%;
-    box-shadow: 6px 6px 3px rgba(0, 0, 0, 0.3);
+  font-family: Arial, sans-serif;
+  background-image: url("/background-2.gif");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-size: 100% 100%;
+  margin: 0;
+  padding: 0;
 }
-.parentdiv{
-    display: flex;
-    margin-top: 20px;
-    /* align-items: center; */
-    justify-content: center;
-    width: 100%;
+.container {
+  margin-top: 50px;
 }
-.tablediv{
-    margin: 0 0 0 20px;
+h3 {
+  display: inline;
 }
-table{
-    height: 100%;
+h4 {
+  margin-left: 100px;
 }
-.instructions{
-    margin-top: 50px;
-    display: flex;
-    /*  align-items: center; */
-    justify-content: center;
+.firsth3 {
+  margin-right: 200px;
 }
-
-.ingredients{
-  padding: 5px;
+.recipeimg {
+  border-radius: 20px;
+  height: 100%;
+  max-width: 100%;
+  box-shadow: 6px 6px 3px rgba(0, 0, 0, 0.3);
 }
-.imgwithtext{
-/* margin-left: 150px; */
-}
-.h3textcontainer{
-  margin-top: 10px;
-  /* width: 50px; */
+.parentdiv {
   display: flex;
-  /* padding-right: 30px; */
-  
+  margin-top: 20px;
+  justify-content: center;
+  width: 100%;
 }
-
-.titlecontainer{
+.tablediv {
+  margin: 0 0 0 20px;
+}
+table {
+  height: 100%;
+}
+.instructions {
+  margin-top: 50px;
   display: flex;
   justify-content: center;
 }
-.titlecontainer p{
-  font-weight: bolder;
-  /* font-size: 30px; */
-  background-image: linear-gradient(to right, #ff0000, #00ff00);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    line-height: 1.2; /* Adjust line height as needed */
-    font-size: 5ch; 
 
+.ingredients {
+  padding: 5px;
 }
-.recipetitle{
+.imgwithtext {
+}
+.h3textcontainer {
+  margin-top: 10px;
+  display: flex;
+}
+
+.titlecontainer {
+  display: flex;
+  justify-content: center;
+}
+.titlecontainer p {
+  font-weight: bolder;
+  background-image: linear-gradient(to right, #ff5f6d, #ffc371);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1.2; 
+  font-size: 5ch;
+}
+.recipetitle {
   margin-left: 23px;
 }
