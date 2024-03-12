@@ -143,6 +143,7 @@ nav ul li a {
 #hero-section {
   background: #fff5f2;
   margin-top: 60px;
+  height: 100vh;
 }
 
 .text,
@@ -158,6 +159,8 @@ nav ul li a {
   width: 80%;
   height: auto;
   display: block;
+  margin-right: 30px;
+  margin-bottom: 100px;
 }
 
 #hero-section .text {

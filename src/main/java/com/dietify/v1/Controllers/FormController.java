@@ -9,9 +9,9 @@ import com.dietify.v1.DTO.Formdata;
 @Controller
 public class FormController {
 
-    @GetMapping("/landing")
+    @GetMapping("/home")
     public String landingpage() {
-        return "landing";
+        return "home";
     }
 
     @GetMapping("/formpage")

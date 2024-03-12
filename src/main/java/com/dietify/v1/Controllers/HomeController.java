@@ -37,7 +37,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String landing() {
-		return "home";
+		return "landing";
 	}
 
 	@GetMapping(value = { "/signin", "/signIn" })

@@ -9,11 +9,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 </head>
 <body>
+    <header>
+        <div th:replace="fragments/newNav :: newBar"></div>
+      </header>
     <div class="vh-80">
         <div class="container text-container">
             <h1 class="mb-4 gradient-text">Your personalized nutrition companion.</h1>
             <p class="mb-5 gradient-subtext">Personalized recipes for your plate, based on what you have and love to taste!</p>
-            <form th:action="@{/signIn}">
+            <form th:action="@{/formpage}">
                 <button type="submit" class="btn btn-primary">Get Started →</button>
             </form>
         </div>
