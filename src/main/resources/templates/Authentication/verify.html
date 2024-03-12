@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SignIN</title>
-    <link rel="stylesheet" th:href="@{/signIn.css}">
+    <link rel="stylesheet" th:href="@{/Authentication/signIn.css}">
     <style>
       body {
           margin: 0;
@@ -30,34 +30,34 @@
         <div class='container'>
           <section class='company-logo'>
             <div class='logo-container'>
-                <img th:src="logo.png" alt='logo'>
+                <img th:src="@{/Images/logo.png}" alt='logo'>
                 <h3>DIETIFY <span>Your personal diet partner</span></h3>
             </div>
           </section>
           <section class='signin-section'>
-            <h2>Forgot Password?</h2>
+            <h2>Verify email</h2>
             <div class='signin-card'>
                 <div class="errorClass">
                     <!-- Display session message if present -->
                     <span th:text="${session.message}"></span>
                 </div>
-                <form th:action="forgot-password" method="post">
+                <form th:action="verify" method="post">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <label>Email</label>
                     <input type="email" name="email" required/>
-                    <button type="submit">Send Link</button>
+                    <button type="submit">Send verification Link</button>
                 </form>
                 <div class='signin-card-footer'>
-                    <h5>Remembered your password? <a th:href="@{/signIn}">Sign in</a></h5>
+                    <h5>Already an user? <a th:href="@{/signIn}">Sign in</a></h5>
                 </div>
             </div>
             <script th:inline="javascript">
                 setTimeout(function() {
                     var errorClass = document.querySelector('.errorClass');
                     if (errorClass) {
-                        errorClass.innerHTML = ''; // Clear the error message
+                        errorClass.innerHTML = ''; 
                     }
-                }, 5000); // Remove after 5 seconds
+                }, 5000); 
             </script>
         </section>
         

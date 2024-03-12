@@ -64,7 +64,7 @@ public class MealController {
 		model.addAttribute("calories", calories);
 		model.addAttribute("Diet", diet);
 		model.addAttribute("dayResponse", response.getBody());
-		return "day-list";
+		return "MealViews/day-list";
 	}
 
 	@PostMapping("/week")
@@ -92,7 +92,7 @@ public class MealController {
 			String diet = formdata.getDiet();
 			model.addAttribute("calories", calories);
 			model.addAttribute("Diet", diet);
-			return "weekList";
+			return "MealViews/weekList";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

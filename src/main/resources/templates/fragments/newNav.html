@@ -4,13 +4,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   <div class="nav-bar">
-    <img class="nav-logo" th:src='@{/logo.png}'>
+    <img class="nav-logo" th:src='@{/Images/logo.png}'>
     <div class="nav-links-container">
       <a class="nav-linkbar" th:href="@{/home}" id="topLink">Home</a>
       <a class="nav-linkbar" href="#aboutSection" id="aboutLink">About Us</a>
       <a class="nav-linkbar" th:href="@{/formpage}" id="survey">Survey</a>
       <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-linkbar" href="#servicesSection" id="servicesLink">addBlogs</a>
-      <img class="nav-avatar" th:src="@{/admin.png}" alt="Avatar" onclick="displaydropdown()">
+      <img class="nav-avatar" th:src="@{/Images/admin.png}" alt="Avatar" onclick="displaydropdown()">
       <div class="dropdown-content">
         <a th:href="@{/userprofile}">Profile</a>
         <a th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>

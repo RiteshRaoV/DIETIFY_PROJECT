@@ -42,12 +42,12 @@ public class HomeController {
 
 	@GetMapping(value = { "/signin", "/signIn" })
 	public String signIn() {
-		return "signIn";
+		return "Authentication/signIn";
 	}
 
 	@GetMapping("/signUp")
 	public String signUp() {
-		return "signUp";
+		return "Authentication/signUp";
 	}
 
 	@PostMapping("/saveUser")
@@ -65,7 +65,7 @@ public class HomeController {
 
 	@GetMapping("/verify")
 	public String verify() {
-		return "verify";
+		return "Authentication/verify";
 	}
 
 	@PostMapping("/verify")
@@ -86,10 +86,10 @@ public class HomeController {
 		if (user != null) {
 			model.addAttribute("email", user.getEmail());
 			model.addAttribute("token", token);
-			return "signUp";
+			return "Authentication/signUp";
 		} else {
 			session.setAttribute("msg", "error while validating your email");
-			return "signUp";
+			return "Authentication/signUp";
 		}
 	}
 
@@ -107,7 +107,7 @@ public class HomeController {
 
 	@GetMapping("/forgot-password")
 	public String forgotpassword() {
-		return "forgot_password";
+		return "Authentication/forgot_password";
 	}
 
 	@GetMapping("/reset")
@@ -115,9 +115,9 @@ public class HomeController {
 		User user = userService.findUserByResetToken(token);
 		if (user != null) {
 			model.addAttribute("email", user.getEmail());
-			return "reset_password";
+			return "Authentication/reset_password";
 		} else {
-			return "reset_password";
+			return "Authentication/reset_password";
 		}
 	}
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SignIN</title>
-    <link rel="stylesheet" th:href="@{/signIn.css}">
+    <link rel="stylesheet" th:href="@{/Authentication/signUp.css}">
     <style>
       body {
           margin: 0;
@@ -30,36 +30,38 @@
         <div class='container'>
           <section class='company-logo'>
             <div class='logo-container'>
-              <img th:src="logo.png" alt='logo'>
+              <img th:src="@{/Images/logo.png}" alt='logo'>
             <h3>DIETIFY <span>Your personal diet partner</span></h3>
             </div>
           </section>
           <section class='signin-section'>
-            <h2>Reset Password</h2>
+            <h2>Sign Up</h2>
             <div class='signin-card'>
                 <div class='errorClass'>
-                    <p th:if="${session.msg}" class="text-center text-success fs-4" th:text="${session.msg}"></p>
+                  <p th:if="${session.msg}" class="text-center text-success fs-4" th:text="${session.msg}"></p>
                 </div>
-                <form th:action="reset" method="post" onsubmit="return validateForm()">
+                <form th:action="saveUser" method="post" onsubmit="return validateForm()">
                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                  <input type="hidden" name="token" th:value="${param.token}" />
+                  <label>Name</label>
+                  <input type="text" name="name" required />
                   <label>Email</label>
                   <input type="email" name="email" th:value="${email}" readonly required />
+                  <input type="hidden" name="resetToken" th:value="${token}" />
                   <div class="password-container">
-                      <label>New Password</label>
+                      <label>Password</label>
                       <input type="password" id="password" name="password" required />
                   </div>
                   <div class="password-container">
                       <label>Confirm Password</label>
                       <input type="password" id="confirmPassword" name="confirmPassword" required />
                   </div>
-                  <button type="submit">Reset Password</button>
+                  <button type="submit">Sign Up</button>
               </form>
-                <div class='signin-card-footer'>
-                    <h5>Remembered your password? <a th:href="@{/signIn}">Sign In</a></h5>
-                </div>
+              <div class='signin-card-footer'>
+                <h5>Registered already ? <a th:href="@{/signIn}">sign-In</a></h5>
             </div>
-        </section>
+            </div>
+          </section>
         </div>
         <div class='left-shape'></div>
         <div class='right-shape'></div>
@@ -70,11 +72,6 @@
   function validateForm() {
       var password = document.getElementById("password").value;
       var confirmPassword = document.getElementById("confirmPassword").value;
-
-      if (password === "") {
-          alert("Please enter a new password");
-          return false;
-      }
 
       if (password !== confirmPassword) {
           alert("Passwords do not match");

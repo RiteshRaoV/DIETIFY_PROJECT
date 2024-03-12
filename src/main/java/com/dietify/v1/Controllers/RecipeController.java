@@ -47,7 +47,7 @@ public class RecipeController {
             recipe.setAnalyzedInstructions(analyzedInstructions);
 
             model.addAttribute("recipe", recipe);
-            return "recipedetails";
+            return "MealViews/recipedetails";
         } else {
             return "errorpage";
         }
