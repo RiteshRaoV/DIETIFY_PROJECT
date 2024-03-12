@@ -34,6 +34,7 @@ body {
     border-radius: 5px;
     background-image: linear-gradient(to right, #ff5f6d, #ffc371);
     color: #fff;
+    border: none;
     text-decoration: none;
     text-transform: uppercase;
     transition: all 0.3s ease;
