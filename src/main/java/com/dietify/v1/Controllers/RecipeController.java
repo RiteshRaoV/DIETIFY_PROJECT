@@ -35,7 +35,7 @@ public class RecipeController {
         // String apiUrl = "https://api.spoonacular.com/recipes/{id}/information?apiKey={apiKey}";
         String jsonstring="{\r\n" + //
                         "    \r\n" + //
-                        "    \"image\": \"https://spoonacular.com/recipeImages/716429-556x370.jpg\",\r\n" + //
+                        "    \"image\": \"https://spoonacular.com/recipeImages/612987-312x231.jpg\",\r\n" + //
                         "    \r\n" + //
                         "    \"servings\": 2,\r\n" + //
                         "\"readyInMinutes\": 45,\r\n" + //

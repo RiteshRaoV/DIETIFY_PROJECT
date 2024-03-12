@@ -4,34 +4,79 @@ body {
     background-repeat: no-repeat;
     background-size: contain;
     background-size: 100% 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .container{
+    margin-top: 50px;
   }
   h3{
     display: inline;
+    
   }
   h4{
     margin-left: 100px;
   }
   .firsth3{
-    margin-right: 250px;
+    margin-right: 200px;
   }
   .recipeimg{
     border-radius: 20px;
-    margin-top: 20px;
-    display: block;
+    /* margin-top: 20px; */
+    /* display: block; */
     height: 100%;
     max-width: 100%;
     box-shadow: 6px 6px 3px rgba(0, 0, 0, 0.3);
 }
 .parentdiv{
     display: flex;
-    margin-top: 80px;
+    margin-top: 20px;
+    /* align-items: center; */
+    justify-content: center;
+    width: 100%;
 }
 .tablediv{
-    margin: 0 0 0 200px;
+    margin: 0 0 0 20px;
 }
 table{
     height: 100%;
 }
 .instructions{
-    margin-top: 70px;
+    margin-top: 50px;
+    display: flex;
+    /*  align-items: center; */
+    justify-content: center;
+}
+
+.ingredients{
+  padding: 5px;
+}
+.imgwithtext{
+/* margin-left: 150px; */
+}
+.h3textcontainer{
+  margin-top: 10px;
+  /* width: 50px; */
+  display: flex;
+  /* padding-right: 30px; */
+  
+}
+
+.titlecontainer{
+  display: flex;
+  justify-content: center;
+}
+.titlecontainer p{
+  font-weight: bolder;
+  /* font-size: 30px; */
+  background-image: linear-gradient(to right, #ff0000, #00ff00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.2; /* Adjust line height as needed */
+    font-size: 5ch; 
+
+}
+.recipetitle{
+  margin-left: 23px;
 }
