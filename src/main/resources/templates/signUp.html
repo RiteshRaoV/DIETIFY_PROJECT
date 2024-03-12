@@ -40,18 +40,22 @@
                 <div class='errorClass'>
                   <p th:if="${session.msg}" class="text-center text-success fs-4" th:text="${session.msg}"></p>
                 </div>
-                <form th:action="saveUser" method="post">
+                <form th:action="saveUser" method="post" onsubmit="return validateForm()">
                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                <label>Name</label>
-                <input type="text"  name="name" required/>
-                <label>Email</label>
-                <input type="email" name="email" th:value="${email}" readonly required/>
-                <input type="hidden" name="resetToken" th:value="${token}" />
-                <div class="password-container">
-                  <label>Password</label>
-                    <input type="password" name="password" required/>
-                </div>
-                <button type="submit">Sign Up</button>
+                  <label>Name</label>
+                  <input type="text" name="name" required />
+                  <label>Email</label>
+                  <input type="email" name="email" th:value="${email}" readonly required />
+                  <input type="hidden" name="resetToken" th:value="${token}" />
+                  <div class="password-container">
+                      <label>Password</label>
+                      <input type="password" id="password" name="password" required />
+                  </div>
+                  <div class="password-container">
+                      <label>Confirm Password</label>
+                      <input type="password" id="confirmPassword" name="confirmPassword" required />
+                  </div>
+                  <button type="submit">Sign Up</button>
               </form>
               <div class='signin-card-footer'>
                 <h5>Registered already ? <a th:href="@{/signIn}">sign-In</a></h5>
@@ -64,3 +68,16 @@
       </div>
 </body>
 </html>
+<script>
+  function validateForm() {
+      var password = document.getElementById("password").value;
+      var confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+          alert("Passwords do not match");
+          return false;
+      }
+
+      return true;
+  }
+</script>
