@@ -59,8 +59,8 @@ public class Favourite {
         return favouriteId;
     }
 
-    public void setFavouriteId(String favouriteId) {
-        this.favouriteId = favouriteId;
+    public void setFavouriteId(ObjectId favouriteId) {
+        this.favouriteId = favouriteId.toString();
     }
 
     public String getType() {
@@ -77,5 +77,15 @@ public class Favourite {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    @Override
+    public String toString() {
+        return "Favourite{" +
+                "id=" + id +
+                ", user=" + user +
+                ", favouriteId='" + favouriteId + '\'' +
+                ", type='" + type + '\'' +
+                ", title='" + title + '\'' +
+                '}';
     }
 }
