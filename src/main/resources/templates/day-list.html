@@ -48,7 +48,10 @@
                 <div class="recipe-bottom3">
                   <div class="recipe-info">Servings: <span th:text="${meal.servings}"></span></div>
                   <div class="recipe-info">Total Time: <span th:text="${meal.readyInMinutes}"></span></div>
-                  <a th:href="@{/recipe}" class="button3">VIEW RECIPE 🍳</a>
+                  <form th:action="@{/recipe}" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <button type="submit" th:href="@{/recipe}" class="button3" th:value="${meal.id}" name="id">VIEW RECIPE 🍳</button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -67,12 +70,6 @@
     </form>
   </div>
 
-  <!-- Popup -->
-  <!-- <div id="popup" style="display: none;">
-        <label for="userText">Enter Text:</label>
-        <input type="text" id="userText" name="userText" th:value="${dayResponse.userText}" >
-        <button type="submit">Save</button>
-    </div> -->
 
   <script>
     function showPopup() {
@@ -80,7 +77,7 @@
     }
     function toggleColor(element) {
   var currentColor = window.getComputedStyle(element.querySelector('i')).color;
-  var newColor = currentColor === 'rgb(255, 0, 0)' ? 'black' : 'red'; // Toggle between red and black
+  var newColor = currentColor === 'rgb(255, 0, 0)' ? 'black' : 'red'; 
 
   element.querySelector('i').style.color = newColor;
   toggleModal();
@@ -93,20 +90,18 @@ function toggleModal() {
 function saveDietPlan() {
   var title = document.getElementById("titleInput").value;
   alert("Diet plan saved with title: " + title);
-  toggleModal(); // Close the modal after saving
+  toggleModal(); 
 }
 
 // Get the modal
 var modal = document.getElementById("myModal");
 
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
     toggleModal();
   }
 }
 
-// When the user presses the Escape key, close the modal
 document.onkeydown = function(event) {
   event = event || window.event;
   if (event.keyCode == 27) {

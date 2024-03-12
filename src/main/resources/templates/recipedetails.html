@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Recipes</title>
+    <link rel="stylesheet" th:href="@{/recipestyle.css}" />
+  </head>
+
+  <body>
+    <header>
+      <div th:replace="fragments/newNav :: newBar"></div>
+    </header>
+
+    <div class="container">
+      <div class="titlecontainer">
+        <p>Japanese Chicken Donburi</p>
+      </div>
+
+      <div class="parentdiv">
+        <div class="imgwithtext">
+          <img th:src="${recipe.getImage()}" class="recipeimg" />
+          <div class="h3textcontainer">
+            <h3
+              class="firsth3"
+              th:text="${'servings: '+recipe.getServings()}"
+            ></h3>
+            <h3
+              class="secondh3"
+              th:text="${'Readyinminutes: '+recipe.getReadyInMinutes()}"
+            ></h3>
+          </div>
+        </div>
+        <div class="tablediv">
+          <h2 class="recipetitle">Ingredients</h2>
+
+          <ul>
+            <li
+              th:each="ingredient : ${recipe.extendedIngredients}"
+              class="ingredients"
+            >
+              <span th:text="${ingredient.name}"></span>
+              <span th:text="${ingredient.amount}"></span>
+              <span th:text="${ingredient.unit}"></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div th:each="instruction : ${recipe.analyzedInstructions}"class="instructions">
+        <h3 th:text="${instruction.name}"></h3>
+        <ol>
+          <h2>Instructions</h2>
+          <li th:each="step : ${instruction.steps}">
+            <div>
+              <p th:text="${ step.step}"></p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </body>
+</html>
