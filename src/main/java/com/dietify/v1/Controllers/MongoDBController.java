@@ -9,9 +9,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParseException;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,9 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.dietify.v1.DTO.DatabaseResponse;
 import com.dietify.v1.DTO.Day.DayResponse;
 import com.dietify.v1.DTO.Week.WeekResponse;
 import com.dietify.v1.Entity.Favourite;
@@ -33,7 +28,6 @@ import com.dietify.v1.Repository.UserRepo;
 import com.dietify.v1.Service.FavService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.springframework.data.mongodb.core.query.Query;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
