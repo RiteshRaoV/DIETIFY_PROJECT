@@ -14,16 +14,26 @@
         <div th:replace="~{fragments/newNav :: newBar}"></div>
     </header>
     <div>
-        <p>Welcome <span th:text="${user}"></span></p>
+        <p>Welcome <span th:text="${name}"></span></p>
     </div>
     <main class="flex">
 
         <div class="card">
             <h2>Day Plan</h2>
+            <ul>
+                <li th:each="dayresponses : ${dayfav}">
+                    <a th:text="${dayresponses.title}"></a>
+                </li>
+            </ul>
         </div>
 
         <div class="card">
             <h2>Week Plan</h2>
+            <ul>
+                <li th:each="weekresponses : ${weekfav}">
+                    <a th:text="${weekresponses.title}"></a>
+                </li>
+            </ul>
         </div>
 
     </main>

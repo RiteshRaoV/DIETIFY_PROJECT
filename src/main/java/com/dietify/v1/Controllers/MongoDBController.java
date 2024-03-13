@@ -167,12 +167,15 @@ public class MongoDBController {
                 }
             }
 
-            if (dayResponses.isEmpty() && weekResponses.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("No meal plans found for DAY or WEEK PLANS for userId: " + user.getId());
-            }
-            m.addAttribute(weekResponses);
-            m.addAttribute(dayResponses);
+            // if (dayResponses.isEmpty() && weekResponses.isEmpty()) {
+            // return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            // .body("No meal plans found for DAY or WEEK PLANS for userId: " +
+            // user.getId());
+            // }
+            m.addAttribute("weekfav",weekFavourites);
+            m.addAttribute("dayfav",dayFavourites);
+            m.addAttribute("weekresponses",weekResponses);
+            m.addAttribute("dayresponses",dayResponses);
             // Process dayResponses and weekResponses as needed...
 
             return ResponseEntity.ok().body("Day Responses: " + dayResponses.toString()
