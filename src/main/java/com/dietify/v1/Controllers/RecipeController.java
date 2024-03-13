@@ -34,6 +34,7 @@ public class RecipeController {
 
         if (response != null) {
             Recipe recipe = new Recipe();
+            recipe.setTitle(response.getTitle());
             recipe.setServings(response.getServings());
             recipe.setReadyInMinutes(response.getReadyInMinutes());
             recipe.setImage(response.getImage());

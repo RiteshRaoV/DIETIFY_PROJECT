@@ -8,9 +8,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Recipe {
     private int servings;
     private int readyInMinutes;
+    private String title;
     private String image;
     private List<ExtendedIngredient> extendedIngredients;
     private List<AnalyzedInstruction> analyzedInstructions;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public int getServings() {
         return servings;
