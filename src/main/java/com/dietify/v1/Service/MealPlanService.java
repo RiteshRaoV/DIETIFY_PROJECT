@@ -12,5 +12,4 @@ public class MealPlanService {
 
     @Value("${apikey}")
     private String apiKey;
-    
 }
