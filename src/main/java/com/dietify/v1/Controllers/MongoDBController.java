@@ -131,8 +131,8 @@ public class MongoDBController {
     // return "response";
 
     // }
-    @GetMapping("/profile")
-    public ResponseEntity<?> retrieveDataByUserIdAndType(Principal p,Model m) {
+    @GetMapping("/userprofile")
+    public String retrieveDataByUserIdAndType(Principal p, Model m) {
         try {
             String email = p.getName();
             User user = userRepo.findByEmail(email);
@@ -141,10 +141,10 @@ public class MongoDBController {
             List<Favourite> dayFavourites = favService.findByUserIdAndType(user.getId(), "day");
             List<Favourite> weekFavourites = favService.findByUserIdAndType(user.getId(), "week");
 
-            if (dayFavourites.isEmpty() && weekFavourites.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("No saved DAY or WEEK PLANS found for userId: " + user.getId());
-            }
+            // if (dayFavourites.isEmpty() && weekFavourites.isEmpty()) {
+            // return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            // .body("No saved DAY or WEEK PLANS found for userId: " + user.getId());
+            // }
 
             List<DayResponse> dayResponses = new ArrayList<>();
             List<WeekResponse> weekResponses = new ArrayList<>();
@@ -167,19 +167,22 @@ public class MongoDBController {
                 }
             }
 
-            if (dayResponses.isEmpty() && weekResponses.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("No meal plans found for DAY or WEEK PLANS for userId: " + user.getId());
-            }
+            // if (dayResponses.isEmpty() && weekResponses.isEmpty()) {
+            // return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            // .body("No meal plans found for DAY or WEEK PLANS for userId: " +
+            // user.getId());
+            // }
             m.addAttribute(weekResponses);
             m.addAttribute(dayResponses);
             // Process dayResponses and weekResponses as needed...
-
-            return ResponseEntity.ok().body("Day Responses: " + dayResponses.toString()
-                    + "\nWeek Responses: " + weekResponses.toString());
+            return "profile";
+            // return ResponseEntity.ok().body("Day Responses: " + dayResponses.toString()
+            // + "\nWeek Responses: " + weekResponses.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving data.");
+            return "error";
+            // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error
+            // retrieving data.");
         }
     }
 

@@ -128,14 +128,14 @@ public class HomeController {
 		return "redirect:/signIn";
 	}
 
-	@GetMapping("/userprofile")
-	public String viewProfile(Principal p, Model m) {
-		// Retrieve the user object from the session
-		if (p != null) {
-			String email = p.getName();
-			User user = userRepo.findByEmail(email);
-			m.addAttribute("user", user.getName());
-		}
-		return "profile";
-	}
+	// @GetMapping("/userprofile")
+	// public String viewProfile(Principal p, Model m) {
+	// 	// Retrieve the user object from the session
+	// 	if (p != null) {
+	// 		String email = p.getName();
+	// 		User user = userRepo.findByEmail(email);
+	// 		m.addAttribute("user", user.getName());
+	// 	}
+	// 	return "profile";
+	// }
 }
