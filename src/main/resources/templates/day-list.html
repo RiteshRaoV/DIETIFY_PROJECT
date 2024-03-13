@@ -16,13 +16,10 @@
     <div th:replace="fragments/newNav :: newBar"></div>
   </header>
         <div class="heading">
-          <h1 class="heading_1"> Here is delicious recipes  </h1>
-          <h1 class="heading_2">suggestion based on your </h1>
+          <p class="heading-week">Meals for the Day</p>
           <h1 class="heading_3">dietary preferences Calories:<span th:text="${calories}"></span>  Diet:<span th:text="${Diet}"></span></h1>
           <div class="icondiv">
-          <!-- <span class="material-symbols-outlined " id="favicons">
-            favorite
-            </span> -->
+          
             <span class="icon" onclick="toggleColor(this)"><i class="fas fa-heart"></i></span>
 
           </div>
@@ -30,9 +27,9 @@
         <div class="modal" id="myModal">
           <div class="modal-content">
             <span class="close" onclick="toggleModal()">&times;</span>
-            <p>Please provide a title for your diet plan:</p>
+            <p>Please provide a title for your diet plan</p>
             <input type="text" id="titleInput" placeholder="Enter title...">
-            <button onclick="saveDietPlan()">Save</button>
+            <button onclick="saveDietPlan()" class="savebtn">Save</button>
           </div>
         </div>
         <div class="page-container">
