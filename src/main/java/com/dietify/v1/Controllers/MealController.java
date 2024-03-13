@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,12 @@ public class MealController {
 
 	@Value("${apikey}")
 	private String apiKey;
+
+	@GetMapping("/day")
+	public String dayMeals(Model model,HttpSession session){
+		model.addAttribute(session.getAttribute("dayResponse"));
+		return "MealViews/day-list";
+	}
 
 	@PostMapping("/day")
 	public String getDayMeals(@ModelAttribute Formdata formdata, Model model, HttpSession session) {
@@ -64,11 +71,18 @@ public class MealController {
 		model.addAttribute("calories", calories);
 		model.addAttribute("Diet", diet);
 		model.addAttribute("dayResponse", response.getBody());
-		return "MealViews/day-list";
+		return "redirect:/mealplanner/day";
+	}
+
+	@GetMapping("/week")
+	public String weekMeals(Model model,HttpSession session){
+		model.addAttribute("weekresponse",session.getAttribute("weekresponse"));
+		return "MealViews/weekList";
 	}
 
 	@PostMapping("/week")
-	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model) {
+	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model,HttpSession session) {
+		session.removeAttribute("weekresponse");
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -87,12 +101,13 @@ public class MealController {
 		try {
 			WeekResponse weekresponse = objectMapper.readValue(jsonString, WeekResponse.class);
 			updateMealSourceUrls(weekresponse.getWeek());
+			session.setAttribute("weekresponse", weekresponse);
 			model.addAttribute("weekresponse", weekresponse);
 			int calories = formdata.getTargetCalories();
 			String diet = formdata.getDiet();
 			model.addAttribute("calories", calories);
 			model.addAttribute("Diet", diet);
-			return "MealViews/weekList";
+			return "redirect:/mealplanner/week";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
