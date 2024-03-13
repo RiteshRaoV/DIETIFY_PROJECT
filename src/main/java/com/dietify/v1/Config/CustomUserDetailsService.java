@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.dietify.v1.Entity.User;
 import com.dietify.v1.Repository.UserRepo;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Component

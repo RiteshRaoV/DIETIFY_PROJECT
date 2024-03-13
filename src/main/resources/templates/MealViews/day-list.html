@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meal Plan</title>
+  <link rel="stylesheet" th:href="@{/MealViewCSS/day-list.css}">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,200" />
+</head>
+
+<body>
+  <header>
+    <div th:replace="fragments/newNav :: newBar"></div>
+  </header>
+        <div class="heading">
+          <h1 class="heading_1"> Here is delicious recipes  </h1>
+          <h1 class="heading_2">suggestion based on your </h1>
+          <h1 class="heading_3">dietary preferences Calories:<span th:text="${calories}"></span>  Diet:<span th:text="${Diet}"></span></h1>
+          <div class="icondiv">
+          <!-- <span class="material-symbols-outlined " id="favicons">
+            favorite
+            </span> -->
+            <span class="icon" onclick="toggleColor(this)"><i class="fas fa-heart"></i></span>
+
+          </div>
+        </div>
+        <div class="modal" id="myModal">
+          <div class="modal-content">
+            <span class="close" onclick="toggleModal()">&times;</span>
+            <p>Please provide a title for your diet plan:</p>
+            <input type="text" id="titleInput" placeholder="Enter title...">
+            <button onclick="saveDietPlan()">Save</button>
+          </div>
+        </div>
+        <div class="page-container">
+          <div class="row">
+            <div class="column-3" th:each="meal : ${dayResponse.meals}">
+              <div class="recipe-card">
+                <div class="recipe-image">
+                  <img th:src="${meal.sourceUrl}" th:alt="${meal.title}">
+                </div>
+                <div class="recipe-top">
+                  <h1 th:text="${meal.title}"></h1>
+                </div>
+                <div class="recipe-bottom3">
+                  <div class="recipe-info">Servings: <span th:text="${meal.servings}"></span></div>
+                  <div class="recipe-info">Total Time: <span th:text="${meal.readyInMinutes}"></span></div>
+                  <form th:action="@{/recipe}" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <button type="submit" th:href="@{/recipe}" class="button3" th:value="${meal.id}" name="id">VIEW RECIPE 🍳</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form th:action="@{/mongodb/store}" method="post" id="saveForm">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+      <button type="button" onclick="showPopup()">Save Day Response</button>
+      <div id="popup" style="display: none;">
+        <input type="text" id="userText" name="userText">
+        <button type="submit">Save</button>
+      </div>
+
+    </form>
+  </div>
+
+
+  <script>
+    function showPopup() {
+      $('#popup').show();
+    }
+    function toggleColor(element) {
+  var currentColor = window.getComputedStyle(element.querySelector('i')).color;
+  var newColor = currentColor === 'rgb(255, 0, 0)' ? 'black' : 'red'; 
+
+  element.querySelector('i').style.color = newColor;
+  toggleModal();
+}
+
+function toggleModal() {
+  var modal = document.getElementById("myModal");
+  modal.style.display = modal.style.display === "block" ? "none" : "block";
+}
+function saveDietPlan() {
+  var title = document.getElementById("titleInput").value;
+  alert("Diet plan saved with title: " + title);
+  toggleModal(); 
+}
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    toggleModal();
+  }
+}
+
+document.onkeydown = function(event) {
+  event = event || window.event;
+  if (event.keyCode == 27) {
+    toggleModal();
+  }
+}
+
+
+  </script>
+</body>
+
+</html>

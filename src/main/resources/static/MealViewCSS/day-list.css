@@ -8,6 +8,9 @@
 body {
   font-family: Arial, sans-serif;
   background-image: url('/background-2.gif');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 header{
   padding-bottom: 50px;
@@ -117,3 +120,85 @@ header{
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+#favicons{
+  font-size: 40px;
+ display: block;
+ cursor: pointer;
+}
+.icondiv{
+  display: flex;
+  justify-content: end;
+  margin-right: 140px;
+}
+.icon {
+  font-size: 24px; 
+  color: black;
+}
+
+.icon.clicked {
+  color: red;
+}
+
+/* modal */
+/* Modal styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+}
+
+/* Modal content */
+.modal-content {
+ margin-left: auto;
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%; 
+  border-radius: 5px;/* Could be more or less, depending on screen size */
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+/* styling for weeklist */
+.calendar{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.week{
+  background-color: #e53935;
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+h2{
+  text-align: center;
+}
+

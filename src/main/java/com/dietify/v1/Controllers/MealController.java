@@ -27,7 +27,6 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/mealplanner")
 public class MealController {
 
-	// Add base for the unchanging part of your web address.
 	@Value("${spoonacular.urls.baseurl}")
 	private String baseURL;
 
@@ -60,13 +59,16 @@ public class MealController {
 			}
 			session.setAttribute("dayResponse", dayResponse);
 		}
-
+		int calories = formdata.getTargetCalories();
+		String diet = formdata.getDiet();
+		model.addAttribute("calories", calories);
+		model.addAttribute("Diet", diet);
 		model.addAttribute("dayResponse", response.getBody());
-		return "day-list";
+		return "MealViews/day-list";
 	}
 
 	@PostMapping("/week")
-	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model,HttpSession session) {
+	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model) {
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -79,17 +81,18 @@ public class MealController {
 				.toUri();
 
 		String jsonResponse = restTemplate.getForObject(uri, String.class);
-		// ResponseEntity<WeekResponse> responseEntity = restTemplate.getForEntity(uri,
-		// WeekResponse.class);
 
-		String jsonString = jsonResponse; // JSON string containing the response data
+		String jsonString = jsonResponse;
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			WeekResponse weekresponse = objectMapper.readValue(jsonString, WeekResponse.class);
 			updateMealSourceUrls(weekresponse.getWeek());
-			session.setAttribute("weekResponse",weekresponse);
 			model.addAttribute("weekresponse", weekresponse);
-			return "weeklist";
+			int calories = formdata.getTargetCalories();
+			String diet = formdata.getDiet();
+			model.addAttribute("calories", calories);
+			model.addAttribute("Diet", diet);
+			return "MealViews/weekList";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

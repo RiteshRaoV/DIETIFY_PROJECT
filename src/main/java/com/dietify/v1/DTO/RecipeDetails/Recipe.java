@@ -2,6 +2,9 @@ package com.dietify.v1.DTO.RecipeDetails;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Recipe {
     private int servings;
     private int readyInMinutes;

@@ -9,12 +9,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 </head>
 <body>
-    <div class="vh-80">
+    <header>
+        <div th:replace="fragments/newNav :: newBar"></div>
+      </header>
+    <div class="main">
         <div class="container text-container">
-            <h1 class="mb-4 gradient-text">Your personalized nutrition companion.</h1>
-            <p class="mb-5 gradient-subtext">Personalized recipes for your plate, based on what you have and love to taste!</p>
-            <form th:action="@{/signIn}">
-                <button type="submit" class="btn btn-primary">Get Started →</button>
+            <h1 class="gradient-text">Your personalized nutrition companion.</h1>
+            <p class="gradient-subtext">Personalized recipes for your plate, based on what you have and love to taste!</p>
+            <form th:action="@{/formpage}">
+                <button type="submit" class="button3-dietify">Get Started →</button>
             </form>
         </div>
     </div>

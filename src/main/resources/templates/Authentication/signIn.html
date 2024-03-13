@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SignIN</title>
-    <link rel="stylesheet" th:href="@{/signIn.css}">
+    <link rel="stylesheet" th:href="@{/Authentication/signIn.css}">
     <style>
       body {
           margin: 0;
           padding: 0;
-          background-image: url('/background-2.gif');
+          background-image: url('/Images/background-2.gif');
           background-repeat: repeat;
           background-attachment: fixed;
           background-size: cover;
@@ -30,7 +30,7 @@
         <div class='container'>
           <section class='company-logo'>
             <div class='logo-container'>
-              <img th:src="img_3.0.png" alt='logo'>
+              <img th:src="@{/Images/logo.png}" alt='logo'>
             <h3>DIETIFY <span>Your personal diet partner</span></h3>
             </div>
           </section>

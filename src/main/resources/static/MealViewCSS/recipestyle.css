@@ -1,0 +1,70 @@
+body {
+  font-family: Arial, sans-serif;
+  background-image: url("/background-2.gif");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-size: 100% 100%;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  margin-top: 50px;
+}
+h3 {
+  display: inline;
+}
+h4 {
+  margin-left: 100px;
+}
+.firsth3 {
+  margin-right: 200px;
+}
+.recipeimg {
+  border-radius: 20px;
+  height: 100%;
+  max-width: 100%;
+  box-shadow: 6px 6px 3px rgba(0, 0, 0, 0.3);
+}
+.parentdiv {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  width: 100%;
+}
+.tablediv {
+  margin: 0 0 0 20px;
+}
+table {
+  height: 100%;
+}
+.instructions {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.ingredients {
+  padding: 5px;
+}
+
+.h3textcontainer {
+  margin-top: 10px;
+  display: flex;
+}
+
+.titlecontainer {
+  display: flex;
+  justify-content: center;
+}
+.titlecontainer p {
+  font-weight: bolder;
+  background-image: linear-gradient(to right, #ff5f6d, #ffc371);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1.2; 
+  font-size: 5ch;
+}
+.recipetitle {
+  margin-left: 23px;
+}

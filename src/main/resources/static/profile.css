@@ -6,10 +6,9 @@
 body {
   margin: 0;
   padding: 0;
-  text-align: center;
   font-family: 'Roboto', sans-serif;
   color: #222;
-  background: #f7f5f0;
+  background: white;
 }
 
 /* Link Styles */
@@ -23,29 +22,11 @@ a:hover {
 }
 
 /* Section Styles */
-header {
-  text-align: center;
-  background: url('https://placeimg.com/1000/989/arch') no-repeat top center;
-  background-size: cover;
-  overflow: hidden;
-  padding-top: 60px;
-  line-height: 1.5;
-}
 
-header .profile-image {
-  margin-top: 50px;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: 3px solid white;
-  transition: all .5s;
-}
 
-header .profile-image:hover {
-  transform: scale(1.2) rotate(5deg);
-}
 
-main {
+
+.flex {
   display: flex;
   flex-wrap: wrap;
   /* Enable wrapping for smaller screens */
@@ -76,11 +57,7 @@ main {
 
 /* @media queries for responsiveness */
 @media screen and (max-width: 768px) {
-  header .profile-image {
-    width: 100px;
-    /* Adjust profile image size for smaller screens */
-    height: 100px;
-  }
+ 
 
   main {
     flex-direction: column;

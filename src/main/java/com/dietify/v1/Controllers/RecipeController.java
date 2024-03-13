@@ -3,20 +3,21 @@ package com.dietify.v1.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.dietify.v1.DTO.RecipeDetails.AnalyzedInstruction;
 import com.dietify.v1.DTO.RecipeDetails.ExtendedIngredient;
 import com.dietify.v1.DTO.RecipeDetails.Recipe;
 
-@RestController
+
+@Controller
 public class RecipeController {
 
-    @Value("${apikey}")
+    @Value("${apikey}") 
     private String apiKey;
 
     private final RestTemplate restTemplate;
@@ -25,9 +26,10 @@ public class RecipeController {
         this.restTemplate = restTemplate;
     }
 
-    @GetMapping("/recipe")
-    public ResponseEntity<Recipe> getRecipeDetails(@RequestParam String id) {
-        String apiUrl = "https://api.spoonacular.com/recipes/{id}/information?apiKey={apiKey}";
+    @PostMapping("/recipe")
+    public String getRecipeDetails(@RequestParam("id") String id,Model model) {
+        String apiUrl = "https://api.spoonacular.com/recipes/"+id+"/information?apiKey="+apiKey;
+        System.out.println("-------------------------------");
         Recipe response = restTemplate.getForObject(apiUrl, Recipe.class, id, apiKey);
 
         if (response != null) {
@@ -44,9 +46,10 @@ public class RecipeController {
             List<AnalyzedInstruction> analyzedInstructions = response.getAnalyzedInstructions();
             recipe.setAnalyzedInstructions(analyzedInstructions);
 
-            return ResponseEntity.ok(recipe);
+            model.addAttribute("recipe", recipe);
+            return "MealViews/recipedetails";
         } else {
-            return ResponseEntity.notFound().build();
+            return "errorpage";
         }
     }
 }

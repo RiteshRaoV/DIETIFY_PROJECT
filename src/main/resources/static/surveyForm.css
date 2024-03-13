@@ -10,7 +10,8 @@ html {
 
 /*Background color*/
 #grad1 {
-    background: url("/background-2.gif");
+    background: url("/Images/background-2.gif");
+    background-size: cover;
     margin-top: 30px;
     height: 100vh;
     padding-top: 125px;
@@ -246,7 +247,7 @@ select.list-dt:focus {
 
 /*Color number of the step and the connector before it*/
 #progressbar li.active:before, #progressbar li.active:after {
-    background: #e53935;
+    background: #fe5722;
 }
 
 /*Imaged Radio Buttons*/
