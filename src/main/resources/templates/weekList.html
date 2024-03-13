@@ -46,7 +46,7 @@
     </div>
 
     <div id="week1" class="days">
-      <div class="page-container">
+      
         <div class="row">
           <div
             class="column-3"
@@ -71,176 +71,51 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+      <div
+        class="container"
+        th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.monday})"
+      ></div>
     </div>
     <div id="week2" class="days" style="display: none">
-      <div class="page-container">
-        <div class="row">
-          <div
-            class="column-3"
-            th:each="meal : ${weekresponse.week.tuesday.meals}"
-          >
-            <div class="recipe-card">
-              <div class="recipe-image">
-                <img th:src="${meal.sourceUrl}" th:alt="${meal.title}" />
-              </div>
-              <div class="recipe-top">
-                <h1 th:text="${meal.title}"></h1>
-              </div>
-              <div class="recipe-bottom3">
-                <div class="recipe-info">
-                  Servings: <span th:text="${meal.servings}"></span>
-                </div>
-                <div class="recipe-info">
-                  Total Time: <span th:text="${meal.readyInMinutes}"></span>
-                </div>
-                <a th:href="@{/recipe}" class="button3">VIEW RECIPE 🍳</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            <div
+        class="container"
+        th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.tuesday})"
+      ></div>
     </div>
     <div id="week3" class="days" style="display: none">
-      <div class="page-container">
-        <div class="row">
-          <div
-            class="column-3"
-            th:each="meal : ${weekresponse.week.wednesday.meals}"
-          >
-            <div class="recipe-card">
-              <div class="recipe-image">
-                <img th:src="${meal.sourceUrl}" th:alt="${meal.title}" />
-              </div>
-              <div class="recipe-top">
-                <h1 th:text="${meal.title}"></h1>
-              </div>
-              <div class="recipe-bottom3">
-                <div class="recipe-info">
-                  Servings: <span th:text="${meal.servings}"></span>
-                </div>
-                <div class="recipe-info">
-                  Total Time: <span th:text="${meal.readyInMinutes}"></span>
-                </div>
-                <a th:href="@{/recipe}" class="button3">VIEW RECIPE 🍳</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
+      <div
+        class="container"
+        th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.wednesday})"
+      ></div>
     </div>
 
     <div id="week4" class="days" style="display: none">
-      <div class="page-container">
-        <div class="row">
-          <div
-            class="column-3"
-            th:each="meal : ${weekresponse.week.thursday.meals}"
-          >
-            <div class="recipe-card">
-              <div class="recipe-image">
-                <img th:src="${meal.sourceUrl}" th:alt="${meal.title}" />
-              </div>
-              <div class="recipe-top">
-                <h1 th:text="${meal.title}"></h1>
-              </div>
-              <div class="recipe-bottom3">
-                <div class="recipe-info">
-                  Servings: <span th:text="${meal.servings}"></span>
-                </div>
-                <div class="recipe-info">
-                  Total Time: <span th:text="${meal.readyInMinutes}"></span>
-                </div>
-                <a th:href="@{/recipe}" class="button3">VIEW RECIPE 🍳</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
+      <div
+        class="container"
+        th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.thursday})"
+      ></div>
     </div>
     <div id="week5" class="days" style="display: none">
-      <div class="page-container">
-        <div class="row">
-          <div
-            class="column-3"
-            th:each="meal : ${weekresponse.week.friday.meals}"
-          >
-            <div class="recipe-card">
-              <div class="recipe-image">
-                <img th:src="${meal.sourceUrl}" th:alt="${meal.title}" />
-              </div>
-              <div class="recipe-top">
-                <h1 th:text="${meal.title}"></h1>
-              </div>
-              <div class="recipe-bottom3">
-                <div class="recipe-info">
-                  Servings: <span th:text="${meal.servings}"></span>
-                </div>
-                <div class="recipe-info">
-                  Total Time: <span th:text="${meal.readyInMinutes}"></span>
-                </div>
-                <a th:href="@{/recipe}" class="button3">VIEW RECIPE 🍳</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
+      <div
+        class="container"
+        th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.friday})"
+      ></div>
     </div>
     <div id="week6" class="days" style="display: none">
-      <div class="page-container">
-        <div class="row">
-          <div
-            class="column-3"
-            th:each="meal : ${weekresponse.week.saturday.meals}"
-          >
-            <div class="recipe-card">
-              <div class="recipe-image">
-                <img th:src="${meal.sourceUrl}" th:alt="${meal.title}" />
-              </div>
-              <div class="recipe-top">
-                <h1 th:text="${meal.title}"></h1>
-              </div>
-              <div class="recipe-bottom3">
-                <div class="recipe-info">
-                  Servings: <span th:text="${meal.servings}"></span>
-                </div>
-                <div class="recipe-info">
-                  Total Time: <span th:text="${meal.readyInMinutes}"></span>
-                </div>
-                <a th:href="@{/recipe}" class="button3">VIEW RECIPE 🍳</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div
+        class="container"
+        th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.saturday})"
+      ></div>
     </div>
     <div id="week7" class="days" style="display: none">
-      <div class="page-container">
-        <div class="row">
-          <div
-            class="column-3"
-            th:each="meal : ${weekresponse.week.sunday.meals}"
-          >
-            <div class="recipe-card">
-              <div class="recipe-image">
-                <img th:src="${meal.sourceUrl}" th:alt="${meal.title}" />
-              </div>
-              <div class="recipe-top">
-                <h1 th:text="${meal.title}"></h1>
-              </div>
-              <div class="recipe-bottom3">
-                <div class="recipe-info">
-                  Servings: <span th:text="${meal.servings}"></span>
-                </div>
-                <div class="recipe-info">
-                  Total Time: <span th:text="${meal.readyInMinutes}"></span>
-                </div>
-                <a th:href="@{/recipe}" class="button3">VIEW RECIPE 🍳</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div
+        class="container"
+        th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.sunday})"
+      ></div>
     </div>
     <form th:action="@{/mongodb/store-week}" method="post" id="saveForm">
       <input
@@ -266,13 +141,7 @@
         }
       }
 
-      //     document.querySelectorAll(".week").forEach(link => {
-      //   link.addEventListener("click", function(event) {
-      //     this.classList.add("clicked");
-      //     event.preventDefault(); // Prevent the default behavior of the link
-      //   });
-      // });
-
+      
       document.querySelectorAll(".week").forEach((week) => {
         week.addEventListener("click", function (event) {
           // Remove the "clicked" class from all weeks
@@ -281,8 +150,6 @@
             .forEach((w) => w.classList.remove("clicked"));
           // Add the "clicked" class to the clicked week
           this.classList.add("clicked");
-          // Call your function to show the corresponding content
-          // showDays(this.getAttribute("data-week"));
         });
       });
 
@@ -323,7 +190,7 @@
         if (event.keyCode == 27) {
           toggleModal();
         }
-      };
+      }
     </script>
   </body>
 </html>
