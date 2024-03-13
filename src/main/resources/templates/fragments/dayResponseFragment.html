@@ -1,4 +1,5 @@
 <div th:fragment="dayResponseFragmentContent(Response)">
+    <link rel="stylesheet" th:href="@{/day-list.css}" />
   <div class="page-container">
     <div class="row">
       <div class="column-3" th:each="meal : ${Response.meals}">

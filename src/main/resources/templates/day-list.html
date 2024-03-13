@@ -1,106 +1,98 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meal Plan</title>
-    <link rel="stylesheet" th:href="@{/day-list.css}" />
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,200"
-    />
-  </head>
 
-  <body>
-    <header>
-      <div th:replace="fragments/newNav :: newBar"></div>
-    </header>
-    <div class="heading">
-      <p class="heading-week">Meals for the Day</p>
-      <h1 class="heading_3">
-        dietary preferences Calories:<span th:text="${calories}"></span>
-        Diet:<span th:text="${Diet}"></span>
-      </h1>
-      <div class="icondiv">
-        <span class="icon" onclick="toggleColor(this)"
-          ><i class="fas fa-heart"></i
-        ></span>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meal Plan</title>
+  <link rel="stylesheet" th:href="@{/day-list.css}">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,200" />
+</head>
+
+<body>
+  <header>
+    <div th:replace="fragments/newNav :: newBar"></div>
+  </header>
+        <div class="heading">
+          <p class="heading-week">Meals for the Day</p>
+          <h1 class="heading_3">dietary preferences Calories:<span th:text="${calories}"></span>  Diet:<span th:text="${Diet}"></span></h1>
+          <div class="icondiv">
+          
+            <span class="icon" onclick="toggleColor(this)"><i class="fas fa-heart"></i></span>
+
+          </div>
+        </div>
+        <div class="modal" id="myModal">
+          <div class="modal-content">
+            <span class="close" onclick="toggleModal()">&times;</span>
+            <p>Please provide a title for your diet plan</p>
+            <input type="text" id="titleInput" placeholder="Enter title...">
+            <button onclick="saveDietPlan()" class="savebtn">Save</button>
+          </div>
+        </div>
+      
+        <div
+        class="container"
+        th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${dayResponse})"
+      ></div>
       </div>
     </div>
-    <div class="modal" id="myModal">
-      <div class="modal-content">
-        <span class="close" onclick="toggleModal()">&times;</span>
-        <p>Please provide a title for your diet plan</p>
-        <input type="text" id="titleInput" placeholder="Enter title..." />
-        <button onclick="saveDietPlan()" class="savebtn">Save</button>
-      </div>
-    </div>
-
-    <div
-      class="container"
-      th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(dayResponse=${dayResponse})"
-    ></div>
-
     <form th:action="@{/mongodb/store}" method="post" id="saveForm">
-      <input
-        type="hidden"
-        name="${_csrf.parameterName}"
-        value="${_csrf.token}"
-      />
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
       <button type="button" onclick="showPopup()">Save Day Response</button>
-      <div id="popup" style="display: none">
-        <input type="text" id="userText" name="userText" />
+      <div id="popup" style="display: none;">
+        <input type="text" id="userText" name="userText">
         <button type="submit">Save</button>
       </div>
+
     </form>
+  </div>
 
-    <script>
-      function showPopup() {
-        $("#popup").show();
-      }
-      function toggleColor(element) {
-        var currentColor = window.getComputedStyle(
-          element.querySelector("i")
-        ).color;
-        var newColor = currentColor === "rgb(255, 0, 0)" ? "black" : "red"; // Toggle between red and black
 
-        element.querySelector("i").style.color = newColor;
-        toggleModal();
-      }
+  <script>
+    function showPopup() {
+      $('#popup').show();
+    }
+    function toggleColor(element) {
+  var currentColor = window.getComputedStyle(element.querySelector('i')).color;
+  var newColor = currentColor === 'rgb(255, 0, 0)' ? 'black' : 'red'; // Toggle between red and black
 
-      function toggleModal() {
-        var modal = document.getElementById("myModal");
-        modal.style.display =
-          modal.style.display === "block" ? "none" : "block";
-      }
-      function saveDietPlan() {
-        var title = document.getElementById("titleInput").value;
-        alert("Diet plan saved with title: " + title);
-        toggleModal(); // Close the modal after saving
-      }
+  element.querySelector('i').style.color = newColor;
+  toggleModal();
+}
 
-      // Get the modal
-      var modal = document.getElementById("myModal");
+function toggleModal() {
+  var modal = document.getElementById("myModal");
+  modal.style.display = modal.style.display === "block" ? "none" : "block";
+}
+function saveDietPlan() {
+  var title = document.getElementById("titleInput").value;
+  alert("Diet plan saved with title: " + title);
+  toggleModal(); // Close the modal after saving
+}
 
-      // When the user clicks anywhere outside of the modal, close it
-      window.onclick = function (event) {
-        if (event.target == modal) {
-          toggleModal();
-        }
-      };
+// Get the modal
+var modal = document.getElementById("myModal");
 
-      // When the user presses the Escape key, close the modal
-      document.onkeydown = function (event) {
-        event = event || window.event;
-        if (event.keyCode == 27) {
-          toggleModal();
-        }
-      };
-    </script>
-  </body>
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    toggleModal();
+  }
+}
+
+// When the user presses the Escape key, close the modal
+document.onkeydown = function(event) {
+  event = event || window.event;
+  if (event.keyCode == 27) {
+    toggleModal();
+  }
+}
+
+
+  </script>
+</body>
+
 </html>
