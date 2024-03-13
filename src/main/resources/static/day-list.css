@@ -122,15 +122,43 @@ header{
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.savebtn{
+  /* padding: 10px 10px; */
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #ff5f6d, #ffc371);
+  color: #fff;
+  text-decoration: none;
+  /* text-transform: uppercase; */
+  border: none;
+  width: 70px;
+  height: 30px;
+  font-size: larger;
+}
+#titleInput{
+height: 30px;
+margin-top: 15px;
+margin-left: 45px;
+border-radius: 5px;
+border: 1px solid black;
+}
+
+.savebtn:hover{
+  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 #favicons{
   font-size: 40px;
  display: block;
  cursor: pointer;
+ z-index: 1000;
+ 
 }
 .icondiv{
   display: flex;
   justify-content: end;
   margin-right: 140px;
+  
 }
 .icon {
   font-size: 24px; 
@@ -153,6 +181,7 @@ header{
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+
 }
 
 /* Modal content */
@@ -162,7 +191,7 @@ header{
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 25%; 
+  width: 28%; 
   border-radius: 5px;/* Could be more or less, depending on screen size */
 }
 
@@ -208,7 +237,7 @@ header{
   border-radius: 30px;/* Change the border style as needed */
 }
 
-p{
+.heading-week{
   margin-top: 10px;
   text-align: center;
   background-image: linear-gradient(to right, #ff5f6d, #ffc371);
