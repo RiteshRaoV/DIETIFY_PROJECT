@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Data from MongoDB</title>
+</head>
+<body>
+    <!-- <div>
+        <p><span th:text="${responseData}"></span></p>
+    </div> -->
+    <!-- <div th:each="items : ${responseData}">
+        <div th:each="item : ${item.entrySet()}">
+            <p th:text="${item.data}"></p>
+            <p th:text="${item.title}"></p>
+        </div> -->
+        <div th:each="item : ${responseData}">
+            <!-- <div th:each="meal : ${item.data.meals}">
+              <p th:text="${meal.title}"></p>
+            </div> -->
+            <p th:text="${item[0].title}"></p>
+          </div>
+    <!-- </div> -->
+    <!-- <h2>Data:</h2>
+    <div th:each="meal : ${responseData.data.meals}">
+        <p th:text="${meal.title}"></p>
+        
+    </div> -->
+
+    <!-- <div th:each="dayPlan : ${responseData}">
+        <h2>Title:</h2>
+        <p th:text="${dayPlan['title']}"></p>
+    </div> -->
+    <!-- <h2>Title:</h2>
+    <p th:text="${responseData.title}"></p> -->
+    <!-- <div>
+        <h2>Data:</h2>
+        <p th:text="${responseData.data}"></p>
+    
+        <h2>Title:</h2>
+        <p th:text="${responseData.title}"></p>
+    </div> -->
+</body>
+</html>

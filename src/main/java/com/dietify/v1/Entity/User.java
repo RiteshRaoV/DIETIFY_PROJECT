@@ -24,11 +24,14 @@ public class User {
 	private String password;
 
 	private String resetToken;
-	
+
 	private String role;
 
-	@OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Blog> blogs = new ArrayList<>();
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Favourite> favourites = new ArrayList<>();
 
 	public int getId() {
 		return id;
