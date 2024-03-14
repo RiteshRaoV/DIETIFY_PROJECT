@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Recipes</title>
-    <link rel="stylesheet" th:href="@{/recipestyle.css}" />
+    <link rel="stylesheet" th:href="@{/MealViewCSS/recipestyle.css}" />
   </head>
 
   <body>
@@ -13,7 +13,7 @@
 
     <div class="container">
       <div class="titlecontainer">
-        <p th:text="${recipe.title}"></p>
+        <p th:text="${recipe.getTitle()}">Japanese Chicken Donburi</p>
       </div>
 
       <div class="parentdiv">
@@ -46,17 +46,13 @@
         </div>
       </div>
 
-      <div
-        th:each="instruction : ${recipe.analyzedInstructions}"
-        class="instructions"
-      >
+      <div th:each="instruction : ${recipe.analyzedInstructions}"class="instructions">
         <h3 th:text="${instruction.name}"></h3>
         <ol>
           <h2>Instructions</h2>
           <li th:each="step : ${instruction.steps}">
             <div>
               <p th:text="${ step.step}"></p>
-
             </div>
           </li>
         </ol>

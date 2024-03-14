@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.dietify.v1.DTO.Meals;
 import com.dietify.v1.DTO.Nutrients;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DayResponse {
 
     private List<Meals> meals;
@@ -23,5 +24,12 @@ public class DayResponse {
 	public void setNutrients(Nutrients nutrients) {
 		this.nutrients = nutrients;
 	}
+	// @Override
+    // public String toString() {
+    //     return "DayResponse{" +
+    //             "meals=" + meals +
+    //             ", nutrients=" + nutrients +
+    //             '}';
+    // }
 
 }

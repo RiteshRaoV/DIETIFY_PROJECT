@@ -16,58 +16,58 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Autowired
-	public CustomAuthSucessHandler sucessHandler;
+    @Autowired
+    public CustomAuthSucessHandler sucessHandler;
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Bean
-	public UserDetailsService getDetailsService() {
-		return new CustomUserDetailsService();
-	}
+    @Bean
+    public UserDetailsService getDetailsService() {
+        return new CustomUserDetailsService();
+    }
 
-	@Bean
-	public DaoAuthenticationProvider getAuthenticationProvider() {
-		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-		daoAuthenticationProvider.setUserDetailsService(getDetailsService());
-		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-		return daoAuthenticationProvider;
-	}
+    @Bean
+    public DaoAuthenticationProvider getAuthenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(getDetailsService());
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return daoAuthenticationProvider;
+    }
 
-	@SuppressWarnings("removal")
-	@Bean
+    @SuppressWarnings("removal")
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests()
                 .requestMatchers("/saveUser","/register","/verify").permitAll() // Allow unauthenticated access to /saveUser
                 .requestMatchers("/mealplanner/**","/formpage","/recipe","/home","/profile").hasRole("USER")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/blogs/**").hasAnyRole("ADMIN","BLOGGER")
+                .requestMatchers("/blogs/**").hasAnyRole("ADMIN", "BLOGGER")
                 .requestMatchers("/**").permitAll()
                 .and()
-            .formLogin()
+                .formLogin()
                 .loginPage("/signin")
                 .loginProcessingUrl("/userLogin")
                 .successHandler(sucessHandler)
                 .permitAll()
                 .and()
-            .logout() // Configuring logout
+                .logout() // Configuring logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
                 .and()
-            .csrf()
+                .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
-            .sessionManagement() 
-            .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) 
-            .maximumSessions(1) 
-            .expiredUrl("/login?expired");
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .maximumSessions(1)
+                .expiredUrl("/login?expired");
         return http.build();
     }
 }

@@ -1,5 +1,5 @@
 <div th:fragment="dayResponseFragmentContent(Response)">
-    <link rel="stylesheet" th:href="@{/day-list.css}" />
+  <link rel="stylesheet" th:href="@{/MealViewCSS/day-list.css}" />
   <div class="page-container">
     <div class="row">
       <div class="column-3" th:each="meal : ${Response.meals}">
@@ -17,7 +17,22 @@
             <div class="recipe-info">
               Total Time: <span th:text="${meal.readyInMinutes}"></span>
             </div>
-            <a th:href="@{/recipe}" class="button3">VIEW RECIPE 🍳</a>
+            <form th:action="@{/recipe}" method="post">
+              <input
+                type="hidden"
+                name="${_csrf.parameterName}"
+                value="${_csrf.token}"
+              />
+              <button
+                type="submit"
+                th:href="@{/recipe}"
+                class="button3"
+                th:value="${meal.id}"
+                name="id"
+              >
+                VIEW RECIPE 🍳
+              </button>
+            </form>
           </div>
         </div>
       </div>

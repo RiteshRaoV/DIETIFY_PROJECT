@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meal Plan</title>
-  <link rel="stylesheet" th:href="@{/day-list.css}">
+  <link rel="stylesheet" th:href="@{/MealViewCSS/day-list.css}">
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,200" />
@@ -15,13 +15,12 @@
   <header>
     <div th:replace="fragments/newNav :: newBar"></div>
   </header>
- 
         <div class="heading">
           <p class="heading-week">Meals for the Day</p>
           <h1 class="heading_3">dietary preferences Calories:<span th:text="${calories}"></span>  Diet:<span th:text="${Diet}"></span></h1>
           <div class="icondiv">
           
-            <span class="icon" id="iconbtn" onclick="toggleColor(this)"><i class="fas fa-heart"></i></span>
+            <span class="icon" onclick="toggleColor(this)"><i class="fas fa-heart"></i></span>
 
           </div>
         </div>
@@ -30,7 +29,7 @@
             <span class="close" onclick="toggleModal()">&times;</span>
             <p>Please provide a title for your diet plan</p>
             <input type="text" id="titleInput" placeholder="Enter title...">
-            <button onclick="saveDietPlan()" class="savebtn" >Save</button>
+            <button onclick="saveDietPlan()" class="savebtn">Save</button>
           </div>
         </div>
       
@@ -40,70 +39,48 @@
       ></div>
       </div>
     </div>
-    `
+    <form th:action="@{/mongodb/store}" method="post" id="saveForm">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+      <button type="button" onclick="showPopup()">Save Day Response</button>
+      <div id="popup" style="display: none;">
+        <input type="text" id="userText" name="userText">
+        <button type="submit">Save</button>
+      </div>
+
+    </form>
   </div>
 
 
   <script>
-    var spanelement;
-    var clickCount = 0;
-    function disableButton() {
-          var button = document.getElementById('iconbtn');
-          if (clickCount === 1 && button) {
-              button.disabled = true;
-              alert('meal plan already saved');
-          }
-         
-    }
-
     function showPopup() {
       $('#popup').show();
     }
-
-
     function toggleColor(element) {
-      spanelement=element;
-        if(clickCount>=1){
-            disableButton();
-         }else{
-              var title = document.getElementById("titleInput");
-              title.value="";   
-              toggleModal();
-        }
-    }
+  var currentColor = window.getComputedStyle(element.querySelector('i')).color;
+  var newColor = currentColor === 'rgb(255, 0, 0)' ? 'black' : 'red'; 
 
-    function toggleModal() {
-        var modal = document.getElementById("myModal");
-        modal.style.display = modal.style.display === "block" ? "none" : "block";
-    }
-
-    function saveDietPlan() {
-          clickCount++;
-          if(clickCount>1){
-              disableButton();
-           }
-         var title = document.getElementById("titleInput").value;
-        alert("Diet plan saved with title: " + title);
-
-        var currentColor = window.getComputedStyle(spanelement.querySelector('i')).color;
-        var newColor = currentColor === 'rgb(255, 0, 0)' ? 'black' : 'red'; // Toggle between red and black
-        spanelement.querySelector('i').style.color = newColor;
-
-      toggleModal(); 
-      
+  element.querySelector('i').style.color = newColor;
+  toggleModal();
 }
 
+function toggleModal() {
+  var modal = document.getElementById("myModal");
+  modal.style.display = modal.style.display === "block" ? "none" : "block";
+}
+function saveDietPlan() {
+  var title = document.getElementById("titleInput").value;
+  alert("Diet plan saved with title: " + title);
+  toggleModal(); 
+}
 
-
+// Get the modal
 var modal = document.getElementById("myModal");
-
 
 window.onclick = function(event) {
   if (event.target == modal) {
     toggleModal();
   }
 }
-
 
 document.onkeydown = function(event) {
   event = event || window.event;
