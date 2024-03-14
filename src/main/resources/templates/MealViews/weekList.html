@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" th:href="@{.MealViewCSS/day-list.css}" />
+    <link rel="stylesheet" th:href="@{/MealViewCSS/day-list.css}" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link
       rel="stylesheet"
@@ -32,9 +32,7 @@
       <a class="week" onclick="showDays('week7')">Sunday</a>
     </div>
     <div class="icondiv">
-      <span class="icon" onclick="toggleColor(this)"
-        ><i class="fas fa-heart"></i
-      ></span>
+      <span class="icon" id="iconbtn" onclick="toggleColor(this)"><i class="fas fa-heart"></i></span>
     </div>
     <div class="modal" id="myModal">
       <div class="modal-content">
@@ -123,26 +121,53 @@
         });
       });
 
-      function toggleColor(element) {
-        var currentColor = window.getComputedStyle(
-          element.querySelector("i")
-        ).color;
-        var newColor = currentColor === "rgb(255, 0, 0)" ? "black" : "red"; // Toggle between red and black
+      var spanelement;
+    var clickCount = 0;
+    function disableButton() {
+          var button = document.getElementById('iconbtn');
+          if (clickCount === 1 && button) {
+              button.disabled = true;
+              alert('meal plan already saved');
+          }
+         
+    }
 
-        element.querySelector("i").style.color = newColor;
-        toggleModal();
-      }
+    function showPopup() {
+      $('#popup').show();
+    }
 
-      function toggleModal() {
+
+    function toggleColor(element) {
+      spanelement=element;
+        if(clickCount>=1){
+            disableButton();
+         }else{
+              var title = document.getElementById("titleInput");
+              title.value="";   
+              toggleModal();
+        }
+    }
+
+    function toggleModal() {
         var modal = document.getElementById("myModal");
-        modal.style.display =
-          modal.style.display === "block" ? "none" : "block";
-      }
-      function saveDietPlan() {
-        var title = document.getElementById("titleInput").value;
+        modal.style.display = modal.style.display === "block" ? "none" : "block";
+    }
+
+    function saveDietPlan() {
+          clickCount++;
+          if(clickCount>1){
+              disableButton();
+           }
+         var title = document.getElementById("titleInput").value;
         alert("Diet plan saved with title: " + title);
-        toggleModal(); // Close the modal after saving
-      }
+
+        var currentColor = window.getComputedStyle(spanelement.querySelector('i')).color;
+        var newColor = currentColor === 'rgb(255, 0, 0)' ? 'black' : 'red'; // Toggle between red and black
+        spanelement.querySelector('i').style.color = newColor;
+
+      toggleModal(); 
+      
+}
 
       // Get the modal
       var modal = document.getElementById("myModal");

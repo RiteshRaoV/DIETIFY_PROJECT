@@ -19,9 +19,7 @@
           <p class="heading-week">Meals for the Day</p>
           <h1 class="heading_3">dietary preferences Calories:<span th:text="${calories}"></span>  Diet:<span th:text="${Diet}"></span></h1>
           <div class="icondiv">
-          
-            <span class="icon" onclick="toggleColor(this)"><i class="fas fa-heart"></i></span>
-
+            <span class="icon" id="iconbtn" onclick="toggleColor(this)"><i class="fas fa-heart"></i></span>
           </div>
         </div>
         <div class="modal" id="myModal">
@@ -29,51 +27,57 @@
             <span class="close" onclick="toggleModal()">&times;</span>
             <p>Please provide a title for your diet plan</p>
             <input type="text" id="titleInput" placeholder="Enter title...">
-            <button onclick="saveDietPlan()" class="savebtn">Save</button>
+            <button onclick="saveDietPlan()" class="savebtn" >Save</button>
           </div>
         </div>
-      
         <div
         class="container"
         th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${dayResponse})"
       ></div>
       </div>
     </div>
-    <form th:action="@{/mongodb/store}" method="post" id="saveForm">
-      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-      <button type="button" onclick="showPopup()">Save Day Response</button>
-      <div id="popup" style="display: none;">
-        <input type="text" id="userText" name="userText">
-        <button type="submit">Save</button>
-      </div>
-
-    </form>
   </div>
-
-
   <script>
+    var spanelement;
+    var clickCount = 0;
+    function disableButton() {
+          var button = document.getElementById('iconbtn');
+          if (clickCount === 1 && button) {
+              button.disabled = true;
+              alert('meal plan already saved');
+          }
+         
+    }
     function showPopup() {
       $('#popup').show();
     }
     function toggleColor(element) {
-  var currentColor = window.getComputedStyle(element.querySelector('i')).color;
-  var newColor = currentColor === 'rgb(255, 0, 0)' ? 'black' : 'red'; 
-
-  element.querySelector('i').style.color = newColor;
-  toggleModal();
+      spanelement=element;
+        if(clickCount>=1){
+            disableButton();
+         }else{
+              var title = document.getElementById("titleInput");
+              title.value="";   
+              toggleModal();
+        }
+    }
+    function toggleModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = modal.style.display === "block" ? "none" : "block";
+    }
+    function saveDietPlan() {
+          clickCount++;
+          if(clickCount>1){
+              disableButton();
+           }
+         var title = document.getElementById("titleInput").value;
+        alert("Diet plan saved with title: " + title);
+        var currentColor = window.getComputedStyle(spanelement.querySelector('i')).color;
+        var newColor = currentColor === 'rgb(255, 0, 0)' ? 'black' : 'red'; // Toggle between red and black
+        spanelement.querySelector('i').style.color = newColor;
+      toggleModal(); 
 }
 
-function toggleModal() {
-  var modal = document.getElementById("myModal");
-  modal.style.display = modal.style.display === "block" ? "none" : "block";
-}
-function saveDietPlan() {
-  var title = document.getElementById("titleInput").value;
-  alert("Diet plan saved with title: " + title);
-  toggleModal(); 
-}
-
-// Get the modal
 var modal = document.getElementById("myModal");
 
 window.onclick = function(event) {
@@ -88,9 +92,7 @@ document.onkeydown = function(event) {
     toggleModal();
   }
 }
-
-
-  </script>
+</script>
 </body>
 
 </html>
