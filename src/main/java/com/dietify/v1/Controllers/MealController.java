@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,9 +34,14 @@ public class MealController {
 	@Value("${apikey}")
 	private String apiKey;
 
+	@GetMapping("/day")
+	public String day(Model model,HttpSession session){
+		model.addAttribute("dayResponse", session.getAttribute("dayResponse"));
+		return "day-list";
+	}
 	@PostMapping("/day")
 	public String getDayMeals(@ModelAttribute Formdata formdata, Model model, HttpSession session) {
-		// session.removeAttribute("dayResponse");
+		session.removeAttribute("dayResponse");
 
 		// RestTemplate rt = new RestTemplate();
 
@@ -104,16 +110,22 @@ public class MealController {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			DayResponse dayResponse = mapper.readValue(jsonString, DayResponse.class);
-			model.addAttribute("dayResponse", dayResponse);
+			session.setAttribute("dayResponse", dayResponse);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "day-list";
+		return "redirect:/mealplanner/day";
 	}
 
+	@GetMapping("/week")
+	public String week(Model model,HttpSession session){
+		model.addAttribute("weekresponse",session.getAttribute("weekResponse"));
+		return "weekList";
+	}
 	@PostMapping("/week")
 	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model,HttpSession session) {
+		session.removeAttribute("weekResponse");
 
 		// RestTemplate restTemplate = new RestTemplate();
 
@@ -377,8 +389,7 @@ public class MealController {
 			WeekResponse weekresponse = objectMapper.readValue(jsonString, WeekResponse.class);
 			updateMealSourceUrls(weekresponse.getWeek());
 			session.setAttribute("weekResponse",weekresponse);
-			model.addAttribute("weekresponse", weekresponse);
-			return "weeklist";
+			return "redirect:/mealplanner/week";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

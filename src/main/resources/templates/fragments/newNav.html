@@ -9,7 +9,7 @@
       <a class="nav-linkbar" th:href="@{/home}" id="topLink">Home</a>
       <a class="nav-linkbar" href="#aboutSection" id="aboutLink">About Us</a>
       <a class="nav-linkbar" th:href="@{/formpage}" id="survey">Survey</a>
-      <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-linkbar" href="#servicesSection" id="servicesLink">addBlogs</a>
+      <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-linkbar" href="/blogs/allBlogs" id="servicesLink">addBlogs</a>
       <img class="nav-avatar" th:src="@{/admin.png}" alt="Avatar" onclick="displaydropdown()">
       <div class="dropdown-content">
         <a th:href="@{/userprofile}">Profile</a>
