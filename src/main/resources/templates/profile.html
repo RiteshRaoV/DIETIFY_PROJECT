@@ -13,7 +13,7 @@
     <header>
         <div th:replace="~{fragments/newNav :: newBar}"></div>
     </header>
-    <div>
+    <div class="Welcome">
         <p>Welcome <span th:text="${name}"></span></p>
     </div>
     <main class="flex">
@@ -23,13 +23,7 @@
             <ul>
                 <li th:each="dayfav : ${dayfavs}">
                     <div>
-                    <!-- <a th:text="${dayfav.title}"></a> -->
-                    <!-- <span th:text="${dayfav.favouriteId}"></span> -->
-                    
-                    <!-- <a th:text="${dayfav.title}" th:href="@{/day-save(favourite_Id=${dayfav.favouriteId})}"></a> -->
-
                     <form id="dayPlanForm" th:action="@{/savedDayPlan}" method="post">
-                        <!-- <input type="hidden" id="favType" name="favType" th:value="*{dayfav.type}"> -->
                         <input type="hidden" id="favouriteId" name="favouriteId" th:value="*{dayfav.favouriteId}">
                         <a href="#" onclick="submitDayForm(); return false;" th:text="${dayfav.title}"></a>
                     </form>
@@ -44,10 +38,8 @@
             <ul>
                 <li th:each="weekfav : ${weekfavs}">
                     <div>
-                    <!-- <a th:text="${weekfav.title}"></a>
                     <span th:text="${weekfav.favouriteId}"></span> -->
                     <form id="weekPlanForm" th:action="@{/savedWeekPlan}" method="post">
-                        <!-- <input type="hidden" id="favType" name="favType" th:value="*{weekfav.type}"> -->
                         <input type="hidden" id="favouriteId" name="favouriteId" th:value="*{weekfav.favouriteId}">
                         <a href="#" onclick="submitWeekForm(); return false;" th:text="${weekfav.title}"></a>
                     </form>
