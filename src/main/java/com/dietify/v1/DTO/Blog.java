@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class Blog {
     public int blogId;
     public String blogContent;
+    public String blogType;
     public String blogTitle;
     public String status;
     public LocalDateTime publishDate;
@@ -24,6 +25,7 @@ public class Blog {
         this.status = status;
         this.publishDate = publishDate;
     }
+    
     public int getBlogId() {
         return blogId;
     }
@@ -53,6 +55,12 @@ public class Blog {
     }
     public void setPublishDate(LocalDateTime publishDate) {
         this.publishDate = publishDate;
+    }
+    public String getBlogType() {
+        return blogType;
+    }
+    public void setBlogType(String blogType) {
+        this.blogType = blogType;
     }
 
     

@@ -32,10 +32,13 @@ public class BlogController {
 
     @GetMapping("/allBlogs")
     public String allBlogs(Model model) {
-        List<User> users = userRepository.findAll();
-        model.addAttribute("users", users);
-        return "allBlogs";
+        // Fetch users with associated blogs
+        List<User> usersWithBlogs = userRepository.findByBlogsIsNotEmpty();
+        
+        model.addAttribute("users", usersWithBlogs);
+        return "BlogViews/allBlogs";
     }
+    
 
     @PostMapping("/changeStatus")
     public String changeBlogStatus(@RequestParam("blogId") int blogId, @RequestParam("status") String status) {
@@ -54,7 +57,7 @@ public class BlogController {
     public String allApprovedBlogs(Model model) {
         List<Blog> approvedBlogs = repo.findByStatus("Approved");
         model.addAttribute("approvedBlogs", approvedBlogs);
-        return "blogs";
+        return "BlogViews/blogs";
     }
 
     @GetMapping("/myBlogs")
@@ -65,7 +68,7 @@ public class BlogController {
         if (user != null) {
             List<Blog> myBlogs = repo.findByUser_Id(user.getId());
             model.addAttribute("myBlogs", myBlogs);
-            return "blogger-home";
+            return "BlogViews/blogger-home";
         } else {
             return "redirect:/login";
         }
@@ -73,7 +76,7 @@ public class BlogController {
 
     @GetMapping("/addBlogs")
     public String addBlogs() {
-        return "add-blogs";
+        return "BlogViews/add-blogs";
     }
 
     @PostMapping("/save")
@@ -83,7 +86,6 @@ public class BlogController {
 
         if (userEmail != null) {
             User user = userRepository.findByEmail(userEmail);
-
             if (user != null) {
                 blog.setUser(user);
                 blog.setStatus("Pending");

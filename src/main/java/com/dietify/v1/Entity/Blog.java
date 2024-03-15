@@ -20,6 +20,8 @@ public class Blog {
     @JoinColumn(name = "bloggerId")
     private User user;
 
+    String blogType;
+
     String blogTitle;
 
     String blogContent;
@@ -94,6 +96,14 @@ public class Blog {
 
     public void setPublishDate(LocalDateTime publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public String getBlogType() {
+        return blogType;
+    }
+
+    public void setBlogType(String blogType) {
+        this.blogType = blogType;
     }
 
 }

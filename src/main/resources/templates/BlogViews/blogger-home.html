@@ -1,18 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeLeaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/BlogViewCSS/blogger-home.css}">
     <title>My Blogs</title>
 </head>
 <body>
+    <header>
+        <div th:replace="fragments/newNav :: newBar"></div>
+    </header>
     <h1>My Blogs</h1>
-    <ul>
-        <th:block th:each="blog : ${myBlogs}">
-            <li th:text="${blog.blogTitle}"></li>
-            <li th:text="${blog.status}"></li>
-        </th:block>
-    </ul>
-    <a th:href="@{/blogs/addBlogs}">Sign in</a></h5>
+    <div class="filter-container">
+        <label for="type">Filter by Type:</label>
+        <select id="type" >
+            <option value="">All Types</option>
+            <option value="Blog">Blog</option>
+            <option value="FunFacts">Fun Facts</option>
+            <option value="HealthTips">Health Tips</option>
+        </select>
+        <label for="status">Filter by Status:</label>
+        <select id="status" >
+            <option value="">All Statuses</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Pending">Pending</option>
+            <input type="submit" onclick="filterBlogs()" value="Apply Filter">
+
+        </select>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="blog : ${myBlogs}" class="blog-row" th:attr="data-type=${blog.blogType}, data-status=${blog.status}">
+                <td th:text="${blog.blogTitle}"></td>
+                <td th:text="${blog.blogContent}"></td>
+                <td th:text="${blog.blogType}"></td>
+                <td th:text="${blog.status}"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <a class="buttonAdd" th:href="@{/blogs/addBlogs}">Add New Blog</a>
 </body>
 </html>
+<script>
+    function filterBlogs() {
+        var type = document.getElementById("type").value;
+        var status = document.getElementById("status").value;
+        
+        var blogs = document.querySelectorAll(".blog-row");
+
+        blogs.forEach(function(blog) {
+            var blogType = blog.getAttribute("data-type");
+            var blogStatus = blog.getAttribute("data-status");
+
+            if ((type === "" || blogType === type) && (status === "" || blogStatus === status)) {
+                blog.style.display = "table-row";
+            } else {
+                blog.style.display = "none";
+            }
+        });
+    }
+</script>
+

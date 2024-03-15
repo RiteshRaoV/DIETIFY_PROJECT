@@ -6,10 +6,15 @@
   <div class="nav-bar">
     <img class="nav-logo" th:src='@{/Images/logo.png}'>
     <div class="nav-links-container">
-      <a class="nav-linkbar" th:href="@{/home}" id="topLink">Home</a>
+      <a class="nav-linkbar" 
+      th:href="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? @{/admin/users} : (${#authorization.expression('hasRole(''ROLE_USER'')')} ? @{/home} : @{/blogs/myBlogs})" 
+      id="topLink">
+      Home
+   </a>
       <a class="nav-linkbar" href="#aboutSection" id="aboutLink">About Us</a>
       <a class="nav-linkbar" th:href="@{/formpage}" id="survey">Survey</a>
-      <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-linkbar" href="#servicesSection" id="servicesLink">addBlogs</a>
+      <a th:if="${#authorization.expression('hasRole(''ROLE_BLOGGER'')')}" class="nav-linkbar" th:href="@{/blogs/addBlogs}" id="addBlogs">addBlogs</a>
+      <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-linkbar" th:href="@{/blogs/allBlogs}" id="servicesLink">allBlogs</a>
       <img class="nav-avatar" th:src="@{/Images/admin.png}" alt="Avatar" onclick="displaydropdown()">
       <div class="dropdown-content">
         <a th:href="@{/userprofile}">Profile</a>

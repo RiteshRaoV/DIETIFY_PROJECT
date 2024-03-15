@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>User and Blog Details</title>
+    <link rel="stylesheet" th:href="@{/BlogViewCSS/allBlogs.css}">
 </head>
 <body>
     <header>
@@ -15,11 +16,7 @@
                 <th>User ID</th>
                 <th>User Name</th>
                 <th>User Email</th>
-                <th>Blog ID</th>
-                <th>Blog Title</th>
-                <th>Blog Content</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>Blogs</th>
             </tr>
         </thead>
         <tbody>
@@ -27,33 +24,43 @@
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.email}"></td>
-                <td colspan="5"> <!-- Leave columns empty for user-specific information -->
+                <td colspan="5">
                     <table>
-                        <tr th:each="blog : ${user.blogs}">
-                            <!-- Display blog details for each user -->
-                            <td th:text="${blog.blogId}"></td>
-                            <td th:text="${blog.blogTitle}"></td>
-                            <td th:text="${blog.blogContent}"></td>
-                            <td th:text="${blog.status}"></td>
-                            <td>
-                                <form th:action="@{/blogs/changeStatus}" method="post">
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                    <input type="hidden" name="blogId" th:value="${blog.blogId}" />
-                                    <input type="hidden" name="status" value="Approved" />
-                                    <button type="submit">Approve</button>
-                                </form>
-                                <form th:action="@{/blogs/changeStatus}" method="post">
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                    <input type="hidden" name="blogId" th:value="${blog.blogId}" />
-                                    <input type="hidden" name="status" value="Rejected" />
-                                    <button type="submit">Reject</button>
-                                </form>
-                            </td>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Blog ID</th>
+                                <th>Blog Title</th>
+                                <th>Blog Content</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="blog : ${user.blogs}">
+                                <td th:text="${blog.blogId}"></td>
+                                <td th:text="${blog.blogTitle}"></td>
+                                <td th:text="${blog.blogContent}"></td>
+                                <td th:text="${blog.status}"></td>
+                                <td>
+                                    <form th:action="@{/blogs/changeStatus}" method="post">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                        <input type="hidden" name="blogId" th:value="${blog.blogId}" />
+                                        <input type="hidden" name="status" value="Approved" />
+                                        <button type="submit">Approve</button>
+                                    </form>
+                                    <form th:action="@{/blogs/changeStatus}" method="post">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                        <input type="hidden" name="blogId" th:value="${blog.blogId}" />
+                                        <input type="hidden" name="status" value="Rejected" />
+                                        <button type="submit">Reject</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </td>
             </tr>
-        </tbody>        
+        </tbody>
     </table>
 </body>
 </html>
