@@ -21,29 +21,28 @@ import com.dietify.v1.Repository.UserRepo;
 public class AdminController {
 
 	@Autowired
-	private UserRepo userRepo; // Use JPA repository for CRUD operations
+	private UserRepo userRepo; 
 
 	@GetMapping("/profile")
 	public String profile(Model model) {
-		// Check if user is authenticated
 		if (SecurityContextHolder.getContext().getAuthentication() == null) {
-			return "redirect:/index"; // Redirect to login if not authenticated
+			return "redirect:/index"; 
 		}
 
 		Principal principal = SecurityContextHolder.getContext().getAuthentication();
 		String email = principal.getName();
-		User user = userRepo.findByEmail(email); // Or userService.getCurrentUser()
+		User user = userRepo.findByEmail(email); 
 		model.addAttribute("user", user);
 
-		return "admin_profile"; // Render the admin profile page
+		return "admin_profile"; 
 	}
 
-	@GetMapping("/users") // Revised endpoint for clarity
+	@GetMapping("/users") 
 	public String getAllUsers(Model model) {
 		List<User> users;
-		users = userRepo.findAll(); // Use JPA repository for simplicity
+		users = userRepo.findAll(); 
 		model.addAttribute("users", users);
-		return "admin_users"; // Render the user data view
+		return "admin_users"; 
 	}
 
 	@PostMapping("/user/delete")
@@ -53,8 +52,6 @@ public class AdminController {
 	}
 	@GetMapping("/user/assignRole")
     public String showAssignRoleForm(@RequestParam("userId") int userId, Model model) {
-        // Here, you might fetch the user details using the userId and pass it to the view
-        // For demonstration, I'm simply passing the userId to the view
         model.addAttribute("userId", userId);
         return "admin/assignRoleForm";
     }
@@ -69,7 +66,7 @@ public class AdminController {
             userRepo.save(user);
             return "redirect:/admin/users";
         } else {
-            return "redirect:/admin/users"; // or any other appropriate action
+            return "redirect:/admin/users";
         }
     }
 }
