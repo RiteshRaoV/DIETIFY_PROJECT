@@ -1,8 +1,6 @@
 package com.dietify.v1.Controllers;
 
-import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
@@ -19,11 +17,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.dietify.v1.DTO.Day.DayResponse;
 import com.dietify.v1.DTO.Week.WeekResponse;
 import com.dietify.v1.Entity.Favourite;
 import com.dietify.v1.Entity.User;
-import com.dietify.v1.Repository.FavouriteRepo;
 import com.dietify.v1.Repository.UserRepo;
 import com.dietify.v1.Service.FavService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,8 +34,6 @@ public class MongoDBController {
     private UserRepo userRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
-    @Autowired
-    private FavouriteRepo favRepository;
     @Autowired
     private UserRepo userRepo;
     @Autowired
@@ -113,8 +109,8 @@ public class MongoDBController {
         }
     }
 
-    @GetMapping("/profile")
-    public ResponseEntity<?> retrieveDataByUserIdAndType(Principal p, Model m) {
+    @GetMapping("/userprofile")
+    public String retrieveDataByUserIdAndType(Principal p, Model m) {
         try {
             String email = p.getName();
             User user = userRepo.findByEmail(email);
@@ -124,61 +120,54 @@ public class MongoDBController {
             List<Favourite> weekFavourites = favService.findByUserIdAndType(user.getId(), "week");
 
             if (dayFavourites.isEmpty() && weekFavourites.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("No saved DAY or WEEK PLANS found for userId: " + user.getId());
+                m.addAttribute("empty", "No saved DAY or WEEK PLANS found");
             }
-
-            List<DayResponse> dayResponses = new ArrayList<>();
-            List<WeekResponse> weekResponses = new ArrayList<>();
-
-            for (Favourite dayFavourite : dayFavourites) {
-                ObjectId dayFavouriteId = new ObjectId(dayFavourite.getFavouriteId());
-                Document dayPlanDocument = mongoTemplate.findById(dayFavouriteId, Document.class, "mealPlans");
-                if (dayPlanDocument != null) {
-                    DayResponse dayResponse = convertDocumentToDayResponse(dayPlanDocument);
-                    dayResponses.add(dayResponse);
-                }
-            }
-
-            for (Favourite weekFavourite : weekFavourites) {
-                ObjectId weekFavouriteId = new ObjectId(weekFavourite.getFavouriteId());
-                Document weekPlanDocument = mongoTemplate.findById(weekFavouriteId, Document.class, "mealPlans");
-                if (weekPlanDocument != null) {
-                    WeekResponse weekResponse = convertDocumentToWeekResponse(weekPlanDocument);
-                    weekResponses.add(weekResponse);
-                }
-            }
-
-            m.addAttribute("weekfav", weekFavourites);
-            m.addAttribute("dayfav", dayFavourites);
-            m.addAttribute("weekresponses", weekResponses);
-            m.addAttribute("dayresponses", dayResponses);
-
-            return ResponseEntity.ok().body("Day Responses: " + dayResponses.toString()
-                    + "\nWeek Responses: " + weekResponses.toString());
+            m.addAttribute("weekfavs", weekFavourites);
+            m.addAttribute("dayfavs", dayFavourites);
+            return "profile";
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving data.");
+            return "error";
         }
     }
 
-    private DayResponse convertDocumentToDayResponse(Document document) {
-        ObjectMapper objectMapper = new ObjectMapper();
+    @PostMapping("/savedDayPlan")
+    public String fetchDayPlan(@RequestParam String favouriteId, Model model) {
         try {
-            return objectMapper.readValue(document.toJson(), DayResponse.class);
-        } catch (IOException e) {
+            ObjectId objectId = new ObjectId(favouriteId);
+            Document document = mongoTemplate.findById(objectId, Document.class, "mealPlans");
+            if (document == null) {
+                return "error";
+            }
+            model.addAttribute("dayResponse", document);
+            return "MealViews/day-list";
+
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return null;
+
+            return "error";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
         }
     }
 
-    private WeekResponse convertDocumentToWeekResponse(Document document) {
-        ObjectMapper objectMapper = new ObjectMapper();
+    @PostMapping("/savedWeekPlan")
+    public String fetchWeekPlan(@RequestParam String favouriteId, Model model) {
         try {
-            return objectMapper.readValue(document.toJson(), WeekResponse.class);
-        } catch (IOException e) {
+            ObjectId objectId = new ObjectId(favouriteId);
+            Document document = mongoTemplate.findById(objectId, Document.class, "mealPlans");
+            if (document == null) {
+                return "error";
+            }
+            model.addAttribute("weekresponse", document);
+            return "MealViews/weekList";
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return null;
+            return "error";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
         }
     }
 
