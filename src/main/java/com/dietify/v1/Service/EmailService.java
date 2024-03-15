@@ -38,7 +38,7 @@ public class EmailService {
 		String subject = "Reset Your Password";
 	
 		// Relative path to the logo in your project's static resources
-		String logoPath = "/logo.png";
+		String logoPath = "https://github.com/RiteshRaoV/project_final/blob/main/src/main/resources/static/Images/logo.png?raw=true";
 	
 		// Email body with logo on top
 		String body = "<!DOCTYPE html>"
@@ -75,7 +75,7 @@ public class EmailService {
 		String subject = "Verify your email";
 	
 		// Logo image URL
-		String logoUrl = "/logo.png";
+		String logoUrl = "https://github.com/RiteshRaoV/project_final/blob/main/src/main/resources/static/Images/logo.png?raw=true";
 	
 		// Email body with logo on top
 		String body = "<!DOCTYPE html>"
