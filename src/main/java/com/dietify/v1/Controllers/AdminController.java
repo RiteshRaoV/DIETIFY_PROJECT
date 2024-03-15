@@ -2,6 +2,7 @@ package com.dietify.v1.Controllers;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,5 +51,25 @@ public class AdminController {
 		userRepo.deleteById(userId);
 		return "redirect:/admin/users";
 	}
+	@GetMapping("/user/assignRole")
+    public String showAssignRoleForm(@RequestParam("userId") int userId, Model model) {
+        // Here, you might fetch the user details using the userId and pass it to the view
+        // For demonstration, I'm simply passing the userId to the view
+        model.addAttribute("userId", userId);
+        return "admin/assignRoleForm";
+    }
 
+	@PostMapping("/user/assignRole")
+    public String assignRole(@RequestParam("userId") int userId, @RequestParam("role") String role) {
+        Optional<User> userOptional = userRepo.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setRole(role);
+            userRepo.save(user);
+            return "redirect:/admin/users";
+        } else {
+            return "redirect:/admin/users"; // or any other appropriate action
+        }
+    }
 }

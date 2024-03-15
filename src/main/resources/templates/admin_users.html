@@ -2,121 +2,122 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <title>Admin User Management</title>
-    <style>
-      /* Basic table styling for clarity and readability */
-      table {
-        border-collapse: collapse;
-        width: 100%;
-        padding-top: 50px; 
-      }
-      th,
-      td {
-        text-align: left;
-        padding: 8px;
-      }
-      th {
-        background-color:#ddd;
-      }
-      .error {
-        color: red;
-      }
-
-      header{
-        padding-bottom: 50px;
-      }
-      body {
-    color: #566787;
-    background: #f5f5f5;
-    font-family: 'Varela Round', sans-serif;
-    font-size: 13px;
-}
-.table-wrapper {
-    background: #fff;
-    padding: 20px 25px;
-    margin: 30px 0;
-    border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0,0,0,.05);
-}
-.table-title {        
-    padding-bottom: 15px;
-    background: #435d7d;
-    color: #fff;
-    padding: 16px 30px;
-    margin: -20px -25px 10px;
-    border-radius: 3px 3px 0 0;
-}
-.table-title h2 {
-    margin: 5px 0 0;
-    font-size: 24px;
-}
-.table-title .btn-group {
-    float: right;
-}
-
-    </style>
+    <link rel="stylesheet" th:href="@{/adminCSS.css}" />
   </head>
-  <header>
-    <div th:replace="fragments/newNav :: newBar"></div>
-  </header>
-
   <body>
-
+    <header>
+      <div th:replace="fragments/newNav :: newBar"></div>
+    </header>
     <div class="container">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h1>Welcome, Admin!</h1>
-                    </div>
-                </div>
-            </div>
-            <hr />
+      <div class="table-wrapper">
+        <div class="table-title">
+          <h2>Welcome, Admin!</h2>
+        </div>
+        <hr />
 
-            <h2>Manage Users</h2>
+        <h3>Manage Users</h3>
 
-            <span class="error" th:if="${error}">{{error}}</span>
-            <table th:if="${users}">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-              <tr th:each="user : ${users}">
+        <span class="error" th:if="${error}">{{error}}</span>
+        <table th:if="${users}">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="user : ${users}">
               <td th:text="${user.id}"></td>
               <td th:text="${user.name}"></td>
               <td th:text="${user.email}"></td>
               <td th:text="${user.role}"></td>
               <td>
-                <th:block th:if="${user.role != 'ROLE_ADMIN'}">
-                  <div style="display: inline-block; margin-right: 10px;">
-                      <form th:action="@{/admin/user/edit}" method="post">
-                          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                          <button type="submit" class="edit" name="id" th:value="${user.id}">
-                            <i class="fa fa-pencil" style="color: orange; font-size: 22px;" title="Edit"></i>
-                          </button>
-                      </form>
-                  </div>
-                  <div style="display: inline-block;">
-                      <form th:action="@{/admin/user/delete}" method="post">
-                          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                          <button type="submit" class="delete" name="id" th:value="${user.id}" style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">
-                              <i class="fa fa-trash" style="color: red; font-size: 22px;" title="Delete"></i>
-                          </button>
-                      </form>
-                  </div>
-              </th:block>
-              
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
+                <div style="display: inline-block; margin-right: 10px">
+                  <input
+                    type="hidden"
+                    name="${_csrf.parameterName}"
+                    value="${_csrf.token}"
+                  />
+                  <button
+                    th:onclick="'openModal(' + ${user.id} + ')'"
+                    class="edit"
+                  >
+                    <i
+                      class="fa fa-pencil"
+                      style="color: orange; font-size: 22px"
+                      title="Edit"
+                    ></i>
+                  </button>
+                </div>
+                <div style="display: inline-block">
+                  <form th:action="@{/admin/user/delete}" method="post">
+                    <input
+                      type="hidden"
+                      name="${_csrf.parameterName}"
+                      value="${_csrf.token}"
+                    />
+                    <button
+                      type="submit"
+                      class="delete"
+                      name="id"
+                      th:value="${user.id}"
+                      style="
+                        background: none;
+                        border: none;
+                        padding: 0;
+                        font: inherit;
+                        cursor: pointer;
+                      "
+                    >
+                      <i
+                        class="fa fa-trash"
+                        style="color: red; font-size: 22px"
+                        title="Delete"
+                      ></i>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>Assign Role</h3>
+        <form th:action="@{/admin/user/assignRole}" method="post">
+          <input type="hidden" id="userId" name="userId" />
+          <label for="role">Select Role:</label>
+          <select id="role" name="role">
+            <option value="ROLE_ADMIN">Admin</option>
+            <option value="ROLE_USER">User</option>
+            <option value="ROLE_BLOGGER">Blogger</option>
+          </select>
+          <br />
+          <input type="submit" class="btn" value="Submit" />
+        </form>
+      </div>
+    </div>
   </body>
 </html>
+<script>
+  function openModal(userId) {
+    document.getElementById("userId").value = userId;
+    document.getElementById("myModal").style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById("myModal").style.display = "none";
+  }
+</script>
