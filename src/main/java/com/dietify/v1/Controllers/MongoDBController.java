@@ -1,8 +1,6 @@
 package com.dietify.v1.Controllers;
 
-import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
@@ -18,12 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.dietify.v1.DTO.Day.DayResponse;
 import com.dietify.v1.DTO.Week.WeekResponse;
 import com.dietify.v1.Entity.Favourite;
 import com.dietify.v1.Entity.User;
-import com.dietify.v1.Repository.FavouriteRepo;
 import com.dietify.v1.Repository.UserRepo;
 import com.dietify.v1.Service.FavService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,13 +30,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping("/favorites")
 public class MongoDBController {
     @Autowired
     private UserRepo userRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
-    @Autowired
-    private FavouriteRepo favRepository;
     @Autowired
     private UserRepo userRepo;
     @Autowired
@@ -113,18 +111,6 @@ public class MongoDBController {
         }
     }
 
-    // @GetMapping("/mongodb/fetch")
-    // public String fetchDataFromMongoDB(@RequestParam int userId, Model model) {
-    // Query query = new Query(Criteria.where("userId").is(userId));
-    // query.fields().include("data").include("title");
-    // query.fields().include("_id");
-    // DatabaseResponse data = new DatabaseResponse();
-    // data.setData(mongoTemplate.find(query, Object.class, "mealPlans"));
-    // // System.out.println(data.getData());
-    // model.addAttribute("responseData", data.getJsonData());
-    // return "response";
-
-    // }
     @GetMapping("/userprofile")
     public String retrieveDataByUserIdAndType(Principal p, Model m) {
         try {
@@ -135,70 +121,55 @@ public class MongoDBController {
             List<Favourite> dayFavourites = favService.findByUserIdAndType(user.getId(), "day");
             List<Favourite> weekFavourites = favService.findByUserIdAndType(user.getId(), "week");
 
-            // if (dayFavourites.isEmpty() && weekFavourites.isEmpty()) {
-            // return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            // .body("No saved DAY or WEEK PLANS found for userId: " + user.getId());
-            // }
-
-            List<DayResponse> dayResponses = new ArrayList<>();
-            List<WeekResponse> weekResponses = new ArrayList<>();
-
-            for (Favourite dayFavourite : dayFavourites) {
-                ObjectId dayFavouriteId = new ObjectId(dayFavourite.getFavouriteId());
-                Document dayPlanDocument = mongoTemplate.findById(dayFavouriteId, Document.class, "mealPlans");
-                if (dayPlanDocument != null) {
-                    DayResponse dayResponse = convertDocumentToDayResponse(dayPlanDocument);
-                    dayResponses.add(dayResponse);
-                }
+            if (dayFavourites.isEmpty() && weekFavourites.isEmpty()) {
+                m.addAttribute("empty", "No saved DAY or WEEK PLANS found");
             }
-
-            for (Favourite weekFavourite : weekFavourites) {
-                ObjectId weekFavouriteId = new ObjectId(weekFavourite.getFavouriteId());
-                Document weekPlanDocument = mongoTemplate.findById(weekFavouriteId, Document.class, "mealPlans");
-                if (weekPlanDocument != null) {
-                    WeekResponse weekResponse = convertDocumentToWeekResponse(weekPlanDocument);
-                    weekResponses.add(weekResponse);
-                }
-            }
-
-            // if (dayResponses.isEmpty() && weekResponses.isEmpty()) {
-            // return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            // .body("No meal plans found for DAY or WEEK PLANS for userId: " +
-            // user.getId());
-            // }
-            m.addAttribute(weekResponses);
-            m.addAttribute(dayResponses);
-            // Process dayResponses and weekResponses as needed...
+            m.addAttribute("weekfavs", weekFavourites);
+            m.addAttribute("dayfavs", dayFavourites);
             return "profile";
-            // return ResponseEntity.ok().body("Day Responses: " + dayResponses.toString()
-            // + "\nWeek Responses: " + weekResponses.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
-            // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error
-            // retrieving data.");
         }
     }
 
-    private DayResponse convertDocumentToDayResponse(Document document) {
-        ObjectMapper objectMapper = new ObjectMapper();
+    @PostMapping("/savedDayPlan")
+    public String fetchDayPlan(@RequestParam String favouriteId, Model model) {
         try {
-            return objectMapper.readValue(document.toJson(), DayResponse.class);
-        } catch (IOException e) {
+            ObjectId objectId = new ObjectId(favouriteId);
+            Document document = mongoTemplate.findById(objectId, Document.class, "mealPlans");
+            if (document == null) {
+                return "error";
+            }
+            model.addAttribute("dayResponse", document);
+            return "MealViews/day-list";
+
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            // Handle exception appropriately
-            return null;
+
+            return "error";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
         }
     }
 
-    private WeekResponse convertDocumentToWeekResponse(Document document) {
-        ObjectMapper objectMapper = new ObjectMapper();
+    @PostMapping("/savedWeekPlan")
+    public String fetchWeekPlan(@RequestParam String favouriteId, Model model) {
         try {
-            return objectMapper.readValue(document.toJson(), WeekResponse.class);
-        } catch (IOException e) {
+            ObjectId objectId = new ObjectId(favouriteId);
+            Document document = mongoTemplate.findById(objectId, Document.class, "mealPlans");
+            if (document == null) {
+                return "error";
+            }
+            model.addAttribute("weekresponse", document);
+            return "MealViews/weekList";
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            // Handle exception appropriately
-            return null;
+            return "error";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
         }
     }
 
