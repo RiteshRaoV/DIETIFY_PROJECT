@@ -13,22 +13,37 @@
     <header>
         <div th:replace="~{fragments/newNav :: newBar}"></div>
     </header>
+<<<<<<< HEAD
     <div class="userName">
         <p>Welcome <span th:text="${user}"></span></p>
+=======
+    <div>
+        <p>Welcome <span th:text="${name}"></span></p>
+>>>>>>> 948380e194c82bb7d3fefa6407daebb6898b491a
     </div>
     <main class="flex">
 
         <div class="card">
             <h2>Day Plan</h2>
             <ul>
+<<<<<<< HEAD
                 <li th:each="object : ${dayResponses}">
                     <span th:text="${object.property}"></span>
+=======
+                <li th:each="dayresponses : ${dayfav}">
+                    <a th:text="${dayresponses.title}"></a>
+>>>>>>> 948380e194c82bb7d3fefa6407daebb6898b491a
                 </li>
             </ul>
         </div>
 
         <div class="card">
             <h2>Week Plan</h2>
+            <ul>
+                <li th:each="weekresponses : ${weekfav}">
+                    <a th:text="${weekresponses.title}"></a>
+                </li>
+            </ul>
         </div>
 
     </main>

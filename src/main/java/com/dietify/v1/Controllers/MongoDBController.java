@@ -113,20 +113,8 @@ public class MongoDBController {
         }
     }
 
-    // @GetMapping("/mongodb/fetch")
-    // public String fetchDataFromMongoDB(@RequestParam int userId, Model model) {
-    // Query query = new Query(Criteria.where("userId").is(userId));
-    // query.fields().include("data").include("title");
-    // query.fields().include("_id");
-    // DatabaseResponse data = new DatabaseResponse();
-    // data.setData(mongoTemplate.find(query, Object.class, "mealPlans"));
-    // // System.out.println(data.getData());
-    // model.addAttribute("responseData", data.getJsonData());
-    // return "response";
-
-    // }
-    @GetMapping("/userprofile")
-    public String retrieveDataByUserIdAndType(Principal p, Model m) {
+    @GetMapping("/profile")
+    public ResponseEntity<?> retrieveDataByUserIdAndType(Principal p, Model m) {
         try {
             String email = p.getName();
             User user = userRepo.findByEmail(email);
@@ -135,10 +123,10 @@ public class MongoDBController {
             List<Favourite> dayFavourites = favService.findByUserIdAndType(user.getId(), "day");
             List<Favourite> weekFavourites = favService.findByUserIdAndType(user.getId(), "week");
 
-            // if (dayFavourites.isEmpty() && weekFavourites.isEmpty()) {
-            // return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            // .body("No saved DAY or WEEK PLANS found for userId: " + user.getId());
-            // }
+            if (dayFavourites.isEmpty() && weekFavourites.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("No saved DAY or WEEK PLANS found for userId: " + user.getId());
+            }
 
             List<DayResponse> dayResponses = new ArrayList<>();
             List<WeekResponse> weekResponses = new ArrayList<>();
@@ -161,22 +149,16 @@ public class MongoDBController {
                 }
             }
 
-            // if (dayResponses.isEmpty() && weekResponses.isEmpty()) {
-            // return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            // .body("No meal plans found for DAY or WEEK PLANS for userId: " +
-            // user.getId());
-            // }
-            m.addAttribute(weekResponses);
-            m.addAttribute(dayResponses);
-            // Process dayResponses and weekResponses as needed...
-            return "profile";
-            // return ResponseEntity.ok().body("Day Responses: " + dayResponses.toString()
-            // + "\nWeek Responses: " + weekResponses.toString());
+            m.addAttribute("weekfav", weekFavourites);
+            m.addAttribute("dayfav", dayFavourites);
+            m.addAttribute("weekresponses", weekResponses);
+            m.addAttribute("dayresponses", dayResponses);
+
+            return ResponseEntity.ok().body("Day Responses: " + dayResponses.toString()
+                    + "\nWeek Responses: " + weekResponses.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return "error";
-            // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error
-            // retrieving data.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving data.");
         }
     }
 
@@ -186,7 +168,6 @@ public class MongoDBController {
             return objectMapper.readValue(document.toJson(), DayResponse.class);
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle exception appropriately
             return null;
         }
     }
@@ -197,7 +178,6 @@ public class MongoDBController {
             return objectMapper.readValue(document.toJson(), WeekResponse.class);
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle exception appropriately
             return null;
         }
     }
