@@ -1,5 +1,6 @@
 package com.dietify.v1.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -58,20 +59,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void saveUserWithEmailAndToken(String email, String verificationToken) {
-		User user = new User();
-		user.setEmail(email);
-		user.setResetToken(verificationToken);
-		user.setRole("ROLE_USER");
-		userRepo.save(user);
-	}
-
-	@Override
 	public void initiatePasswordReset(String email) {
 		User user = userRepo.findByEmail(email);
 		if (user != null) {
 			String resetToken = emailService.generateResetToken();
 			user.setResetToken(resetToken);
+			user.setResetTokenExpiryDateTime(LocalDateTime.now());
 			userRepo.save(user);
 			emailService.sendResetPasswordEmail(user.getEmail(), resetToken);
 		}
@@ -83,6 +76,7 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setEmail(email);
 		user.setResetToken(verificationToken);
+		user.setResetTokenCreationDateTime(LocalDateTime.now());
 		user.setRole("ROLE_USER");
 		userRepo.save(user);
 		emailService.sendVerificationMail(email, verificationToken);

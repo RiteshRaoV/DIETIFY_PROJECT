@@ -42,7 +42,7 @@
         <tbody>
             <tr th:each="blog : ${myBlogs}" class="blog-row" th:attr="data-type=${blog.blogType}, data-status=${blog.status}">
                 <td th:text="${blog.blogTitle}"></td>
-                <td th:text="${blog.blogContent}"></td>
+                <td th:utext="${blog.blogContent}"></td>
                 <td th:text="${blog.blogType}"></td>
                 <td th:text="${blog.status}"></td>
             </tr>

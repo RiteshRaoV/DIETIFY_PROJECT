@@ -39,7 +39,7 @@
                             <tr th:each="blog : ${user.blogs}">
                                 <td th:text="${blog.blogId}"></td>
                                 <td th:text="${blog.blogTitle}"></td>
-                                <td th:text="${blog.blogContent}"></td>
+                                <td th:utext="${blog.blogContent}"></td>
                                 <td th:text="${blog.status}"></td>
                                 <td>
                                     <form th:action="@{/blogs/changeStatus}" method="post">

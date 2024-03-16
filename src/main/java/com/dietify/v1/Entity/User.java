@@ -1,5 +1,6 @@
 package com.dietify.v1.Entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,10 @@ public class User {
 
 	private String resetToken;
 
+	private LocalDateTime resetTokenExpiryDateTime; 
+
+    private LocalDateTime resetTokenCreationDateTime;
+
 	private String role;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -39,6 +44,30 @@ public class User {
 
 	public String getRole() {
 		return role;
+	}
+
+	public LocalDateTime getResetTokenExpiryDateTime() {
+		return resetTokenExpiryDateTime;
+	}
+
+	public void setResetTokenExpiryDateTime(LocalDateTime resetTokenExpiryDateTime) {
+		this.resetTokenExpiryDateTime = resetTokenExpiryDateTime;
+	}
+
+	public LocalDateTime getResetTokenCreationDateTime() {
+		return resetTokenCreationDateTime;
+	}
+
+	public void setResetTokenCreationDateTime(LocalDateTime resetTokenCreationDateTime) {
+		this.resetTokenCreationDateTime = resetTokenCreationDateTime;
+	}
+
+	public List<Favourite> getFavourites() {
+		return favourites;
+	}
+
+	public void setFavourites(List<Favourite> favourites) {
+		this.favourites = favourites;
 	}
 
 	public void setRole(String role) {
