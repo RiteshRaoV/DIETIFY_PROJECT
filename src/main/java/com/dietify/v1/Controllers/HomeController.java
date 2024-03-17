@@ -1,6 +1,7 @@
 package com.dietify.v1.Controllers;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dietify.v1.Entity.Favourite;
 import com.dietify.v1.Entity.User;
 import com.dietify.v1.Repository.UserRepo;
+import com.dietify.v1.Service.FavService;
 import com.dietify.v1.Service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +27,9 @@ public class HomeController {
 
 	@Autowired
 	private UserRepo userRepo;
+
+	@Autowired
+	private FavService favService;
 
 	@ModelAttribute
 	public void commonUser(Principal p, Model m) {
@@ -128,4 +134,25 @@ public class HomeController {
 		return "redirect:/signIn";
 	}
 
+	@GetMapping("/userprofile")
+	public String retrieveDataByUserIdAndType(Principal p, Model m) {
+		try {
+			String email = p.getName();
+			User user = userRepo.findByEmail(email);
+			m.addAttribute("name", user.getName());
+
+			List<Favourite> dayFavourites = favService.findByUserIdAndType(user.getId(), "day");
+			List<Favourite> weekFavourites = favService.findByUserIdAndType(user.getId(), "week");
+
+			if (dayFavourites.isEmpty() && weekFavourites.isEmpty()) {
+				m.addAttribute("empty", "No saved DAY or WEEK PLANS found");
+			}
+			m.addAttribute("weekfavs", weekFavourites);
+			m.addAttribute("dayfavs", dayFavourites);
+			return "profile";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
 }

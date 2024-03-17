@@ -34,8 +34,13 @@ public class MealController {
 	@Value("${apikey}")
 	private String apiKey;
 
+	@ModelAttribute("controllerName")
+	public String getControllerName() {
+		return "MealController";
+	}
+
 	@GetMapping("/day")
-	public String dayMeals(Model model,HttpSession session){
+	public String dayMeals(Model model, HttpSession session) {
 		model.addAttribute(session.getAttribute("dayResponse"));
 		return "MealViews/day-list";
 	}
@@ -75,13 +80,13 @@ public class MealController {
 	}
 
 	@GetMapping("/week")
-	public String weekMeals(Model model,HttpSession session){
-		model.addAttribute("weekresponse",session.getAttribute("weekresponse"));
+	public String weekMeals(Model model, HttpSession session) {
+		model.addAttribute("weekresponse", session.getAttribute("weekresponse"));
 		return "MealViews/weekList";
 	}
 
 	@PostMapping("/week")
-	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model,HttpSession session) {
+	public String getWeekMeals(@ModelAttribute Formdata formdata, Model model, HttpSession session) {
 		session.removeAttribute("weekresponse");
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -113,7 +118,6 @@ public class MealController {
 		}
 		return "errorpage";
 	}
-	
 
 	private void updateMealSourceUrls(Week week) {
 		Day[] days = { week.getMonday(), week.getTuesday(), week.getWednesday(),

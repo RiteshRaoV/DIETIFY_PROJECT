@@ -21,28 +21,28 @@ import com.dietify.v1.Repository.UserRepo;
 public class AdminController {
 
 	@Autowired
-	private UserRepo userRepo; 
+	private UserRepo userRepo;
 
 	@GetMapping("/profile")
 	public String profile(Model model) {
 		if (SecurityContextHolder.getContext().getAuthentication() == null) {
-			return "redirect:/index"; 
+			return "redirect:/index";
 		}
 
 		Principal principal = SecurityContextHolder.getContext().getAuthentication();
 		String email = principal.getName();
-		User user = userRepo.findByEmail(email); 
+		User user = userRepo.findByEmail(email);
 		model.addAttribute("user", user);
 
-		return "admin_profile"; 
+		return "admin_profile";
 	}
 
-	@GetMapping("/users") 
+	@GetMapping("/users")
 	public String getAllUsers(Model model) {
 		List<User> users;
-		users = userRepo.findAll(); 
+		users = userRepo.findAll();
 		model.addAttribute("users", users);
-		return "admin_users"; 
+		return "admin_users";
 	}
 
 	@PostMapping("/user/delete")
@@ -50,23 +50,24 @@ public class AdminController {
 		userRepo.deleteById(userId);
 		return "redirect:/admin/users";
 	}
+
 	@GetMapping("/user/assignRole")
-    public String showAssignRoleForm(@RequestParam("userId") int userId, Model model) {
-        model.addAttribute("userId", userId);
-        return "admin/assignRoleForm";
-    }
+	public String showAssignRoleForm(@RequestParam("userId") int userId, Model model) {
+		model.addAttribute("userId", userId);
+		return "admin/assignRoleForm";
+	}
 
 	@PostMapping("/user/assignRole")
-    public String assignRole(@RequestParam("userId") int userId, @RequestParam("role") String role) {
-        Optional<User> userOptional = userRepo.findById(userId);
+	public String assignRole(@RequestParam("userId") int userId, @RequestParam("role") String role) {
+		Optional<User> userOptional = userRepo.findById(userId);
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setRole(role);
-            userRepo.save(user);
-            return "redirect:/admin/users";
-        } else {
-            return "redirect:/admin/users";
-        }
-    }
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			user.setRole(role);
+			userRepo.save(user);
+			return "redirect:/admin/users";
+		} else {
+			return "redirect:/admin/users";
+		}
+	}
 }

@@ -26,9 +26,9 @@ public class User {
 
 	private String resetToken;
 
-	private LocalDateTime resetTokenExpiryDateTime; 
+	private LocalDateTime resetTokenExpiryDateTime;
 
-    private LocalDateTime resetTokenCreationDateTime;
+	private LocalDateTime resetTokenCreationDateTime;
 
 	private String role;
 
@@ -117,5 +117,4 @@ public class User {
 	public void setBlogs(List<Blog> blogs) {
 		this.blogs = blogs;
 	}
-
 }

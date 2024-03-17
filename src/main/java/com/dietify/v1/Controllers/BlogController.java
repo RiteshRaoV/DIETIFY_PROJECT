@@ -34,11 +34,10 @@ public class BlogController {
     public String allBlogs(Model model) {
         // Fetch users with associated blogs
         List<User> usersWithBlogs = userRepository.findByBlogsIsNotEmpty();
-        
+
         model.addAttribute("users", usersWithBlogs);
         return "BlogViews/allBlogs";
     }
-    
 
     @PostMapping("/changeStatus")
     public String changeBlogStatus(@RequestParam("blogId") int blogId, @RequestParam("status") String status) {

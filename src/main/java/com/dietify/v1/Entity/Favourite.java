@@ -20,12 +20,10 @@ public class Favourite {
     private String favouriteId; // Using String to represent ObjectId
 
     @Column(name = "type", nullable = false)
-    private String type; // Assuming it's a String, update accordingly
+    private String type;
 
     @Column(name = "title", nullable = false)
     private String title;
-
-    // Constructors
 
     public Favourite() {
     }
@@ -38,7 +36,6 @@ public class Favourite {
     }
 
     // Getters and Setters
-
     public Long getId() {
         return id;
     }
@@ -77,15 +74,5 @@ public class Favourite {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-    @Override
-    public String toString() {
-        return "Favourite{" +
-                "id=" + id +
-                ", user=" + user +
-                ", favouriteId='" + favouriteId + '\'' +
-                ", type='" + type + '\'' +
-                ", title='" + title + '\'' +
-                '}';
     }
 }

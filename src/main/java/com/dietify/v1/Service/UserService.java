@@ -1,6 +1,5 @@
 package com.dietify.v1.Service;
 
-
 import java.util.List;
 
 import com.dietify.v1.Entity.User;
@@ -13,7 +12,7 @@ public interface UserService {
 
 	public boolean existsByEmail(String email);
 
-    public void resetPassword(String email, String token, String newPassword);
+	public void resetPassword(String email, String token, String newPassword);
 
 	public void initiatePasswordReset(String email);
 

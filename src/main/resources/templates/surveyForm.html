@@ -1,93 +1,86 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="surveyForm.css">
-   
+
     <link rel="stylesheet" th:href="@{/surveyformstyle.css}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
-   
-    
-    
 </head>
+
 <body>
     <!-- MultiStep Form -->
-   
     <header>
         <div th:replace="~{fragments/newNav :: newBar}"></div>
-      </header>    
-      
-<div class="container-fluid" id="grad1">
-    <div class="row justify-content-center mt-0">
-        <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
-            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
-                <h2><strong>Diet planner</strong></h2>
-                <p>Fill all form field to go to next step</p>
-                <div class="row">
-                    <div class="col-md-12 mx-0 myform">
-                        <!-- th action will be changinging dynamically in js fucnction doesnt matter here-->
-                        <form id="msform"  th:action="@{/mealplanner/day}" th:object="${formdata}" method="post">
-                            <!-- progressbar -->
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-                            <ul id="progressbar">
-                                <li class="active" id="confirm"><strong>Timeframe</strong></li>
-                                <li id="confirm"><strong>Calories</strong></li>
-                                <li id="confirm"><strong>Diet</strong></li>
-                               
-                            </ul>
-                            <!-- fieldsets -->
-                            <fieldset>
-                                <div class="form-card">
-                                    <h2 class="fs-title">Timeframe</h2>
-                                    <select class="form-control" id="timeFrame" th:field="*{timeFrame}" required>
-                                        <option value="day">Day</option>
-                                        <option value="week">Week</option>
-                                    </select>
-                                </div>
-                                <input type="button" name="next" class="next action-button" value="Next Step"/>
-                            </fieldset>
-                            <fieldset>
-                                <div class="form-card">
-                                    <h2 class="fs-title">Target Calories</h2>
-                                    <input type="number" class="form-control" id="targetCalories" th:field="*{targetCalories}" required>
-                                </div>
-                                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                                <input type="button" name="next" class="next action-button" value="Next Step"/>
-                            </fieldset>
-                            <fieldset>
-                                <div class="form-card">
-                                    <h2 class="fs-title">Diet</h2>
-                                    <select class="form-control" id="diet" th:field="*{diet}" required>
-                                        <option value="Gluten Free">GlutenFree</option>
-                                        <option value="Ketogenic">Ketogenic</option>
-                                        <option value="Vegetarian">Vegetarian</option>
-                                        <option value="Vegan">Vegan</option>
-                                        <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
-                                        <option value="Paleo">Paleo</option>
-                                    </select>
-                    
-                                </div>
-                                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                                <!-- <button class="submitbtn" type="submit">Submit</button> -->
-                                <input type="submit" name="next" class="next action-button" value="Submit"/>
-                            </fieldset>
-                           
-
-                            
-                            
-                        </form>
+    </header>
+    <div class="container-fluid" id="grad1">
+        <div class="row justify-content-center mt-0">
+            <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+                <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                    <h2><strong>Diet planner</strong></h2>
+                    <p>Fill all form field to go to next step</p>
+                    <div class="row">
+                        <div class="col-md-12 mx-0 myform">
+                            <!-- th action will be changinging dynamically in js fucnction doesnt matter here-->
+                            <form id="msform" th:action="@{/mealplanner/day}" th:object="${formdata}" method="post">
+                                <!-- progressbar -->
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                <ul id="progressbar">
+                                    <li class="active" id="confirm"><strong>Timeframe</strong></li>
+                                    <li id="confirm"><strong>Calories</strong></li>
+                                    <li id="confirm"><strong>Diet</strong></li>
+                                </ul>
+                                <!-- fieldsets -->
+                                <fieldset>
+                                    <div class="form-card">
+                                        <h2 class="fs-title">Timeframe</h2>
+                                        <select class="form-control" id="timeFrame" th:field="*{timeFrame}" required>
+                                            <option value="day">Day</option>
+                                            <option value="week">Week</option>
+                                        </select>
+                                    </div>
+                                    <input type="button" name="next" class="next action-button" value="Next Step" />
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-card">
+                                        <h2 class="fs-title">Target Calories</h2>
+                                        <input type="number" class="form-control" id="targetCalories"
+                                            th:field="*{targetCalories}" required>
+                                    </div>
+                                    <input type="button" name="previous" class="previous action-button-previous"
+                                        value="Previous" />
+                                    <input type="button" name="next" class="next action-button" value="Next Step" />
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-card">
+                                        <h2 class="fs-title">Diet</h2>
+                                        <select class="form-control" id="diet" th:field="*{diet}" required>
+                                            <option value="Gluten Free">GlutenFree</option>
+                                            <option value="Ketogenic">Ketogenic</option>
+                                            <option value="Vegetarian">Vegetarian</option>
+                                            <option value="Vegan">Vegan</option>
+                                            <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
+                                            <option value="Paleo">Paleo</option>
+                                        </select>
+                                    </div>
+                                    <input type="button" name="previous" class="previous action-button-previous"
+                                        value="Previous" />
+                                    <!-- <button class="submitbtn" type="submit">Submit</button> -->
+                                    <input type="submit" name="next" class="next action-button" value="Submit" />
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script th:src="@{surveyForm.js}"></script>
-
+    <script th:src="@{surveyForm.js}"></script>
 </body>
+
 </html>

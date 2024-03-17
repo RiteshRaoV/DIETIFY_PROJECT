@@ -1,64 +1,79 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeLeaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignIN</title>
-    <link rel="stylesheet" th:href="@{/Authentication/signIn.css}">
-    <style>
-      body {
-          margin: 0;
-          padding: 0;
-          background-image: url('/Images/background-2.gif');
-          background-repeat: repeat;
-          background-attachment: fixed;
-          background-size: cover;
-      }
-      .content-wrapper {
-          margin-left: 10%; /* Adjust margin-left as needed */
-      }
-      .errorClass{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 10%;
-      }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignIN</title>
+  <link rel="stylesheet" th:href="@{/Authentication/signIn.css}">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('/Images/background-2.gif');
+      background-repeat: repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+
+    .content-wrapper {
+      margin-left: 10%;
+      /* Adjust margin-left as needed */
+    }
+
+    .errorClass {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10%;
+    }
   </style>
 </head>
+
 <body>
-    <div class='signin-page'>
-        <div class='container'>
-          <section class='company-logo'>
-            <div class='logo-container'>
-              <img th:src="@{/Images/logo.png}" alt='logo'>
-            <h3>DIETIFY <span>Your personal diet partner</span></h3>
-            </div>
-          </section>
-          <section class='signin-section'>
-            <h2>Sign In</h2>
-            <div class='signin-card'>
-              <div class="errorClass">
-                <p th:if="${param.error}" class="text-center text-danger fs-5" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></p>
-              </div>
-              <form th:action="userLogin" method="post">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <label>Email</label>
-                <input type="email"  name="username" required/>
-                <label>Password</label>
-                <div class="password-container">
-                  <input type="password"  name="password" required/>
-                  <span class="forgot-pass"><a th:href="@{/forgot-password}">forgot password?</a></span>
-                </div>
-                <button type="submit">Sign In</button>
-              </form>
-              <div class='signin-card-footer'>
-                <h5>Don't have an account? <a th:href="@{/verify}">Get started</a></h5>
-            </div>
-            </div>
-          </section>
+  <div class='signin-page'>
+    <div class='container'>
+      <section class='company-logo'>
+        <div class='logo-container'>
+          <img th:src="@{/Images/logo.png}" alt='logo'>
+          <h3>DIETIFY <span>Your personal diet partner</span></h3>
         </div>
-        <div class='left-shape'></div>
-        <div class='right-shape'></div>
-      </div>
+      </section>
+      <section class='signin-section'>
+        <h2>Sign In</h2>
+        <div class='signin-card'>
+          <div class="errorClass">
+            <p th:if="${param.error}" class="text-center text-danger fs-5"
+              th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></p>
+          </div>
+          <form th:action="userLogin" method="post">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <label>Email</label>
+            <input type="email" name="username" required />
+            <label>Password</label>
+            <div class="password-container">
+              <input type="password" name="password" required />
+              <span class="forgot-pass"><a th:href="@{/forgot-password}">forgot password?</a></span>
+            </div>
+            <button type="submit">Sign In</button>
+          </form>
+          <div class='signin-card-footer'>
+            <h5>Don't have an account? <a th:href="@{/verify}">Get started</a></h5>
+          </div>
+        </div>
+        <script th:inline="javascript">
+          setTimeout(function () {
+            var errorClass = document.querySelector('.errorClass');
+            if (errorClass) {
+              errorClass.innerHTML = ''; // Clear the error message
+            }
+          }, 5000); // Remove after 5 seconds
+        </script>
+      </section>
+    </div>
+    <div class='left-shape'></div>
+    <div class='right-shape'></div>
+  </div>
 </body>
+
 </html>

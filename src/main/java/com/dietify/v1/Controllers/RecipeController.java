@@ -13,11 +13,10 @@ import com.dietify.v1.DTO.RecipeDetails.AnalyzedInstruction;
 import com.dietify.v1.DTO.RecipeDetails.ExtendedIngredient;
 import com.dietify.v1.DTO.RecipeDetails.Recipe;
 
-
 @Controller
 public class RecipeController {
 
-    @Value("${apikey}") 
+    @Value("${apikey}")
     private String apiKey;
 
     private final RestTemplate restTemplate;
@@ -27,8 +26,8 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe")
-    public String getRecipeDetails(@RequestParam("id") String id,Model model) {
-        String apiUrl = "https://api.spoonacular.com/recipes/"+id+"/information?apiKey="+apiKey;
+    public String getRecipeDetails(@RequestParam("id") String id, Model model) {
+        String apiUrl = "https://api.spoonacular.com/recipes/" + id + "/information?apiKey=" + apiKey;
         System.out.println("-------------------------------");
         Recipe response = restTemplate.getForObject(apiUrl, Recipe.class, id, apiKey);
 

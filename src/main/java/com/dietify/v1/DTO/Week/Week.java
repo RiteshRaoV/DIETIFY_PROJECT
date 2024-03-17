@@ -3,28 +3,27 @@ package com.dietify.v1.DTO.Week;
 import com.dietify.v1.DTO.Day.Day;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
 public class Week {
-    @JsonProperty("monday")
-    private Day monday;
+	@JsonProperty("monday")
+	private Day monday;
 
-    @JsonProperty("tuesday")
-    private Day tuesday;
+	@JsonProperty("tuesday")
+	private Day tuesday;
 
-    @JsonProperty("wednesday")
-    private Day wednesday;
+	@JsonProperty("wednesday")
+	private Day wednesday;
 
-    @JsonProperty("thursday")
-    private Day thursday;
+	@JsonProperty("thursday")
+	private Day thursday;
 
-    @JsonProperty("friday")
-    private Day friday;
+	@JsonProperty("friday")
+	private Day friday;
 
-    @JsonProperty("saturday")
-    private Day saturday;
+	@JsonProperty("saturday")
+	private Day saturday;
 
-    @JsonProperty("sunday")
-    private Day sunday;
+	@JsonProperty("sunday")
+	private Day sunday;
 
 	public Day getMonday() {
 		return monday;

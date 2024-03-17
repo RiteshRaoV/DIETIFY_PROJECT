@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.dietify.v1.Entity.User;
 
-
 public class CustomUser implements UserDetails {
 
 	private User user;

@@ -1,24 +1,29 @@
 <div th:fragment="newBar">
   <link rel="stylesheet" th:href="@{/newNav.css}" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
   <div class="nav-bar">
     <img class="nav-logo" th:src='@{/Images/logo.png}'>
     <div class="nav-links-container">
-      <a class="nav-linkbar" 
-      th:href="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? @{/admin/users} : (${#authorization.expression('hasRole(''ROLE_USER'')')} ? @{/home} : @{/blogs/myBlogs})" 
-      id="topLink">
-      Home
-   </a>
+      <a class="nav-linkbar"
+        th:href="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? @{/admin/users} : (${#authorization.expression('hasRole(''ROLE_USER'')')} ? @{/home} : @{/blogs/myBlogs})"
+        id="topLink">
+        Home
+      </a>
       <a class="nav-linkbar" href="#aboutSection" id="aboutLink">About Us</a>
       <a class="nav-linkbar" th:href="@{/formpage}" id="survey">Survey</a>
-      <a th:if="${#authorization.expression('hasRole(''ROLE_BLOGGER'')')}" class="nav-linkbar" th:href="@{/blogs/addBlogs}" id="addBlogs">addBlogs</a>
-      <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-linkbar" th:href="@{/blogs/allBlogs}" id="servicesLink">allBlogs</a>
+      <a th:if="${#authorization.expression('hasRole(''ROLE_BLOGGER'')')}" class="nav-linkbar"
+        th:href="@{/blogs/addBlogs}" id="addBlogs">addBlogs</a>
+      <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-linkbar"
+        th:href="@{/blogs/allBlogs}" id="servicesLink">allBlogs</a>
       <img class="nav-avatar" th:src="@{/Images/admin.png}" alt="Avatar" onclick="displaydropdown()">
       <div class="dropdown-content">
-        <a th:href="@{/favorites/userprofile}">Profile</a>
-        <a th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+        <a th:href="@{/userprofile}">Profile</a>
+        <a th:href="@{/logout}"
+          onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
         <form id="logout-form" action="#" th:action="@{/logout}" method="post" style="display: none;">
           <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         </form>
@@ -32,6 +37,5 @@
       dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
     }
   </script>
-  
-</div>
 
+</div>

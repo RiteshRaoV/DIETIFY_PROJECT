@@ -17,17 +17,16 @@
         <p>Welcome <span th:text="${name}"></span></p>
     </div>
     <main class="flex">
-
         <div class="card">
             <h2>Day Plan</h2>
             <ul>
                 <li th:each="dayfav : ${dayfavs}">
                     <div>
-                    <form id="dayPlanForm" th:action="@{/savedDayPlan}" method="post">
-                        <input type="hidden" id="favouriteId" name="favouriteId" th:value="*{dayfav.favouriteId}">
-                        <a href="#" onclick="submitDayForm(); return false;" th:text="${dayfav.title}"></a>
-                    </form>
-                    
+                        <form id="dayPlanForm" th:action="@{/favourites/day}" method="post">
+                            <input type="hidden" id="favouriteId" name="favouriteId" th:value="*{dayfav.favouriteId}">
+                            <a href="#" onclick="submitDayForm(); return false;" th:text="${dayfav.title}"></a>
+                        </form>
+
                     </div>
                 </li>
             </ul>
@@ -38,17 +37,15 @@
             <ul>
                 <li th:each="weekfav : ${weekfavs}">
                     <div>
-                    <span th:text="${weekfav.favouriteId}"></span> -->
-                    <form id="weekPlanForm" th:action="@{/savedWeekPlan}" method="post">
-                        <input type="hidden" id="favouriteId" name="favouriteId" th:value="*{weekfav.favouriteId}">
-                        <a href="#" onclick="submitWeekForm(); return false;" th:text="${weekfav.title}"></a>
-                    </form>
+                        <form id="weekPlanForm" th:action="@{/favourites/week}" method="post">
+                            <input type="hidden" id="favouriteId" name="favouriteId" th:value="*{weekfav.favouriteId}">
+                            <a href="#" onclick="submitWeekForm(); return false;" th:text="${weekfav.title}"></a>
+                        </form>
                     </div>
-                
+
                 </li>
             </ul>
         </div>
-
     </main>
     <script>
         function submitDayForm() {
@@ -60,8 +57,6 @@
             document.getElementById('weekPlanForm').submit();
         }
     </script>
-    
-
 </body>
 
 </html>

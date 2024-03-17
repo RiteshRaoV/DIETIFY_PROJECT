@@ -1,32 +1,33 @@
 package com.dietify.v1.DTO;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Meals {
 
-    @JsonProperty("id")
-    private int id;
-    @JsonProperty("imageType")
-    private String imageType;
-    @JsonProperty("title")
-    private String title;
-    @JsonProperty("readyInMinutes")
-    private int readyInMinutes;
-    @JsonProperty("servings")
-    private int servings;
-    @JsonProperty("sourceUrl")
-    private String sourceUrl;
+	@JsonProperty("id")
+	private int id;
+	@JsonProperty("imageType")
+	private String imageType;
+	@JsonProperty("title")
+	private String title;
+	@JsonProperty("readyInMinutes")
+	private int readyInMinutes;
+	@JsonProperty("servings")
+	private int servings;
+	@JsonProperty("sourceUrl")
+	private String sourceUrl;
 
-    @Override
-    public String toString() {
-        return "Meals{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", imageType='" + imageType + '\'' +
-                ", readyInMinutes=" + readyInMinutes +
-                ", servings=" + servings +
-                ", sourceUrl='" + sourceUrl + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "Meals{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", imageType='" + imageType + '\'' +
+				", readyInMinutes=" + readyInMinutes +
+				", servings=" + servings +
+				", sourceUrl='" + sourceUrl + '\'' +
+				'}';
+	}
 
 	public int getId() {
 		return id;

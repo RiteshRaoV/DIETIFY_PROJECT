@@ -18,18 +18,8 @@
               Total Time: <span th:text="${meal.readyInMinutes}"></span>
             </div>
             <form th:action="@{/recipe}" method="post">
-              <input
-                type="hidden"
-                name="${_csrf.parameterName}"
-                value="${_csrf.token}"
-              />
-              <button
-                type="submit"
-                th:href="@{/recipe}"
-                class="button3"
-                th:value="${meal.id}"
-                name="id"
-              >
+              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+              <button type="submit" th:href="@{/recipe}" class="button3" th:value="${meal.id}" name="id">
                 VIEW RECIPE 🍳
               </button>
             </form>

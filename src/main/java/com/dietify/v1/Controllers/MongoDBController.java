@@ -1,8 +1,5 @@
 package com.dietify.v1.Controllers;
 
-import java.security.Principal;
-import java.util.List;
-
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +11,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dietify.v1.DTO.Day.DayResponse;
 import com.dietify.v1.DTO.Week.WeekResponse;
-import com.dietify.v1.Entity.Favourite;
 import com.dietify.v1.Entity.User;
 import com.dietify.v1.Repository.UserRepo;
 import com.dietify.v1.Service.FavService;
@@ -30,19 +26,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/favorites")
+@RequestMapping("/favourites")
 public class MongoDBController {
+
     @Autowired
     private UserRepo userRepository;
+
     @Autowired
     private MongoTemplate mongoTemplate;
-    @Autowired
-    private UserRepo userRepo;
+
     @Autowired
     private FavService favService;
 
-    @PostMapping("/mongodb/store")
-    public ResponseEntity<String> storeDataToMongoDB(@RequestParam String userText, HttpSession session) {
+    @ModelAttribute("controllerName")
+    public String getControllerName() {
+        return "MongoDBController";
+    }
+
+    @PostMapping("/store-day")
+    public ResponseEntity<String> storeDataToMongoDB(@RequestParam String titleInput, HttpSession session) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userEmail = authentication.getName();
@@ -64,7 +66,7 @@ public class MongoDBController {
             mongoTemplate.save(document, "mealPlans");
             ObjectId savedDocumentId = document.getObjectId("_id");
 
-            favService.saveFavourite(user, savedDocumentId, "day", userText);
+            favService.saveFavourite(user, savedDocumentId, "day", titleInput);
 
             return ResponseEntity.ok().body("Data stored successfully for user " + user.getId());
         } catch (JsonParseException e) {
@@ -76,8 +78,8 @@ public class MongoDBController {
         }
     }
 
-    @PostMapping("/mongodb/store-week")
-    public ResponseEntity<String> storeWeekDataToMongoDB(@RequestParam String userText, HttpSession session) {
+    @PostMapping("/store-week")
+    public ResponseEntity<String> storeWeekDataToMongoDB(@RequestParam String titleInput, HttpSession session) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userEmail = authentication.getName();
@@ -86,7 +88,7 @@ public class MongoDBController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
             }
 
-            WeekResponse weekResponse = (WeekResponse) session.getAttribute("weekResponse");
+            WeekResponse weekResponse = (WeekResponse) session.getAttribute("weekresponse");
             if (weekResponse == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No week response data found in session.");
             }
@@ -99,7 +101,7 @@ public class MongoDBController {
             mongoTemplate.save(document, "mealPlans");
             ObjectId savedDocumentId = document.getObjectId("_id");
 
-            favService.saveFavourite(user, savedDocumentId, "week", userText);
+            favService.saveFavourite(user, savedDocumentId, "week", titleInput);
 
             return ResponseEntity.ok().body("Data stored successfully for user " + user.getId());
         } catch (JsonParseException e) {
@@ -111,29 +113,7 @@ public class MongoDBController {
         }
     }
 
-    @GetMapping("/userprofile")
-    public String retrieveDataByUserIdAndType(Principal p, Model m) {
-        try {
-            String email = p.getName();
-            User user = userRepo.findByEmail(email);
-            m.addAttribute("name", user.getName());
-
-            List<Favourite> dayFavourites = favService.findByUserIdAndType(user.getId(), "day");
-            List<Favourite> weekFavourites = favService.findByUserIdAndType(user.getId(), "week");
-
-            if (dayFavourites.isEmpty() && weekFavourites.isEmpty()) {
-                m.addAttribute("empty", "No saved DAY or WEEK PLANS found");
-            }
-            m.addAttribute("weekfavs", weekFavourites);
-            m.addAttribute("dayfavs", dayFavourites);
-            return "profile";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "error";
-        }
-    }
-
-    @PostMapping("/savedDayPlan")
+    @PostMapping("/day")
     public String fetchDayPlan(@RequestParam String favouriteId, Model model) {
         try {
             ObjectId objectId = new ObjectId(favouriteId);
@@ -146,7 +126,6 @@ public class MongoDBController {
 
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-
             return "error";
         } catch (Exception e) {
             e.printStackTrace();
@@ -154,7 +133,7 @@ public class MongoDBController {
         }
     }
 
-    @PostMapping("/savedWeekPlan")
+    @PostMapping("/week")
     public String fetchWeekPlan(@RequestParam String favouriteId, Model model) {
         try {
             ObjectId objectId = new ObjectId(favouriteId);
@@ -172,5 +151,4 @@ public class MongoDBController {
             return "error";
         }
     }
-
 }

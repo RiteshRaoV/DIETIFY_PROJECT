@@ -6,7 +6,6 @@ import com.dietify.v1.DTO.Meals;
 import com.dietify.v1.DTO.Nutrients;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
 public class Day {
     @JsonProperty("meals")
     private List<Meals> meals;
