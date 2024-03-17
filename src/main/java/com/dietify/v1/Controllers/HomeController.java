@@ -51,46 +51,42 @@ public class HomeController {
 	}
 
 	@PostMapping("/saveUser")
-	public String saveUser(@ModelAttribute User user, HttpSession session, Model m) {
-		User savedUser = userService.saveUser(user);
-
-		if (savedUser != null) {
-			session.setAttribute("msg", "Registered successfully");
+	public String saveUser(@ModelAttribute User user, HttpSession session) {
+		if (userService.existsByEmail(user.getEmail())) {
+			session.setAttribute("msg", "User with this email already exists.");
 			return "redirect:/signUp";
 		} else {
-			session.setAttribute("msg", "Something went wrong on the server");
-		}
-		return "redirect:/signUp";
-	}
-
-	@GetMapping("/verify")
-	public String verify() {
-		return "Authentication/verify";
-	}
-
-	@PostMapping("/verify")
-	public String register(@RequestParam String email, HttpSession session) {
-		if (userService.existsByEmail(email)) {
-			session.setAttribute("message", "Email address already exists");
-			return "redirect:/verify";
-		} else {
-			userService.initiateMailValidation(email);
-			session.setAttribute("message", "Verification link sent to your email id");
-			return "redirect:/verify";
+			User savedUser = userService.saveUser(user);
+			if (savedUser != null) {
+				userService.initiateMailValidation(savedUser.getEmail());
+				session.setAttribute("msg", "Registered successfully. Verification link sent to your email.");
+				return "redirect:/signUp";
+			} else {
+				session.setAttribute("msg", "Something went wrong on the server.");
+				return "redirect:/signUp";
+			}
 		}
 	}
-
+	
+	
 	@GetMapping("/verifyEmail")
 	public String register(@RequestParam("token") String token, Model model, HttpSession session) {
 		User user = userService.findUserByResetToken(token);
 		if (user != null) {
-			model.addAttribute("email", user.getEmail());
-			model.addAttribute("token", token);
-			return "Authentication/signUp";
+			user.setResetToken(null);
+			user.setVerificationTokenDateTime(null);
+			user.setVerificationStatus(true);
+			userRepo.save(user);
+			return "verificationSuccess";
 		} else {
 			session.setAttribute("msg", "error while validating your email");
 			return "Authentication/signUp";
 		}
+	}
+
+	@GetMapping("/forgot-password")
+	public String forgotpassword() {
+		return "Authentication/forgot_password";
 	}
 
 	@PostMapping("/forgot-password")
@@ -103,11 +99,6 @@ public class HomeController {
 			session.setAttribute("message", "email does'nt exist");
 			return "redirect:/forgot-password";
 		}
-	}
-
-	@GetMapping("/forgot-password")
-	public String forgotpassword() {
-		return "Authentication/forgot_password";
 	}
 
 	@GetMapping("/reset")

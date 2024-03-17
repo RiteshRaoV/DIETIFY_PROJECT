@@ -26,9 +26,11 @@ public class User {
 
 	private String resetToken;
 
-	private LocalDateTime resetTokenExpiryDateTime; 
+	private LocalDateTime passwordResetTokenDateTime;
 
-    private LocalDateTime resetTokenCreationDateTime;
+	private LocalDateTime verificationTokenDateTime;
+
+	private boolean verificationStatus;
 
 	private String role;
 
@@ -45,21 +47,29 @@ public class User {
 	public String getRole() {
 		return role;
 	}
-
-	public LocalDateTime getResetTokenExpiryDateTime() {
-		return resetTokenExpiryDateTime;
+	
+	public LocalDateTime getPasswordResetTokenDateTime() {
+		return passwordResetTokenDateTime;
 	}
 
-	public void setResetTokenExpiryDateTime(LocalDateTime resetTokenExpiryDateTime) {
-		this.resetTokenExpiryDateTime = resetTokenExpiryDateTime;
+	public void setPasswordResetTokenDateTime(LocalDateTime passwordResetTokenDateTime) {
+		this.passwordResetTokenDateTime = passwordResetTokenDateTime;
 	}
 
-	public LocalDateTime getResetTokenCreationDateTime() {
-		return resetTokenCreationDateTime;
+	public LocalDateTime getVerificationTokenDateTime() {
+		return verificationTokenDateTime;
 	}
 
-	public void setResetTokenCreationDateTime(LocalDateTime resetTokenCreationDateTime) {
-		this.resetTokenCreationDateTime = resetTokenCreationDateTime;
+	public void setVerificationTokenDateTime(LocalDateTime verificationTokenDateTime) {
+		this.verificationTokenDateTime = verificationTokenDateTime;
+	}
+
+	public boolean isVerificationStatus() {
+		return verificationStatus;
+	}
+
+	public void setVerificationStatus(boolean verificationStatus) {
+		this.verificationStatus = verificationStatus;
 	}
 
 	public List<Favourite> getFavourites() {
@@ -117,5 +127,7 @@ public class User {
 	public void setBlogs(List<Blog> blogs) {
 		this.blogs = blogs;
 	}
+
+
 
 }

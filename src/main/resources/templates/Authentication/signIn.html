@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SignIN</title>
     <link rel="stylesheet" th:href="@{/Authentication/signIn.css}">
-    <script th:src="@{/LoadingAnimation/loading.js}"></script>
 </head>
 <body>
     <div class='signin-page'>
@@ -21,6 +20,7 @@
             <div class='signin-card'>
               <div class="errorClass">
                 <p th:if="${param.error}" class="text-center text-danger fs-5" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></p>
+                <p th:text="${session.verificationMessage}"></p>
               </div>
               <form th:action="userLogin" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -34,7 +34,7 @@
                 <button type="submit">Sign In</button>
               </form>
               <div class='signin-card-footer'>
-                <h5>Don't have an account? <a th:href="@{/verify}">Get started</a></h5>
+                <h5>Don't have an account? <a th:href="@{/signUp}">Get started</a></h5>
             </div>
             </div>
           </section>
@@ -44,3 +44,4 @@
       </div>
 </body>
 </html>
+<script th:src="@{/LoadingAnimation/loading.js}"></script>

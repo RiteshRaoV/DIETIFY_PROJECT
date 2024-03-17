@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Successful</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        .box {
+            width: 300px;
+            padding: 20px;
+            background-color: #fe5722;
+            border-radius: 10px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .redirect {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Verification Successful!</h2>
+        <p class="redirect">Redirecting to Sign In...</p>
+    </div>
+    <script th:inline="javascript">
+        setTimeout(function() {
+            /* Redirect to sign-in page */
+            /* [[@{/signIn}]] is Thymeleaf syntax for URL mapping */
+            window.location.href = /*[[@{/signIn}]]*/ "/signIn";
+        }, 3000); /* Redirect after 3 seconds */
+    </script>
+</body>
+</html>

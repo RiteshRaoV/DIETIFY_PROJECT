@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SignIN</title>
     <link rel="stylesheet" th:href="@{/Authentication/signUp.css}">
-    <script th:src="@{/LoadingAnimation/loading.js}"></script>
 </head>
 <body>
     <div class='signin-page'>
@@ -27,8 +26,7 @@
                   <label>Name</label>
                   <input type="text" name="name" required />
                   <label>Email</label>
-                  <input type="email" name="email" th:value="${email}" readonly required />
-                  <input type="hidden" name="resetToken" th:value="${token}" />
+                  <input type="email" name="email" th:value="${email}" required />
                   <div class="password-container">
                       <label>Password</label>
                       <input type="password" id="password" name="password" required />
@@ -63,3 +61,4 @@
       return true;
   }
 </script>
+<script th:src="@{/LoadingAnimation/loading.js}"></script>

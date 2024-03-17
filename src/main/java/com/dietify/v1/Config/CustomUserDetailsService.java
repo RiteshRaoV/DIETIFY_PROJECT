@@ -17,14 +17,17 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
 		User user = userRepo.findByEmail(username);
-		System.out.println(user);
+
 		if (user == null) {
-			throw new UsernameNotFoundException("user not found");
+			throw new UsernameNotFoundException("User not found with username: " + username);
+		}
+
+		if (user.getResetToken() == null && !user.isVerificationStatus()) {
+			throw new UsernameNotFoundException("User account not verified yet");
 		} else {
 			return new CustomUser(user);
 		}
-	}
 
+	}
 }

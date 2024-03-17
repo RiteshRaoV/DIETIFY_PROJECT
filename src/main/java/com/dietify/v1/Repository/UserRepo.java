@@ -20,8 +20,7 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 
 	List<User> findByBlogsIsNotEmpty();
 
-    List<User> findByResetTokenExpiryDateTimeBefore(LocalDateTime now);
+	List<User> findByVerificationStatus(boolean verificationStatus);
 
-    List<User> findByPasswordIsNullAndResetTokenIsNotNullAndRoleIsNotNull();
-
+    List<User> findByPasswordResetTokenDateTimeBefore(LocalDateTime dateTime);
 }

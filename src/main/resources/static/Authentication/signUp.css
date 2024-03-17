@@ -13,7 +13,23 @@
   grid-template-columns: 1fr 1fr;
   font-family: 'Lato', sans-serif;
 }
-
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('/Images/background-2.gif');
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+.content-wrapper {
+  margin-left: 10%; /* Adjust margin-left as needed */
+}
+.errorClass{
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: 10%;
+}
 /*Company logo section*/
 .company-logo {
   width:100%;
@@ -29,7 +45,7 @@
 
 .company-logo h3 {
   font-weight:lighter;
-  color: #fe5722;
+  color:#fe5722;
 }
 
 .company-logo img {
@@ -41,7 +57,6 @@
   color:rgb(55, 63, 65);
 }
 
-  
 
 /*signIn section */
 .signin-section {
@@ -54,11 +69,7 @@
 .signin-section h2 {
   color:rgb(0, 0, 0);
 }
-.session-msg {
-    text-align: center;
-    margin: 20px auto; /* Center vertically and horizontally */
-  }
-  
+
 /*signin card*/
 .signin-card {
   background-color:#fff;
