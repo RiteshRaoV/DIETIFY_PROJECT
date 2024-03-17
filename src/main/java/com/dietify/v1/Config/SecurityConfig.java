@@ -43,7 +43,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests()
                 .requestMatchers("/saveUser","/register","/verify").permitAll() // Allow unauthenticated access to /saveUser
-                .requestMatchers("/mealplanner/**","/formpage","/recipe","/home","/profile","/favorites/**").hasAnyRole("USER","BLOGGER")
+                .requestMatchers("/mealplanner/**","/formpage","/recipe","/home","/profile","/favorites/**").hasAnyRole("USER","BLOGGER","ADMIN")
                 .requestMatchers("/admin/**","/favorites/**").hasRole("ADMIN")
                 .requestMatchers("/blogs/**").hasAnyRole("ADMIN", "BLOGGER")
                 .requestMatchers("/**").permitAll()

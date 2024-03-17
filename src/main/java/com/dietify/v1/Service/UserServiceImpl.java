@@ -44,18 +44,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(User user) {
-		String email = user.getEmail();
-		String token = user.getResetToken();
-		User existingUser = userRepo.findByEmailAndResetToken(email, token);
-		if (existingUser != null) {
-			String encodedPassword = passwordEncoder.encode(user.getPassword());
-			existingUser.setName(user.getName());
-			existingUser.setPassword(encodedPassword);
-			existingUser.setResetToken(null);
-			userRepo.save(existingUser);
-			return existingUser;
-		}
-		return null;
+		String password = passwordEncoder.encode(user.getPassword());
+		user.setPassword(password);
+		user.setRole("ROLE_USER");
+		User newuser = userRepo.save(user);
+		return newuser;
 	}
 
 	@Override
@@ -64,7 +57,7 @@ public class UserServiceImpl implements UserService {
 		if (user != null) {
 			String resetToken = emailService.generateResetToken();
 			user.setResetToken(resetToken);
-			user.setResetTokenExpiryDateTime(LocalDateTime.now());
+			user.setPasswordResetTokenDateTime(LocalDateTime.now());
 			userRepo.save(user);
 			emailService.sendResetPasswordEmail(user.getEmail(), resetToken);
 		}
@@ -73,11 +66,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void initiateMailValidation(String email) {
 		String verificationToken = emailService.generateResetToken();
-		User user = new User();
-		user.setEmail(email);
+		User user=userRepo.findByEmail(email);
 		user.setResetToken(verificationToken);
-		user.setResetTokenCreationDateTime(LocalDateTime.now());
-		user.setRole("ROLE_USER");
+		user.setVerificationTokenDateTime(LocalDateTime.now());
 		userRepo.save(user);
 		emailService.sendVerificationMail(email, verificationToken);
 	}

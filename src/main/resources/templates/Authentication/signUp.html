@@ -6,27 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SignIN</title>
   <link rel="stylesheet" th:href="@{/Authentication/signUp.css}">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-image: url('/Images/background-2.gif');
-      background-repeat: repeat;
-      background-attachment: fixed;
-      background-size: cover;
-    }
-
-    .content-wrapper {
-      margin-left: 10%;
-    }
-
-    .errorClass {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 10%;
-    }
-  </style>
 </head>
 
 <body>
@@ -49,8 +28,7 @@
             <label>Name</label>
             <input type="text" name="name" required />
             <label>Email</label>
-            <input type="email" name="email" th:value="${email}" readonly required />
-            <input type="hidden" name="resetToken" th:value="${token}" />
+            <input type="email" name="email" th:value="${email}" required />
             <div class="password-container">
               <label>Password</label>
               <input type="password" id="password" name="password" required />
@@ -75,8 +53,39 @@
         </script>
       </section>
     </div>
-    <div class='left-shape'></div>
-    <div class='right-shape'></div>
+    <!-- </section>
+    <section class='signin-section'>
+      <h2>Sign Up</h2>
+      <div class='signin-card'>
+        <div class='errorClass'>
+          <p th:if="${session.msg}" class="text-center text-success fs-4" th:text="${session.msg}"></p>
+        </div>
+        <form th:action="saveUser" method="post" onsubmit="return validateForm()">
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+          <label>Name</label>
+          <input type="text" name="name" required />
+          <label>Email</label>
+          <input type="email" name="email" th:value="${email}" readonly required />
+          <input type="hidden" name="resetToken" th:value="${token}" />
+          <div class="password-container">
+            <label>Password</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div class="password-container">
+            <label>Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required />
+          </div>
+          <button type="submit">Sign Up</button>
+        </form>
+        <div class='signin-card-footer'>
+          <h5>Registered already ? <a th:href="@{/signIn}">sign-In</a></h5>
+        </div>
+      </div>
+      
+    </section> -->
+  </div>
+  <div class='left-shape'></div>
+  <div class='right-shape'></div>
   </div>
 </body>
 
@@ -94,3 +103,4 @@
     return true;
   }
 </script>
+<script th:src="@{/LoadingAnimation/loading.js}"></script>
