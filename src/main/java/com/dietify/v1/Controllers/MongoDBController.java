@@ -44,18 +44,18 @@ public class MongoDBController {
     }
 
     @PostMapping("/store-day")
-    public ResponseEntity<String> storeDataToMongoDB(@RequestParam String titleInput, HttpSession session) {
+    public String storeDataToMongoDB(@RequestParam String titleInput, HttpSession session) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userEmail = authentication.getName();
             User user = userRepository.findByEmail(userEmail);
             if (user == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+                return "error";
             }
 
             DayResponse dayResponse = (DayResponse) session.getAttribute("dayResponse");
             if (dayResponse == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No day response data found in session.");
+                return "error";
             }
 
             ObjectMapper objectMapper = new ObjectMapper();
@@ -68,29 +68,29 @@ public class MongoDBController {
 
             favService.saveFavourite(user, savedDocumentId, "day", titleInput);
 
-            return ResponseEntity.ok().body("Data stored successfully for user " + user.getId());
+            return "redirect:/mealplanner/day";
         } catch (JsonParseException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid JSON format.");
+            return "error";
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error storing data.");
+            return "error";
         }
     }
 
     @PostMapping("/store-week")
-    public ResponseEntity<String> storeWeekDataToMongoDB(@RequestParam String titleInput, HttpSession session) {
+    public String storeWeekDataToMongoDB(@RequestParam String titleInput, HttpSession session) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userEmail = authentication.getName();
             User user = userRepository.findByEmail(userEmail);
             if (user == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+                return "error";
             }
 
             WeekResponse weekResponse = (WeekResponse) session.getAttribute("weekresponse");
             if (weekResponse == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No week response data found in session.");
+                return "error";
             }
 
             ObjectMapper objectMapper = new ObjectMapper();
@@ -103,13 +103,13 @@ public class MongoDBController {
 
             favService.saveFavourite(user, savedDocumentId, "week", titleInput);
 
-            return ResponseEntity.ok().body("Data stored successfully for user " + user.getId());
+            return "redirect:/mealplanner/week";
         } catch (JsonParseException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid JSON format.");
+            return "error";
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error storing data.");
+            return "error";
         }
     }
 
