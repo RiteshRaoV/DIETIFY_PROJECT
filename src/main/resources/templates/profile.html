@@ -11,52 +11,40 @@
 
 <body>
     <header>
-        <div th:replace="~{fragments/newNav :: newBar}"></div>
+        <div class="navbar" th:replace="~{fragments/newNav :: newBar}"></div>
     </header>
-    <div class="Welcome">
+    <div class="welcome-section">
         <p>Welcome <span th:text="${name}"></span></p>
     </div>
-    <main class="flex">
+    <main class="flex-container">
         <div class="card">
-            <h2>Day Plan</h2>
-            <ul>
-                <li th:each="dayfav : ${dayfavs}">
-                    <div>
-                        <form id="dayPlanForm" th:action="@{/favourites/day}" method="post">
-                            <input type="hidden" id="favouriteId" name="favouriteId" th:value="*{dayfav.favouriteId}">
-                            <a href="#" onclick="submitDayForm(); return false;" th:text="${dayfav.title}"></a>
+            <h2>Day Plans</h2>
+            <ul class="plan-list">
+                <li th:each="dayfav : ${dayfavs}" class="plan-item">
+                    <div class="form-container">
+                        <form class="plan-form" th:action="@{/favourites/day}" method="post">
+                            <input type="hidden" class="fav-id" name="favouriteId" th:value="*{dayfav.favouriteId}">
+                            <button type="submit" class="plan-btn" th:text="${dayfav.title}"></button>
                         </form>
-
                     </div>
                 </li>
             </ul>
         </div>
 
         <div class="card">
-            <h2>Week Plan</h2>
-            <ul>
-                <li th:each="weekfav : ${weekfavs}">
-                    <div>
-                        <form id="weekPlanForm" th:action="@{/favourites/week}" method="post">
-                            <input type="hidden" id="favouriteId" name="favouriteId" th:value="*{weekfav.favouriteId}">
-                            <a href="#" onclick="submitWeekForm(); return false;" th:text="${weekfav.title}"></a>
+            <h2>Week Plans</h2>
+            <ul class="plan-list">
+                <li th:each="weekfav : ${weekfavs}" class="plan-item">
+                    <div class="form-container">
+                        <form class="plan-form" th:action="@{/favourites/week}" method="post">
+                            <input type="hidden" class="fav-id" name="favouriteId" th:value="*{weekfav.favouriteId}">
+                            <button type="submit" class="plan-btn" th:text="${weekfav.title}"></button>
                         </form>
                     </div>
-
                 </li>
             </ul>
         </div>
     </main>
-    <script>
-        function submitDayForm() {
-            document.getElementById('dayPlanForm').submit();
-        }
-    </script>
-    <script>
-        function submitWeekForm() {
-            document.getElementById('weekPlanForm').submit();
-        }
-    </script>
 </body>
 
 </html>
