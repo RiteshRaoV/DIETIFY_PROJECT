@@ -73,8 +73,8 @@ body {
 .nav-avatar {
     width: 25px; /* Adjust the width and height as needed */
     height: 25px;
-    top: -25%;
-    right: -12%;
+    top: -35%;
+    right: -10%;
     border: 2px solid #fe5722;
     border-radius: 50%; 
     cursor: pointer; 
