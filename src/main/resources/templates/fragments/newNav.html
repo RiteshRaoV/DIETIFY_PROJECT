@@ -5,6 +5,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <div class="nav-bar">
     <img class="nav-logo" th:src='@{/Images/logo.png}'>
     <div class="nav-links-container">
@@ -19,23 +21,48 @@
         th:href="@{/blogs/addBlogs}" id="addBlogs">addBlogs</a>
       <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-linkbar"
         th:href="@{/blogs/allBlogs}" id="servicesLink">allBlogs</a>
-      <img class="nav-avatar" th:src="@{/Images/admin.png}" alt="Avatar" onclick="displaydropdown()">
-      <div class="dropdown-content">
-        <a th:href="@{/userprofile}">Profile</a>
-        <a th:href="@{/logout}"
-          onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-        <form id="logout-form" action="#" th:action="@{/logout}" method="post" style="display: none;">
-          <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        </form>
+      <div class="nav-avatar-container">
+    <img class="nav-avatar" th:src="@{/Images/admin.png}" alt="Avatar" onclick="openProfileModal()">
+    <div class="dropdown-content" id="profile-dropdown">
+        <div class="nav-profile-modal" id="profile-modal">
+            <span class="nav-profile-modal-close" onclick="closeProfileModal()">&times;</span>
+            <h2>Welcome, <span th:text="${#authentication.principal.getName()}"></span></h2>
+            <p><span th:text="${#authentication.principal.getUsername()}"></span></p>
+            <a th:href="@{/userprofile}" class="nav-profile-button">Favorites</a>
+            <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;">
+              <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          </form>
+          <a th:href="@{/logout}" class="nav-logout-button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="fas fa-sign-out-alt"></i>Sign out
+          </a>
+                      <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;">
+                <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            </form>
+        </div>
+    </div>
+</div>
+
+      
+      <div id="profile-modal" class="nav-profile-modal">
+        <span class="nav-profile-modal-close" onclick="closeProfileModal()">&times;</span>
+        <h2>Welcome, [Username]</h2>
+        <p>Email: [User Email]</p>
+        <button class="nav-profile-button">Favorites</button>
       </div>
     </div>
   </div>
 
   <script>
-    function displaydropdown() {
-      const dropdownContent = document.querySelector('.dropdown-content');
-      dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-    }
+    function openProfileModal() {
+  const modal = document.getElementById('profile-modal');
+  modal.style.display = 'block';
+}
+
+function closeProfileModal() {
+  const modal = document.getElementById('profile-modal');
+  modal.style.display = 'none';
+}
+
   </script>
 
 </div>

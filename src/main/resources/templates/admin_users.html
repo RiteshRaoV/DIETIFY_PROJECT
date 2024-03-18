@@ -10,7 +10,10 @@
 
 <body>
   <header>
-    <div th:replace="~{fragments/newNav :: newBar}"></div>
+    <div th:replace="fragments/newNav :: newBar">
+      <!-- Access user name from session attribute -->
+
+  </div>
   </header>
   <div class="container">
     <div class="table-wrapper">
