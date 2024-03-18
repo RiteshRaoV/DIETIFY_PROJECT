@@ -75,6 +75,7 @@ body {
     height: 25px;
     top: -25%;
     right: -12%;
+    border: 2px solid #fe5722;
     border-radius: 50%; 
     cursor: pointer; 
     position: absolute; 
