@@ -42,14 +42,14 @@
             <td>
               <div style="display: inline-block; margin-right: 10px">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                <button th:onclick="'openModal(' + ${user.id} + ')'" class="edit" >
+                <button th:onclick="'openModal(' + ${user.id} + ')'" class="edit" th:if="${user.role!='ROLE_ADMIN'}" >
                   <i class="fa fa-pencil" style="color: orange; font-size: 22px" title="Edit"></i>
                 </button>
               </div>
               <div style="display: inline-block">
                 <form th:action="@{/admin/user/delete}" method="post">
                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                  <button type="submit" class="delete" name="id" th:value="${user.id}" >
+                  <button type="submit" class="delete" name="id" th:value="${user.id}" th:if="${user.role!='ROLE_ADMIN'}">
                     <i class="fa fa-trash" style="color: red; font-size: 22px" title="Delete"></i>
                   </button>
                 </form>
