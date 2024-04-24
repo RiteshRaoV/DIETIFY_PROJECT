@@ -40,7 +40,7 @@ public class EmailService {
 
 	public void sendResetPasswordEmail(String email, String token) {
 		String serverIp = ipAddressService.getServerIpAddress();
-		String resetLink = "http://"+ serverIp +"/reset?token=" + token;
+		String resetLink = "http://"+ serverIp +"1111/reset?token=" + token;
 		String subject = "Reset Your Password";
 
 		// Relative path to the logo in your project's static resources
@@ -77,7 +77,7 @@ public class EmailService {
 
 	public void sendVerificationMail(String email, String token) {
 		String serverIp = ipAddressService.getServerIpAddress();
-		String verifyLink = "http://"+ serverIp +"/verifyEmail?token=" + token;
+		String verifyLink = "http://"+ serverIp +"1111/verifyEmail?token=" + token;
 		String subject = "Verify your email";
 
 		// Logo image URL
