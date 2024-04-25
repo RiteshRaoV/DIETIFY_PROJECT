@@ -1,12 +1,8 @@
 #!/bin/bash
 
-# Set executable permissions for the script on the host machine
-chmod +x get_host_ip.sh
+HOST_IP=$(ip route | awk 'NR==1 {print $3}')
 
-# Get the host's IP address using the script
-HOST_IP=$(./get_host_ip.sh)
-
-# Pass the IP address as an environment variable to Docker Compose
+# Export the IP address as an environment variable
 export HOST_IP
 
 # Run Docker Compose
