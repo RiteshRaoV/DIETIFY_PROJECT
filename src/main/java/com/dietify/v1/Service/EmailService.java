@@ -3,6 +3,7 @@ package com.dietify.v1.Service;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ public class EmailService {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@Autowired
-	private IpAddressService ipAddressService;
+	@Value("${server.address}")
+	String serverIp;
 
 
 	private void sendEmail(String to, String subject, String content) {
@@ -39,7 +40,6 @@ public class EmailService {
 	}
 
 	public void sendResetPasswordEmail(String email, String token) {
-		String serverIp = ipAddressService.getServerIpAddress();
 		String resetLink = "http://"+ serverIp +":1111/reset?token=" + token;
 		String subject = "Reset Your Password";
 
@@ -76,7 +76,6 @@ public class EmailService {
 	}
 
 	public void sendVerificationMail(String email, String token) {
-		String serverIp = ipAddressService.getServerIpAddress();
 		String verifyLink = "http://"+ serverIp +":1111/verifyEmail?token=" + token;
 		String subject = "Verify your email";
 
