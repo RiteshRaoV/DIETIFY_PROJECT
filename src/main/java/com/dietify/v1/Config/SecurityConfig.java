@@ -41,33 +41,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests()
-                .requestMatchers("/saveUser","/register","/verify").permitAll() // Allow unauthenticated access to /saveUser
-                .requestMatchers("/mealplanner/**","/formpage","/recipe","/home","/profile","/favorites/**").hasAnyRole("USER","BLOGGER","ADMIN")
-                .requestMatchers("/admin/**","/favorites/**").hasRole("ADMIN")
-                .requestMatchers("/blogs/**").hasAnyRole("ADMIN", "BLOGGER")
-                .requestMatchers("/**").permitAll()
-            .and()
-            .formLogin()
-                .loginPage("/signin")
-                .loginProcessingUrl("/userLogin")
-                .successHandler(sucessHandler)
-                .permitAll()
-            .and()
-            .logout() // Configuring logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll()
-            .and()
-            .csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            .and()
-            .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                .maximumSessions(1)
-                .expiredUrl("/login?expired");
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/saveUser", "/register", "/verify").permitAll() // Allow unauthenticated access to /saveUser
+                        .requestMatchers("/mealplanner/**", "/formpage", "/recipe", "/home", "/profile", "/favorites/**").hasAnyRole("USER", "BLOGGER", "ADMIN")
+                        .requestMatchers("/admin/**", "/favorites/**").hasRole("ADMIN")
+                        .requestMatchers("/blogs/**").hasAnyRole("ADMIN", "BLOGGER")
+                        .requestMatchers("/**").permitAll())
+                .formLogin(login -> login
+                        .loginPage("/signin")
+                        .loginProcessingUrl("/userLogin")
+                        .successHandler(sucessHandler)
+                        .permitAll())
+                .logout(logout -> logout // Configuring logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll())
+                .csrf(csrf -> csrf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .sessionManagement(management -> management
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                        .maximumSessions(1)
+                        .expiredUrl("/login?expired"));
         return http.build();
     }
 }
