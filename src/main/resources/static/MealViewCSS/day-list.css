@@ -11,7 +11,6 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  overflow: hidden;
 }
 header{
   padding-bottom: 50px;
@@ -19,31 +18,71 @@ header{
 .heading {
   text-align: center;
 }
-
-.heading_1 {
-  padding-top: 20px;
-  font-weight: 1000;
-  font-family: "Roboto";
-  font-size: 42px; /* Adjust font size as needed */
-  color: rgb(84, 82, 82); /* Default color */
-}
-
-.heading_2 {
-  padding-top: 20px;
-  font-family: "Roboto";
-  font-size: 36px; /* Adjust font size as needed */
-  color: rgb(84, 82, 82); /* Default color */
-}
-.heading_3{
-  padding-top: 20px;
+.heading-welcome{
+  padding-top: 30px;
   padding-bottom: 20px;
-  font-size: 24px;
-  font-family: "Roboto";
+  margin-top: 10px;
+  margin-bottom: -30px;
+  font-size: 7ch;
+  font-weight: 800;
+  font-family: sans-serif;
   background: linear-gradient(to right, #ff5f6d, #ffc371); /* Gradient for "dietary preferences" */
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
+
+/* Nutritional info container */
+.nutritional-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 80px;
+  background: none;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: -50px;
+}
+
+/* Info row */
+.info-row {
+  display: flex;
+  align-items: center;
+}
+
+/* Info icon */
+.info-icon {
+  margin-right: 15px;
+  font-size: 24px;
+  color: #ff6347; /* Reddish color for the icons */
+}
+
+/* Info content */
+.info-content {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Info label */
+.info-label {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Info value */
+.info-value {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Font Awesome icon style */
+.fa {
+  font-weight: 900;
+}
+
+
+
 
 .row {
   max-width: 3000px;
@@ -167,12 +206,6 @@ border: 1px solid black;
   color: black;
 }
 
-/* .icon.clicked {
-  color: red;
-} */
-
-/* modal */
-/* Modal styles */
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */

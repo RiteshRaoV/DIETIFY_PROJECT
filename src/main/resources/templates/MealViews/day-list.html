@@ -18,9 +18,7 @@
     <div th:replace="~{fragments/newNav :: newBar}"></div>
   </header>
   <div class="heading">
-    <p class="heading-week">Meals for the Day</p>
-    <h1 class="heading_3">dietary preferences Calories:<span th:text="${calories}"></span> Diet:<span
-        th:text="${Diet}"></span></h1>
+    <p class="heading-welcome">Here are some recipes</p>
     <div class="icondiv" th:if="${controllerName eq 'MealController'}">
       <span class="icon" id="iconbtn" onclick="toggleColor(this)"><i class="fas fa-heart"></i></span>
     </div>
@@ -40,7 +38,46 @@
     th:replace="~{fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${dayResponse})}"></div>
   </div>
   </div>
-  </div>
+  </div><div class="nutritional-info">
+    <div class="info-row">
+        <div class="info-icon">
+            <i class="fas fa-fire"></i>
+        </div>
+        <div class="info-content">
+            <div class="info-label">Calories</div>
+            <div class="info-value" th:text="${dayResponse.nutrients.calories}"></div>
+        </div>
+    </div>
+    <div class="info-row">
+        <div class="info-icon">
+            <i class="fas fa-cheese"></i>
+        </div>
+        <div class="info-content">
+            <div class="info-label">Fat</div>
+            <div class="info-value" th:text="${dayResponse.nutrients.fat}"></div>
+        </div>
+    </div>
+    <div class="info-row">
+        <div class="info-icon">
+            <i class="fas fa-bread-slice"></i>
+        </div>
+        <div class="info-content">
+            <div class="info-label">Carbs</div>
+            <div class="info-value" th:text="${dayResponse.nutrients.carbohydrates}"></div>
+        </div>
+    </div>
+    <div class="info-row">
+        <div class="info-icon">
+            <i class="fas fa-drumstick-bite"></i>
+        </div>
+        <div class="info-content">
+            <div class="info-label">Protein</div>
+            <div class="info-value" th:text="${dayResponse.nutrients.protein}"></div>
+        </div>
+    </div>
+</div>
+
+
   <script>
     var spanelement;
     var clickCount = 0;
