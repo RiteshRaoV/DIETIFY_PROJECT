@@ -21,7 +21,8 @@ body {
     justify-content: center;
     min-height: 100vh;
     overflow-x: hidden;
-    background: url("https://github.com/applescan/what-to-eat/blob/main/public/background-3.png?raw=true");
+    background-image: url("/Images/background-2.gif");
+    background-size: cover;
 }
 ::selection {
     color: #fff;
