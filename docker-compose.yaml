@@ -33,7 +33,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       MONGODB_URI: mongodb://mongodb:27017/dietify
-      SERVER_ADDRESS: ${HOST_IP} 
+      SERVER_ADDRESS: 
 
     depends_on:
       - mysql
