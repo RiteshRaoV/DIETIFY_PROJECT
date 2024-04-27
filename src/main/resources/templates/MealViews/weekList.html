@@ -17,7 +17,7 @@
   <header>
     <div th:replace="fragments/newNav :: newBar"></div>
   </header>
-  <p class="heading-week">Meals for the week</p>
+  <p class="heading-week">Here are some recipes</p>
   <div class="calendar">
     <a class="week clicked" onclick="showDays('week1')">Monday</a>
     <a class="week" onclick="showDays('week2')">Tuesday</a>
@@ -43,40 +43,315 @@
     </div>
   </form>
 
-  <div id="week1" class="days">
+  <div id="week1" class="days" style="margin-top: -60px;">
     <div class="container"
       th:replace="~{fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.monday})}">
     </div>
+    <div class="nutritional-info" style="margin-top: -80px;">
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-fire"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Calories</div>
+              <div class="info-value" th:text="${weekresponse.week.monday.nutrients.calories}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-cheese"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Fat</div>
+              <div class="info-value" th:text="${weekresponse.week.monday.nutrients.fat}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-bread-slice"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Carbs</div>
+              <div class="info-value" th:text="${weekresponse.week.monday.nutrients.carbohydrates}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-drumstick-bite"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Protein</div>
+              <div class="info-value" th:text="${weekresponse.week.monday.nutrients.protein}"></div>
+          </div>
+      </div>
   </div>
-  <div id="week2" class="days" style="display: none">
-    <div class="container"
-      th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.tuesday})">
-    </div>
-  </div>
-  <div id="week3" class="days" style="display: none">
-    <div class="container"
-      th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.wednesday})">
     </div>
   </div>
 
-  <div id="week4" class="days" style="display: none">
+  <div id="week2" class="days" style="margin-top: -60px; display: none;" >
+    <div class="container"
+      th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.tuesday})">
+    </div>
+    <div class="nutritional-info" style="margin-top: -80px;">
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-fire"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Calories</div>
+              <div class="info-value" th:text="${weekresponse.week.tuesday.nutrients.calories}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-cheese"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Fat</div>
+              <div class="info-value" th:text="${weekresponse.week.tuesday.nutrients.fat}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-bread-slice"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Carbs</div>
+              <div class="info-value" th:text="${weekresponse.week.tuesday.nutrients.carbohydrates}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-drumstick-bite"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Protein</div>
+              <div class="info-value" th:text="${weekresponse.week.tuesday.nutrients.protein}"></div>
+          </div>
+      </div>
+  </div>
+    </div>
+  </div>
+  
+  <div id="week3" class="days" style="margin-top: -60px;display: none">
+    <div class="container"
+      th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.wednesday})">
+    </div>
+    <div class="nutritional-info" style="margin-top: -80px;">
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-fire"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Calories</div>
+              <div class="info-value" th:text="${weekresponse.week.wednesday.nutrients.calories}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-cheese"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Fat</div>
+              <div class="info-value" th:text="${weekresponse.week.wednesday.nutrients.fat}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-bread-slice"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Carbs</div>
+              <div class="info-value" th:text="${weekresponse.week.wednesday.nutrients.carbohydrates}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-drumstick-bite"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Protein</div>
+              <div class="info-value" th:text="${weekresponse.week.wednesday.nutrients.protein}"></div>
+          </div>
+      </div>
+  </div>
+    </div>
+  </div>
+
+  <div id="week4" class="days" style="margin-top: -60px;display: none">
     <div class="container"
       th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.thursday})">
     </div>
+    <div class="nutritional-info" style="margin-top: -80px;">
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-fire"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Calories</div>
+              <div class="info-value" th:text="${weekresponse.week.thursday.nutrients.calories}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-cheese"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Fat</div>
+              <div class="info-value" th:text="${weekresponse.week.thursday.nutrients.fat}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-bread-slice"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Carbs</div>
+              <div class="info-value" th:text="${weekresponse.week.thursday.nutrients.carbohydrates}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-drumstick-bite"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Protein</div>
+              <div class="info-value" th:text="${weekresponse.week.thursday.nutrients.protein}"></div>
+          </div>
+      </div>
   </div>
-  <div id="week5" class="days" style="display: none">
+    </div>
+  </div>
+  <div id="week5" class="days" style="margin-top: -60px;display: none">
     <div class="container"
       th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.friday})">
     </div>
+    <div class="nutritional-info" style="margin-top: -80px;">
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-fire"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Calories</div>
+              <div class="info-value" th:text="${weekresponse.week.friday.nutrients.calories}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-cheese"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Fat</div>
+              <div class="info-value" th:text="${weekresponse.week.friday.nutrients.fat}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-bread-slice"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Carbs</div>
+              <div class="info-value" th:text="${weekresponse.week.friday.nutrients.carbohydrates}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-drumstick-bite"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Protein</div>
+              <div class="info-value" th:text="${weekresponse.week.friday.nutrients.protein}"></div>
+          </div>
+      </div>
   </div>
-  <div id="week6" class="days" style="display: none">
+    </div>
+  </div>
+  <div id="week6" class="days" style="margin-top: -60px;display: none">
     <div class="container"
       th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.saturday})">
     </div>
+    <div class="nutritional-info" style="margin-top: -80px;">
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-fire"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Calories</div>
+              <div class="info-value" th:text="${weekresponse.week.saturday.nutrients.calories}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-cheese"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Fat</div>
+              <div class="info-value" th:text="${weekresponse.week.saturday.nutrients.fat}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-bread-slice"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Carbs</div>
+              <div class="info-value" th:text="${weekresponse.week.saturday.nutrients.carbohydrates}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-drumstick-bite"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Protein</div>
+              <div class="info-value" th:text="${weekresponse.week.saturday.nutrients.protein}"></div>
+          </div>
+      </div>
   </div>
-  <div id="week7" class="days" style="display: none">
+    </div>
+  </div>
+  <div id="week7" class="days" style="margin-top: -60px;display: none">
     <div class="container"
       th:replace="fragments/dayResponseFragment :: dayResponseFragmentContent(Response=${weekresponse.week.sunday})">
+    </div>
+    <div class="nutritional-info" style="margin-top: -80px;">
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-fire"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Calories</div>
+              <div class="info-value" th:text="${weekresponse.week.sunday.nutrients.calories}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-cheese"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Fat</div>
+              <div class="info-value" th:text="${weekresponse.week.sunday.nutrients.fat}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-bread-slice"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Carbs</div>
+              <div class="info-value" th:text="${weekresponse.week.sunday.nutrients.carbohydrates}"></div>
+          </div>
+      </div>
+      <div class="info-row">
+          <div class="info-icon">
+              <i class="fas fa-drumstick-bite"></i>
+          </div>
+          <div class="info-content">
+              <div class="info-label">Protein</div>
+              <div class="info-value" th:text="${weekresponse.week.sunday.nutrients.protein}"></div>
+          </div>
+      </div>
+  </div>
     </div>
   </div>
   <script>
