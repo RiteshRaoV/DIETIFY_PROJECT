@@ -17,7 +17,7 @@ public class EmailService {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@Value("${server.address}")
+	@Value("${host.address}")
 	String serverIp;
 
 
