@@ -17,6 +17,6 @@ public class FormController {
     @GetMapping("/formpage")
     public String formpage(Model model) {
         model.addAttribute("formdata", new Formdata());
-        return "surveyform";
+        return "surveyForm";
     }
 }
