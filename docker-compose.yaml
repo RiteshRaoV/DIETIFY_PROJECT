@@ -5,7 +5,7 @@ services:
     image: mysql:8.0.35
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: dietify
+      MYSQL_DATABASE: security_db
     ports:
       - "3306:3306"
     volumes:
@@ -27,12 +27,21 @@ services:
     ports:
       - "1111:1111"
     environment:
-      SPRING_PROFILES_ACTIVE: docker
+      SERVER_PORT: 1111
+      SPOONACULAR_BASE_URL: https://api.spoonacular.com/mealplanner/generate
+      SPOONACULAR_API_KEY: cf71138d62d74cd9877ee1e30e14582b
+      LOGGING_LEVEL_org_springframework_web_client_RestTemplate: DEBUG
+      SPRING_DATA_MONGODB_HOST: mongodb
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_DATABASE: practice
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/dietify?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-      MONGODB_URI: mongodb://mongodb:27017/dietify
-      SERVER_ADDRESS: 0.0.0.0
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
+      HOST_ADDRESS: localhost
+      SMTP_EMAIL: rashadchowki42@gmail.com
+      SMTP_KEY: fovo berp krln xgji
     depends_on:
       - mysql
       - mongodb
